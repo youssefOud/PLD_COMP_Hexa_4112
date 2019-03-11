@@ -29,9 +29,7 @@ int main(int arg, const char ** argv) {
 	tree::ParseTree* tree = parser.prog();
 	
 	Compilateur visitor;
-	int resultat = (int) visitor.visit(tree);
-
-	cout << "Resultat " << resultat << endl;
+	visitor.visit(tree);
 
 	return 0;
 }

@@ -15,19 +15,27 @@
 class  exprBaseVisitor : public exprVisitor {
 public:
 
-  virtual antlrcpp::Any visitProggeneral(exprParser::ProggeneralContext *ctx) override {
+  virtual antlrcpp::Any visitProg(exprParser::ProgContext *ctx) override {
     return visitChildren(ctx);
   }
 
-  virtual antlrcpp::Any visitTypevar(exprParser::TypevarContext *ctx) override {
+  virtual antlrcpp::Any visitTypefct(exprParser::TypefctContext *ctx) override {
     return visitChildren(ctx);
   }
 
-  virtual antlrcpp::Any visitNom(exprParser::NomContext *ctx) override {
+  virtual antlrcpp::Any visitNomfct(exprParser::NomfctContext *ctx) override {
     return visitChildren(ctx);
   }
 
-  virtual antlrcpp::Any visitCodefonction(exprParser::CodefonctionContext *ctx) override {
+  virtual antlrcpp::Any visitInstruction(exprParser::InstructionContext *ctx) override {
+    return visitChildren(ctx);
+  }
+
+  virtual antlrcpp::Any visitNombre(exprParser::NombreContext *ctx) override {
+    return visitChildren(ctx);
+  }
+
+  virtual antlrcpp::Any visitRet(exprParser::RetContext *ctx) override {
     return visitChildren(ctx);
   }
 

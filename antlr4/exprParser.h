@@ -12,12 +12,13 @@
 class  exprParser : public antlr4::Parser {
 public:
   enum {
-    T__0 = 1, T__1 = 2, T__2 = 3, T__3 = 4, T__4 = 5, T__5 = 6, WS = 7, 
-    INT = 8, NOM = 9
+    T__0 = 1, T__1 = 2, T__2 = 3, T__3 = 4, T__4 = 5, T__5 = 6, T__6 = 7, 
+    INT = 8, NBR = 9, ID = 10, WS = 11
   };
 
   enum {
-    RuleProg = 0, RuleType = 1, RuleNomfonction = 2, RuleCode = 3
+    RuleProg = 0, RuleType = 1, RuleFunction = 2, RulePr = 3, RuleExpr = 4, 
+    RuleRet = 5
   };
 
   exprParser(antlr4::TokenStream *input);
@@ -32,30 +33,20 @@ public:
 
   class ProgContext;
   class TypeContext;
-  class NomfonctionContext;
-  class CodeContext; 
+  class FunctionContext;
+  class PrContext;
+  class ExprContext;
+  class RetContext; 
 
   class  ProgContext : public antlr4::ParserRuleContext {
   public:
     ProgContext(antlr4::ParserRuleContext *parent, size_t invokingState);
-   
-    ProgContext() : antlr4::ParserRuleContext() { }
-    void copyFrom(ProgContext *context);
-    using antlr4::ParserRuleContext::copyFrom;
-
     virtual size_t getRuleIndex() const override;
-
-   
-  };
-
-  class  ProggeneralContext : public ProgContext {
-  public:
-    ProggeneralContext(ProgContext *ctx);
-
     TypeContext *type();
-    NomfonctionContext *nomfonction();
-    CodeContext *code();
+    PrContext *pr();
+
     virtual antlrcpp::Any accept(antlr4::tree::ParseTreeVisitor *visitor) override;
+   
   };
 
   ProgContext* prog();
@@ -73,60 +64,96 @@ public:
    
   };
 
-  class  TypevarContext : public TypeContext {
+  class  TypefctContext : public TypeContext {
   public:
-    TypevarContext(TypeContext *ctx);
-
-    virtual antlrcpp::Any accept(antlr4::tree::ParseTreeVisitor *visitor) override;
-  };
-
-  TypeContext* type();
-
-  class  NomfonctionContext : public antlr4::ParserRuleContext {
-  public:
-    NomfonctionContext(antlr4::ParserRuleContext *parent, size_t invokingState);
-   
-    NomfonctionContext() : antlr4::ParserRuleContext() { }
-    void copyFrom(NomfonctionContext *context);
-    using antlr4::ParserRuleContext::copyFrom;
-
-    virtual size_t getRuleIndex() const override;
-
-   
-  };
-
-  class  NomContext : public NomfonctionContext {
-  public:
-    NomContext(NomfonctionContext *ctx);
-
-    antlr4::tree::TerminalNode *NOM();
-    virtual antlrcpp::Any accept(antlr4::tree::ParseTreeVisitor *visitor) override;
-  };
-
-  NomfonctionContext* nomfonction();
-
-  class  CodeContext : public antlr4::ParserRuleContext {
-  public:
-    CodeContext(antlr4::ParserRuleContext *parent, size_t invokingState);
-   
-    CodeContext() : antlr4::ParserRuleContext() { }
-    void copyFrom(CodeContext *context);
-    using antlr4::ParserRuleContext::copyFrom;
-
-    virtual size_t getRuleIndex() const override;
-
-   
-  };
-
-  class  CodefonctionContext : public CodeContext {
-  public:
-    CodefonctionContext(CodeContext *ctx);
+    TypefctContext(TypeContext *ctx);
 
     antlr4::tree::TerminalNode *INT();
     virtual antlrcpp::Any accept(antlr4::tree::ParseTreeVisitor *visitor) override;
   };
 
-  CodeContext* code();
+  TypeContext* type();
+
+  class  FunctionContext : public antlr4::ParserRuleContext {
+  public:
+    FunctionContext(antlr4::ParserRuleContext *parent, size_t invokingState);
+   
+    FunctionContext() : antlr4::ParserRuleContext() { }
+    void copyFrom(FunctionContext *context);
+    using antlr4::ParserRuleContext::copyFrom;
+
+    virtual size_t getRuleIndex() const override;
+
+   
+  };
+
+  class  NomfctContext : public FunctionContext {
+  public:
+    NomfctContext(FunctionContext *ctx);
+
+    antlr4::tree::TerminalNode *ID();
+    virtual antlrcpp::Any accept(antlr4::tree::ParseTreeVisitor *visitor) override;
+  };
+
+  FunctionContext* function();
+
+  class  PrContext : public antlr4::ParserRuleContext {
+  public:
+    PrContext(antlr4::ParserRuleContext *parent, size_t invokingState);
+   
+    PrContext() : antlr4::ParserRuleContext() { }
+    void copyFrom(PrContext *context);
+    using antlr4::ParserRuleContext::copyFrom;
+
+    virtual size_t getRuleIndex() const override;
+
+   
+  };
+
+  class  InstructionContext : public PrContext {
+  public:
+    InstructionContext(PrContext *ctx);
+
+    RetContext *ret();
+    ExprContext *expr();
+    virtual antlrcpp::Any accept(antlr4::tree::ParseTreeVisitor *visitor) override;
+  };
+
+  PrContext* pr();
+
+  class  ExprContext : public antlr4::ParserRuleContext {
+  public:
+    ExprContext(antlr4::ParserRuleContext *parent, size_t invokingState);
+   
+    ExprContext() : antlr4::ParserRuleContext() { }
+    void copyFrom(ExprContext *context);
+    using antlr4::ParserRuleContext::copyFrom;
+
+    virtual size_t getRuleIndex() const override;
+
+   
+  };
+
+  class  NombreContext : public ExprContext {
+  public:
+    NombreContext(ExprContext *ctx);
+
+    antlr4::tree::TerminalNode *NBR();
+    virtual antlrcpp::Any accept(antlr4::tree::ParseTreeVisitor *visitor) override;
+  };
+
+  ExprContext* expr();
+
+  class  RetContext : public antlr4::ParserRuleContext {
+  public:
+    RetContext(antlr4::ParserRuleContext *parent, size_t invokingState);
+    virtual size_t getRuleIndex() const override;
+
+    virtual antlrcpp::Any accept(antlr4::tree::ParseTreeVisitor *visitor) override;
+   
+  };
+
+  RetContext* ret();
 
 
 private:

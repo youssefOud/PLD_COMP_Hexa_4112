@@ -19,13 +19,17 @@ public:
   /**
    * Visit parse trees produced by exprParser.
    */
-    virtual antlrcpp::Any visitProggeneral(exprParser::ProggeneralContext *context) = 0;
+    virtual antlrcpp::Any visitProg(exprParser::ProgContext *context) = 0;
 
-    virtual antlrcpp::Any visitTypevar(exprParser::TypevarContext *context) = 0;
+    virtual antlrcpp::Any visitTypefct(exprParser::TypefctContext *context) = 0;
 
-    virtual antlrcpp::Any visitNom(exprParser::NomContext *context) = 0;
+    virtual antlrcpp::Any visitNomfct(exprParser::NomfctContext *context) = 0;
 
-    virtual antlrcpp::Any visitCodefonction(exprParser::CodefonctionContext *context) = 0;
+    virtual antlrcpp::Any visitInstruction(exprParser::InstructionContext *context) = 0;
+
+    virtual antlrcpp::Any visitNombre(exprParser::NombreContext *context) = 0;
+
+    virtual antlrcpp::Any visitRet(exprParser::RetContext *context) = 0;
 
 
 };

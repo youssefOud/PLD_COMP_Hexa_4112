@@ -1,8 +1,11 @@
 grammar expr;
-prog: type nomfonction '()' '{' code '}' # proggeneral;
-type: 'int' # typevar;
-nomfonction: NOM # nom;
-code: 'return' INT ';' # codefonction;
+prog: type 'main' '(' ')' '{' pr '}' ;
+type : INT # typefct ;
+function : ID # nomfct;
+pr : ret expr ';' # instruction ;
+expr : NBR # nombre ;
+INT : 'int' ;
+NBR : [0-9]+ ;
+ret : 'return' ;
+ID : [a-z]+ ;
 WS : [ \t\r\n] -> skip ;
-INT	: [0-9]+ ;
-NOM	: [A-z]+ ;
