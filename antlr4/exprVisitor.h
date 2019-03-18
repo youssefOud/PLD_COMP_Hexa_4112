@@ -19,17 +19,35 @@ public:
   /**
    * Visit parse trees produced by exprParser.
    */
-    virtual antlrcpp::Any visitProg(exprParser::ProgContext *context) = 0;
+    virtual antlrcpp::Any visitFunction(exprParser::FunctionContext *context) = 0;
 
     virtual antlrcpp::Any visitTypefct(exprParser::TypefctContext *context) = 0;
 
-    virtual antlrcpp::Any visitNomfct(exprParser::NomfctContext *context) = 0;
+    virtual antlrcpp::Any visitRightValueID(exprParser::RightValueIDContext *context) = 0;
 
-    virtual antlrcpp::Any visitInstruction(exprParser::InstructionContext *context) = 0;
+    virtual antlrcpp::Any visitRightValueNBR(exprParser::RightValueNBRContext *context) = 0;
 
-    virtual antlrcpp::Any visitNombre(exprParser::NombreContext *context) = 0;
+    virtual antlrcpp::Any visitLeftValue(exprParser::LeftValueContext *context) = 0;
 
-    virtual antlrcpp::Any visitRet(exprParser::RetContext *context) = 0;
+    virtual antlrcpp::Any visitDeclaration(exprParser::DeclarationContext *context) = 0;
+
+    virtual antlrcpp::Any visitDefinition(exprParser::DefinitionContext *context) = 0;
+
+    virtual antlrcpp::Any visitAffectation(exprParser::AffectationContext *context) = 0;
+
+    virtual antlrcpp::Any visitReturn(exprParser::ReturnContext *context) = 0;
+
+    virtual antlrcpp::Any visitCorpsAffectRet(exprParser::CorpsAffectRetContext *context) = 0;
+
+    virtual antlrcpp::Any visitCorpsRetour(exprParser::CorpsRetourContext *context) = 0;
+
+    virtual antlrcpp::Any visitCorpsDeclareRet(exprParser::CorpsDeclareRetContext *context) = 0;
+
+    virtual antlrcpp::Any visitCorpsAffect(exprParser::CorpsAffectContext *context) = 0;
+
+    virtual antlrcpp::Any visitCorpsRec(exprParser::CorpsRecContext *context) = 0;
+
+    virtual antlrcpp::Any visitCorpsDeclare(exprParser::CorpsDeclareContext *context) = 0;
 
 
 };

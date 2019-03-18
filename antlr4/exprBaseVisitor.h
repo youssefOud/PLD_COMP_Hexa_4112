@@ -15,7 +15,7 @@
 class  exprBaseVisitor : public exprVisitor {
 public:
 
-  virtual antlrcpp::Any visitProg(exprParser::ProgContext *ctx) override {
+  virtual antlrcpp::Any visitFunction(exprParser::FunctionContext *ctx) override {
     return visitChildren(ctx);
   }
 
@@ -23,19 +23,55 @@ public:
     return visitChildren(ctx);
   }
 
-  virtual antlrcpp::Any visitNomfct(exprParser::NomfctContext *ctx) override {
+  virtual antlrcpp::Any visitRightValueID(exprParser::RightValueIDContext *ctx) override {
     return visitChildren(ctx);
   }
 
-  virtual antlrcpp::Any visitInstruction(exprParser::InstructionContext *ctx) override {
+  virtual antlrcpp::Any visitRightValueNBR(exprParser::RightValueNBRContext *ctx) override {
     return visitChildren(ctx);
   }
 
-  virtual antlrcpp::Any visitNombre(exprParser::NombreContext *ctx) override {
+  virtual antlrcpp::Any visitLeftValue(exprParser::LeftValueContext *ctx) override {
     return visitChildren(ctx);
   }
 
-  virtual antlrcpp::Any visitRet(exprParser::RetContext *ctx) override {
+  virtual antlrcpp::Any visitDeclaration(exprParser::DeclarationContext *ctx) override {
+    return visitChildren(ctx);
+  }
+
+  virtual antlrcpp::Any visitDefinition(exprParser::DefinitionContext *ctx) override {
+    return visitChildren(ctx);
+  }
+
+  virtual antlrcpp::Any visitAffectation(exprParser::AffectationContext *ctx) override {
+    return visitChildren(ctx);
+  }
+
+  virtual antlrcpp::Any visitReturn(exprParser::ReturnContext *ctx) override {
+    return visitChildren(ctx);
+  }
+
+  virtual antlrcpp::Any visitCorpsAffectRet(exprParser::CorpsAffectRetContext *ctx) override {
+    return visitChildren(ctx);
+  }
+
+  virtual antlrcpp::Any visitCorpsRetour(exprParser::CorpsRetourContext *ctx) override {
+    return visitChildren(ctx);
+  }
+
+  virtual antlrcpp::Any visitCorpsDeclareRet(exprParser::CorpsDeclareRetContext *ctx) override {
+    return visitChildren(ctx);
+  }
+
+  virtual antlrcpp::Any visitCorpsAffect(exprParser::CorpsAffectContext *ctx) override {
+    return visitChildren(ctx);
+  }
+
+  virtual antlrcpp::Any visitCorpsRec(exprParser::CorpsRecContext *ctx) override {
+    return visitChildren(ctx);
+  }
+
+  virtual antlrcpp::Any visitCorpsDeclare(exprParser::CorpsDeclareContext *ctx) override {
     return visitChildren(ctx);
   }
 
