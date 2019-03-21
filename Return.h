@@ -15,6 +15,7 @@ public:
     RightValue *getRightValue();
 	std::string toString() { return "Return "+rightValue->toString(); };
 	int getClassName(){return 4;};
+string genererCodeAssembleur(map<string, pair<int, int>>*);
 
 private:
     RightValue * rightValue;

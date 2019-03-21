@@ -110,13 +110,13 @@ string Fonction::genererCodeAssembleur(){
 	assembleur += "pushq %rbp # save %rbp on the stack \r\n";
 	assembleur += "movq %rsp, %rbp # define %rbp for the current function \r\n";
 
-	assembleur += "# body";
+	assembleur += "# body \r\n";
 	
 	for(std::list<Instruction*>::iterator it = this->instructions.begin(); it != this->instructions.end(); it++){
-		// on ne fait rien car c'est juste une déclaration
-		if ((*it)->getClassName() != 1) {
-			//assembleur+=*it->genererCodeAssembleur(&symbolTable);
-		}
+		// on ne fait rien quand c'est juste une déclaration
+		//if ((*it)->getClassName() != 1) {
+			assembleur+= (*it)->genererCodeAssembleur(&symbolTable);
+		//}
 	}
 	
 	assembleur += "# epilogue \r\n";

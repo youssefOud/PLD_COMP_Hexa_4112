@@ -4,6 +4,9 @@
 #include <iostream>
 #include <string>
 #include "Affectation.h"
+#include <utility>
+#include <map>
+
 using namespace std;
 
 class Definition : public Affectation {
@@ -12,8 +15,9 @@ public:
 
 	Definition(RightValue *r, LeftValue *l, string t):Affectation(r, l, t) {};
 	~Definition() {};
-     string toString() {return "AffectationSimple RightValue "+right->toString()+" LeftValue "+left->toString()+ " Type "+to_string(type)+"\n"; };
-     int getClassName() {return 2;};
+     string toString();
+     int getClassName();
+     string genererCodeAssembleur(map<string, pair<int, int>>*);
   
 protected:
 

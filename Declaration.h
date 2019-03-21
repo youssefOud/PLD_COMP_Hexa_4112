@@ -4,6 +4,8 @@
 #include "Instruction.h"
 #include <iostream>
 #include <string>
+#include <utility>
+#include <map>
 
 using namespace std;
 
@@ -25,6 +27,7 @@ public:
     string toString();
 	int convertTypeToInt(string);
 	int getClassName();
+        string genererCodeAssembleur(map<string, pair<int, int>>*);
     
 private:
     string id;

@@ -74,3 +74,7 @@ int Declaration::convertTypeToInt(string nom) {
 int Declaration::getClassName(){
 	return 1;
 }
+
+string Declaration::genererCodeAssembleur(map<string, pair<int, int>> *st){
+	return "";
+}
