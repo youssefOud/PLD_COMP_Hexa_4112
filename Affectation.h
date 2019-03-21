@@ -4,6 +4,8 @@
 #include <iostream>
 #include <string>
 #include "Instruction.h"
+#include <utility>
+#include <map>
 
 using namespace std;
 
@@ -23,6 +25,7 @@ public:
 	RightValue *getRight();
     LeftValue *getLeft();	
 int convertTypeToInt(string);
+        virtual string genererCodeAssembleur(map<string, pair<int, int>> *)=0;
   
   
 

@@ -36,6 +36,7 @@ public:
 			(std::string) context->type()->getText(), visit(context->corps())));
 			cout<<fonctions.front()->toString()<<endl;
 			fonctions.front()->generateST();
+			cout << fonctions.front()->genererCodeAssembleur() << endl;
     return NULL;
   }
 

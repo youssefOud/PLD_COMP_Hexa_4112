@@ -15,6 +15,7 @@ public:
     RightValue *getExpression();
 	std::string toString() { return "Return "+expression->toString(); };
 	int getClassName(){return 4;};
+string genererCodeAssembleur(map<string, pair<int, int>>*);
 
 private:
     RightValue *expression;
