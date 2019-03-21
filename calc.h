@@ -23,23 +23,11 @@ using namespace std;
 class  calc : public exprBaseVisitor {
 public:
 
-
-	list<Fonction*> fonctions ;
-	// ça commence à être chaud quand on a plusieurs fonctions plusieurs scopes
-	//ça serait bien de remonter lees infos plus haut genre une classe fonction avec toutes les délcarations affectations de la fonction
-
-	
-
   virtual antlrcpp::Any visitFunction(exprParser::FunctionContext *context) override {
 		fonctions.push_back(
 			new Fonction((std::string) context->ID()->getText(),
 			(std::string) context->type()->getText(), visit(context->corps())));
 			cout<<fonctions.front()->toString()<<endl;
-			fonctions.front()->generateST();
-    
-			fonctions.front()->generateSA();
-			fonctions.front()->processSA();
-			cout << fonctions.front()->genererCodeAssembleur() << endl;
 
     return NULL;
   }
@@ -147,14 +135,19 @@ public:
     instructions.splice(instructions.end(),visit(context->corps()));
     return instructions;
   }
-
-
-
+  
   /*virtual antlrcpp::Any visitRet(exprParser::RetContext *context) override {
-    myfile << "visit ret" << std::endl; 
-    //return (int) stoi(ctx->NBR()->getText());
-    return NULL;
+   myfile << "visit ret" << std::endl; 
+   //return (int) stoi(ctx->NBR()->getText());
+   return NULL;
   }*/
+  
+  list<Fonction*> getFonctions() {
+    return fonctions;
+  } 
+  
+protected :
+  list<Fonction*> fonctions ;
 
 
 

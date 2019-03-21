@@ -4,5 +4,10 @@ int main (){
 	int b=14;
 	a=b;
 	c=12;
-	return c;
+	int r;
+	int e;
+	r=e;
+	b=r;
+	r=c;
+	return d;
 }

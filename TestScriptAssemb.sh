@@ -28,6 +28,7 @@ else	#Nombre parametres correct, voir si le fichier est .cpp
 			done
 		#Ici observation de parametres pour lancer le programme
 			if [ $ANALYSE -eq 1 ]; then 
+				./exe -a test/$FICHIER
 				echo "ANALYSE STATIQUE" 
 			fi
 			if [ $OPTIMISATION -eq 1 ]; then 
@@ -44,7 +45,7 @@ else	#Nombre parametres correct, voir si le fichier est .cpp
 		#---------------------------------------
 		else
 		# On lance l'exec avec le nom du fichier si tout est ok
-		echo "./exe fichierTest/$1"
+		echo "./exe test/$1"
 		fi
 	fi
 fi
