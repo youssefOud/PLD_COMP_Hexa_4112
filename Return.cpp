@@ -5,6 +5,6 @@ Return::~Return()
 
 }
 
-RightValue *Return::getExpression() {
-    return expression;
+RightValue *Return::getRightValue() {
+    return rightValue;
 }

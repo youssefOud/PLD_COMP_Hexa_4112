@@ -1,6 +1,8 @@
 #include "Fonction.h"
 #include "Declaration.h"
 #include "Definition.h"
+#include "AffectationSimple.h"
+#include "Return.h"
 #include <iostream>
 #include <utility>
 
@@ -71,28 +73,26 @@ void Fonction::generateST(){
 			it2 = this->symbolTable.find(((Declaration*)(*it))->getId());
 			if (it2 != symbolTable.end()) {	
 				// Existe deja dans la table des symboles : gérer cas d'erreur
-				cerr << "erreur" << endl;
+				//déclarations multiples
+				errors.push_back("Declarations multiples de la variable "+ ((Declaration*)(*it))->getId());
 			} else {
 				// On commence les adresses à -8
 				pair<int, int> temp;
 				//temp
 				adresseCount-=8;
 				this->symbolTable.insert(make_pair(((Declaration*)(*it))->getId(), std::make_pair(((Declaration*)(*it))->getType(),adresseCount)));
-				cout<< ((Declaration*)(*it))->getId() << "     " << ((Declaration*)(*it))->getType() << "      " << adresseCount <<endl ;
 			}
 		}
 		
-		if((*it)->getClassName() == 2){ //Définition (Type d'affectation)
+		else if((*it)->getClassName() == 2){ //Définition (Type d'affectation)
 			std::map<string,pair<int,int>>::iterator it2;
 			it2 = this->symbolTable.find(((Definition*)(*it))->getLeft()->getId());
 			if (it2 != symbolTable.end()) {	
-				// Existe deja dans la table des symboles : gérer cas d'erreur
-				cerr << "erreur" << endl;
+				errors.push_back("Declarations multiples de la variable "+ ((Definition*)(*it))->getLeft()->getId());
 			} else {
 				// On commence les adresses à -8
 				adresseCount-=8;
 				this->symbolTable.insert(make_pair(((Definition*)(*it))->getLeft()->getId(), std::make_pair(((Definition*)(*it))->getType(),adresseCount)));
-				cout<< ((Definition*)(*it))->getLeft()->getId() << "     " << ((Definition*)(*it))->getType() << "      " << adresseCount <<endl ;
 			}
 		}
 	}
@@ -125,4 +125,152 @@ string Fonction::genererCodeAssembleur(){
 
 	return assembleur;
 }
+
+void Fonction::generateSA(){
+	
+	for(std::list<Instruction*>::iterator it = this->instructions.begin(); it != this->instructions.end(); it++){
+
+		if((*it)->getClassName() == 1){  //Declaration
+			std::map<string,vector<int>>::iterator it2;
+			it2 = this->staticAnalysis.find(((Declaration*)(*it))->getId());
+			if (it2 == staticAnalysis.end()) {	
+				//déclaration d'une nouvelle variable
+				vector<int> flags(2, 0);
+				this->staticAnalysis.insert(make_pair(((Declaration*)(*it))->getId(),flags ));
+				//ATTENTION LES DECLARATIONS MULTIPLES SONT GEREES DU COTE DE LA ST
+			}
+		}
+		else if((*it)->getClassName() == 2){ //Définition (Type d'affectation)
+			std::map<string,vector<int>>::iterator it2;
+			if(((Definition*)(*it))->getRight()->getId() != "")//c'est une variable
+			{
+				it2 = this->staticAnalysis.find(((Definition*)(*it))->getRight()->getId());
+				if (it2 != staticAnalysis.end()) {
+					//on vérifie qu'elle a bien été initialisée
+					if((*it2).second[0]==1){
+						//on met à jour la ligne de la variable en disant qu'elle est utilisée
+						(*it2).second[1]=1;
+						// traitement de la left value
+						it2 = this->staticAnalysis.find(((Definition*)(*it))->getLeft()->getId());
+						if (it2 == staticAnalysis.end()) {// elle n'a jamais été déclarée
+							//on notifie qu'elle a été déclarée et initialisée
+							vector<int> flags{1,0};
+							this->staticAnalysis.insert(make_pair(((Definition*)(*it))->getRight()->getId(),flags ));
+						}
+						//ATTENTION LES DECLARATIONS MULTIPLES SONT GEREES PAR LA ST
+					}
+					else{
+						errors.push_back("Variable utilisee mais non initialisee " + ((Definition*)(*it))->getRight()->getId());
+					}
+				}
+				else {
+					//a gerer var droite utilisée mais non déclarée
+					errors.push_back("Variable utilisee mais non declaree " + ((Definition*)(*it))->getRight()->getId() );
+				}
+			}
+		}
+		else if( (*it)->getClassName() == 3  ){ //Affectation Simple (Type d'affectation)
+			std::map<string,vector<int>>::iterator it2;
+			if(((AffectationSimple*)(*it))->getRight()->getId() != "")//c'est une variable
+			{
+				it2 = this->staticAnalysis.find(((AffectationSimple*)(*it))->getRight()->getId());
+				if (it2 != staticAnalysis.end()) {
+					//on vérifie qu'elle a bien été initialisée
+					if((*it2).second[0]==1){
+						//on met à jour la ligne de la variable en disant qu'elle est utilisée
+						(*it2).second[1]=1;
+						// traitement de la left value
+						it2 = this->staticAnalysis.find(((AffectationSimple*)(*it))->getLeft()->getId());
+						if (it2 != staticAnalysis.end()) {// elle a déjà été déclarée
+							//on notifie qu'elle a été initialisée ou affectée
+							(*it2).second[0]=1;
+						}
+						else{
+						//a gerer var gauche utilisée mais non déclarée
+						errors.push_back("Variable utilisee mais non declaree " + ((AffectationSimple*)(*it))->getLeft()->getId());
+						}
+					}
+					else{
+						errors.push_back("Variable utilisee mais non initialisee " + ((AffectationSimple*)(*it))->getRight()->getId());
+					}
+				}
+				else {
+					//a gerer var droite utilisée mais non déclarée
+					errors.push_back("Variable utilisee mais non declaree " + ((AffectationSimple*)(*it))->getRight()->getId() );
+				}
+				
+			}
+			else{ //c'est un nombre
+				it2 = this->staticAnalysis.find(((AffectationSimple*)(*it))->getLeft()->getId());
+				if (it2 != staticAnalysis.end()) {// elle a déjà été déclarée
+					//on notifie qu'elle a été initialisée
+					(*it2).second[0]=1;
+				}
+				else{
+					//a gerer var gauche utilisée mais non déclarée
+					errors.push_back("Variable utilisee mais non declaree " + ((AffectationSimple*)(*it))->getLeft()->getId());
+				}
+				
+			}
+		}
+		else if( (*it)->getClassName() == 4  ){ //Return
+			std::map<string,vector<int>>::iterator it2;
+			if(((Return*)(*it))->getRightValue()->getId() != "")//c'est une variable
+			{
+				it2 = this->staticAnalysis.find(((Return*)(*it))->getRightValue()->getId());
+				if (it2 != staticAnalysis.end()) { // elle existe dans la table d'AS
+				//on vérifie qu'elle a bien été initialisée
+					if((*it2).second[0]==0){//elle n'a pas été init
+						errors.push_back("Variable retournee non initialisee " + ((Return*)(*it))->getRightValue()->getId());
+					}
+				}
+				else {
+					//a gerer var retournée mais non déclarée
+					errors.push_back("Variable retournee non declaree " + ((Return*)(*it))->getRightValue()->getId());
+				}
+				
+			}
+			
+		}
+	}
+
+}
+	
+	
+	void Fonction::processSA(){
+
+		for(std::map<string,vector<int>>::iterator it=staticAnalysis.begin() ; it!=staticAnalysis.end() ; ++it)
+		{
+			if((*it).second[1]==0){
+				warnings.push_back("Variable non utilisee " +(*it).first );
+				
+			}
+		}
+		
+	}
+	
+	void Fonction::displaySymbolTable(){
+		cout << "SymbolTable : "<< endl;
+		cout << "ID TYPE ADD"<<endl;
+		for(std::map<string,pair<int,int>>::iterator it=symbolTable.begin() ; it!=symbolTable.end() ; ++it)
+		{
+			cout<< (*it).first << " " <<(*it).second.first << (*it).second.second <<endl;
+		}
+	}
+	
+	void Fonction::displayStaticAnalysis(){
+		cout << "StaticAnalysisTable : "<< endl;
+		cout << "ID INIT UTI"<<endl;
+		for(std::map<string,vector<int>>::iterator it=staticAnalysis.begin() ; it!=staticAnalysis.end() ; ++it)
+		{
+			cout<< (*it).first << " " << (*it).second[0] << (*it).second[1] <<endl;
+		}
+	}
+	
+	void Fonction::displayWarnings(){
+	}
+	
+	void Fonction::displayErrors(){
+	}
+
 

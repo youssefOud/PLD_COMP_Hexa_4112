@@ -1,6 +1,7 @@
 #include <string.h>
 #include <map>
 #include <list>
+#include <vector>
 #include "Instruction.h"
 #include "Enum.h"
 
@@ -23,11 +24,19 @@ class Fonction{
 		string toString();
 		void generateST();
 		string genererCodeAssembleur();
-		
+		void generateSA();
+		void processSA();
+		void displaySymbolTable();
+		void displayStaticAnalysis();
+		void displayWarnings();
+		void displayErrors();
 
 	private:
 		string id;
 		list <Instruction*> instructions;
 		map<string,pair<int, int>> symbolTable;
 		type_e type;
+		map<string,vector<int>> staticAnalysis;
+		list<string> errors;
+		list<string> warnings;
 };
