@@ -9,5 +9,5 @@ int main (){
 	r=e;
 	b=r;
 	r=c;
-	return d;
+	return a;
 }

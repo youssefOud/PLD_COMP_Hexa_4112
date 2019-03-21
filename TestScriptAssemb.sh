@@ -3,11 +3,11 @@
 if [ $# -gt 4 ] || [ $# -lt 1 ] 
 then 
 	echo "Erreur dans le nombre d'argument passé"
-else	#Nombre parametres correct, voir si le fichier est .cpp
+else	#Nombre parametres correct, voir si le fichier est .c
 	
 	FICHIER=${@: -1}
 	EXT_FICHIER=${FICHIER##*.}
-	if [ $EXT_FICHIER != "cpp" ] 
+	if [ $EXT_FICHIER != "c" ] 
 	then
 		echo "Erreur dans l'extension du fichier"
 	else	#On regarde les options
@@ -29,14 +29,13 @@ else	#Nombre parametres correct, voir si le fichier est .cpp
 		#Ici observation de parametres pour lancer le programme
 			if [ $ANALYSE -eq 1 ]; then 
 				./exe -a test/$FICHIER
-				echo "ANALYSE STATIQUE" 
 			fi
 			if [ $OPTIMISATION -eq 1 ]; then 
 				echo "OPTIMISATION"
 			fi
 			if [ $CODE_GEN -eq 1 ]; then
-				echo "CODE GENER"
 			# 4 instructions sur les sujet
+				./exe -c test/$FICHIER
 				as -o main.o main.s
 				gcc main.o
 				./a.out

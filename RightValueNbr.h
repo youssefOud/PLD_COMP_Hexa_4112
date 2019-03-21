@@ -13,5 +13,5 @@ class RightValueNbr : public RightValue {
 		~RightValueNbr() {};
 		string toString() { return "RightValueNbr "+to_string(nbr)+"\n";}
 		string getId() {return ""; };
-		int getNbr() {cout<<"rightValueNbr getNbr"<<endl; return nbr; };
+		int getNbr() { return nbr; };
 };

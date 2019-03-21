@@ -70,7 +70,9 @@ int main(int argc, const char ** argv) {
 	  
 	  if (c) {
   	  // Générer que si argument passé en option
-  	  (*it)->genererCodeAssembleur();
+	    ofstream myfile("./main.s");
+	    myfile << (*it)->genererCodeAssembleur() << endl;
+	    myfile.close();
 	  }
 	}
 	
