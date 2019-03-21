@@ -6,8 +6,8 @@ Return::~Return()
 
 }
 
-RightValue *Return::getExpression() {
-    return expression;
+RightValue *Return::getRightValue() {
+    return rightValue;
 }
 
 string Return::genererCodeAssembleur(map<string, pair<int, int>> *st){
