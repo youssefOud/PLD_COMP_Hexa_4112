@@ -24,9 +24,9 @@ class  calc : public exprBaseVisitor {
 public:
 
 
-	list<Fonction*> fonctions ;
-	// ça commence à être chaud quand on a plusieurs fonctions plusieurs scopes
-	//ça serait bien de remonter lees infos plus haut genre une classe fonction avec toutes les délcarations affectations de la fonction
+  list<Fonction*> fonctions ;
+  // ça commence à être chaud quand on a plusieurs fonctions plusieurs scopes
+  //ça serait bien de remonter lees infos plus haut genre une classe fonction avec toutes les délcarations affectations de la fonction
 
 	
 
@@ -34,14 +34,13 @@ public:
 		fonctions.push_back(
 			new Fonction((std::string) context->ID()->getText(),
 			(std::string) context->type()->getText(), visit(context->corps())));
-			cout<<fonctions.front()->toString()<<endl;
-			fonctions.front()->generateST();
-    
-			fonctions.front()->generateSA();
-			fonctions.front()->processSA();
-			cout << fonctions.front()->genererCodeAssembleur() << endl;
-
-    return NULL;
+		fonctions.front()->generateST();
+    		fonctions.front()->generateSA();
+		fonctions.front()->processSA();
+		ofstream myfile ("./test/main.s");
+		myfile << fonctions.front()->genererCodeAssembleur() << endl ;
+  		myfile.close();
+    		return NULL;
   }
 
   virtual antlrcpp::Any visitTypefct(exprParser::TypefctContext *ctx) override {
@@ -49,20 +48,8 @@ public:
     //return NULL;
   }
 
-  /*virtual antlrcpp::Any visitInstruction(exprParser::InstructionContext *ctx) override {
-    myfile << "	movl $"; 
-    return visit(ctx->expr());
-    //return NULL;
-  }*/
-
-  /*virtual antlrcpp::Any visitNombre(exprParser::NombreContext *ctx) override {
-    myfile << stoi(ctx->NBR()->getText()) << ", \%eax" << std::endl << "	ret" << std::endl;
-    //return (int) stoi(ctx->NBR()->getText());
-    return NULL;
-  }*/
-
-	//il faut rendre le même type pas string une fois et int une fois
-// plutot utiliser le polymorphisme qui permettra également de vérifier s'il 'agit d'un ID Ou d'un NBR
+  //il faut rendre le même type pas string une fois et int une fois
+  // plutot utiliser le polymorphisme qui permettra également de vérifier s'il 'agit d'un ID Ou d'un NBR
   virtual antlrcpp::Any visitRightValueID(exprParser::RightValueIDContext *context) override {
     RightValue * rvid = new RightValueId((std::string) context->ID()->getText());
     return rvid;

@@ -13,7 +13,7 @@ int main(int , const char **) {
 
 	cout<<"lecture fichier: "<<endl;
 	ifstream myReadFile;
-	myReadFile.open("./test/ret42.cpp");
+	myReadFile.open("./test/affect.cpp");
 	//char output[100];
 	string output="";
 	string temp;
