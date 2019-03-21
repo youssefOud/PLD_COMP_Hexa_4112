@@ -24,6 +24,7 @@ public:
 	string toSmallString();
     string toString();
 	int convertTypeToInt(string);
+	int getClassName();
     
 private:
     string id;

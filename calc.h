@@ -35,6 +35,7 @@ public:
 			new Fonction((std::string) context->ID()->getText(),
 			(std::string) context->type()->getText(), visit(context->corps())));
 			cout<<fonctions.front()->toString()<<endl;
+			fonctions.front()->generateST();
     return NULL;
   }
 

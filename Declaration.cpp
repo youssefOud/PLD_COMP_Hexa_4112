@@ -71,3 +71,6 @@ int Declaration::convertTypeToInt(string nom) {
 	return t; 
 }
 
+int Declaration::getClassName(){
+	return 1;
+}

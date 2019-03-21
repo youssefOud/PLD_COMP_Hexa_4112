@@ -13,6 +13,7 @@ public:
 	Definition(RightValue *r, LeftValue *l, string t):Affectation(r, l, t) {};
 	~Definition() {};
      string toString() {return "AffectationSimple RightValue "+right->toString()+" LeftValue "+left->toString()+ " Type "+to_string(type)+"\n"; };
+     int getClassName() {return 2;};
   
 protected:
 

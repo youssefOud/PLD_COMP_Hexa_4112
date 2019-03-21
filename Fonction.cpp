@@ -1,5 +1,10 @@
 #include "Fonction.h"
+#include "Declaration.h"
+#include "Definition.h"
+#include <iostream>
+#include <utility>
 
+using namespace std;
 Fonction::Fonction(string nomFct, string typeFct, list<Instruction*> instr) {
 	id = nomFct;
 	type = convertTypeToInt(typeFct);
@@ -54,5 +59,70 @@ string Fonction::toString() {
 
     print += "\r\n";
 	return print;
+}
+
+
+void Fonction::generateST(){
+	int adresseCount = 0;
+	for(std::list<Instruction*>::iterator it = this->instructions.begin(); it != this->instructions.end(); it++){
+
+		if((*it)->getClassName() == 1){  //Declaration
+			std::map<string,pair<int,int>>::iterator it2;
+			it2 = this->symbolTable.find(((Declaration*)(*it))->getId());
+			if (it2 != symbolTable.end()) {	
+				// Existe deja dans la table des symboles : gérer cas d'erreur
+				cerr << "erreur" << endl;
+			} else {
+				// On commence les adresses à -8
+				pair<int, int> temp;
+				//temp
+				adresseCount-=8;
+				this->symbolTable.insert(make_pair(((Declaration*)(*it))->getId(), std::make_pair(((Declaration*)(*it))->getType(),adresseCount)));
+				cout<< ((Declaration*)(*it))->getId() << "     " << ((Declaration*)(*it))->getType() << "      " << adresseCount <<endl ;
+			}
+		}
+		
+		if((*it)->getClassName() == 2){ //Définition (Type d'affectation)
+			std::map<string,pair<int,int>>::iterator it2;
+			it2 = this->symbolTable.find(((Definition*)(*it))->getLeft()->getId());
+			if (it2 != symbolTable.end()) {	
+				// Existe deja dans la table des symboles : gérer cas d'erreur
+				cerr << "erreur" << endl;
+			} else {
+				// On commence les adresses à -8
+				adresseCount-=8;
+				this->symbolTable.insert(make_pair(((Definition*)(*it))->getLeft()->getId(), std::make_pair(((Definition*)(*it))->getType(),adresseCount)));
+				cout<< ((Definition*)(*it))->getLeft()->getId() << "     " << ((Definition*)(*it))->getType() << "      " << adresseCount <<endl ;
+			}
+		}
+	}
+}
+
+
+string Fonction::genererCodeAssembleur(){
+	string assembleur = "";
+	assembleur += ".text                       # section declaration\r\n";
+	assembleur += ".global main                # entry point\r\n";
+	assembleur += "\r\n";
+
+	assembleur += "main: \r\n";
+	assembleur += "# prologue \r\n";
+	assembleur += "pushq %rbp # save %rbp on the stack \r\n";
+	assembleur += "movq %rsp, %rbp # define %rbp for the current function \r\n";
+
+	assembleur += "# body";
+	
+	for(std::list<Instruction*>::iterator it = this->instructions.begin(); it != this->instructions.end(); it++){
+		// on ne fait rien car c'est juste une déclaration
+		if ((*it)->getClassName() != 1) {
+			//assembleur+=*it->genererCodeAssembleur(&symbolTable);
+		}
+	}
+	
+	assembleur += "# epilogue \r\n";
+	assembleur += "popq %rbp # restore %rbp from the stack \r\n";
+	assembleur += "ret # return to the caller (here the shell) \r\n";
+
+	return assembleur;
 }
 

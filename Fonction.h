@@ -21,10 +21,13 @@ class Fonction{
 		void addInstruction(Instruction* instr);
 		type_e convertTypeToInt(string nom); 
 		string toString();
+		void generateST();
+		string genererCodeAssembleur();
+		
 
 	private:
 		string id;
 		list <Instruction*> instructions;
-		map<string,int> dico;
+		map<string,pair<int, int>> symbolTable;
 		type_e type;
 };

@@ -4,8 +4,6 @@
 #include <iostream>
 #include <string>
 #include "Instruction.h"
-#include "LeftValue.h"
-#include "RightValue.h"
 
 using namespace std;
 
@@ -17,6 +15,7 @@ public:
 	Affectation();
 	virtual ~Affectation();
     virtual string toString() {return "Affectation"; };
+    virtual int getClassName()=0;
     
 	int getType();	
 	void setType(int t);
@@ -28,7 +27,7 @@ int convertTypeToInt(string);
   
 
 protected:
-int type;
+	int type;
 	RightValue *right;
 	LeftValue *left;
 

@@ -14,6 +14,7 @@ public:
     ~Return();
     RightValue *getExpression();
 	std::string toString() { return "Return "+expression->toString(); };
+	int getClassName(){return 4;};
 
 private:
     RightValue *expression;
