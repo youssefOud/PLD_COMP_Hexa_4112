@@ -100,6 +100,7 @@ void Fonction::generateST(){
 
 
 string Fonction::genererCodeAssembleur(){
+
 	string assembleur = "";
 	assembleur += ".text                       # section declaration\r\n";
 	assembleur += ".global main                # entry point\r\n";
