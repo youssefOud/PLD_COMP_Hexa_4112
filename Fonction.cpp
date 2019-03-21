@@ -268,6 +268,7 @@ void Fonction::generateSA(){
 	}
 	
 	void Fonction::displayWarnings(){
+	  
 	}
 	
 	void Fonction::displayErrors(){
