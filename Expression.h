@@ -11,7 +11,7 @@ class Expression {
 		Expression() {};
 		virtual ~Expression() {};
 		virtual string genererCodeAssembleur(map<string, pair<int, int>> *) =0;
-		//virtual string toString() =0;
+		virtual string toString() =0;
 	
 	protected:
 };

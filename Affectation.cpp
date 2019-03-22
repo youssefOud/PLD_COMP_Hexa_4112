@@ -1,7 +1,7 @@
 #include "Affectation.h"
 
-Affectation::Affectation(RightValue *r, LeftValue *l, string t) {
-	right=r;
+Affectation::Affectation(Expression *e, LeftValue *l, string t) {
+	expr=e;
 	left=l;
 	type=convertTypeToInt(t);
  	
@@ -12,8 +12,8 @@ Affectation::~Affectation()
 	
 }
 
-RightValue *Affectation::getRight() {
-    return right;
+Expression *Affectation::getExpr() {
+    return expr;
 }
 
 LeftValue *Affectation::getLeft() {

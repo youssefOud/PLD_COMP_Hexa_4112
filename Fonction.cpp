@@ -128,7 +128,7 @@ string Fonction::genererCodeAssembleur(){
 }
 
 void Fonction::generateSA(){
-	
+	/*
 	for(list<Instruction*>::iterator it = this->instructions.begin(); it != this->instructions.end(); it++){
 
 		if((*it)->getClassName() == 1){  //Declaration
@@ -246,7 +246,7 @@ void Fonction::generateSA(){
 			
 		}
 	}
-
+*/
 }
 	
 	

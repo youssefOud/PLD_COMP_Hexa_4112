@@ -6,6 +6,7 @@
 #include "Affectation.h"
 #include <utility>
 #include <map>
+#include "Expression.h"
 
 using namespace std;
 
@@ -13,7 +14,7 @@ class Definition : public Affectation {
 
 public:
 
-	Definition(RightValue *r, LeftValue *l, string t):Affectation(r, l, t) {};
+	Definition(Expression *e, LeftValue *l, string t):Affectation(e, l, t) {};
 	~Definition() {};
      string toString();
      int getClassName();

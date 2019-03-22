@@ -4,7 +4,7 @@
 
 std::string Definition::toString() 
 {
-    return "Definition RightValue "+right->toString()+" LeftValue "+left->toString()+ " Type "+to_string(type)+"\n";
+    return "Definition Expression "+expr->toString()+" LeftValue "+left->toString()+ " Type "+to_string(type)+"\n";
 }
 
 
@@ -13,7 +13,7 @@ int Definition::getClassName(){
 }
 
 string Definition::genererCodeAssembleur(map<string, pair<int, int>> *st){
-	if(!right->getId().empty()){
+	/*if(!right->getId().empty()){
 		string res = "movl " + to_string((st->find(right->getId()))->second.second) + "(%rbp), %eax\r\n";
 		res += "movl %eax, " +to_string((st->find(left->getId()))->second.second)+ "(%rbp)\r\n";
 		return res;
@@ -23,5 +23,6 @@ string Definition::genererCodeAssembleur(map<string, pair<int, int>> *st){
 	else{
 		return "movl $" +to_string(right->getNbr())+ ", " + to_string((st->find(left->getId()))->second.second)+ "(%rbp)\r\n";		
 	}
-		
+	*/
+	return "";	
 }
