@@ -24,7 +24,7 @@ int main(int argc, const char ** argv) {
   }
   
   string nomFichier(argv[argc-1]);
-  
+    cout << nomFichier <<endl;
 	cout<<"lecture fichier: "<<endl;
 	ifstream myReadFile;
 	myReadFile.open(nomFichier);
@@ -53,11 +53,12 @@ int main(int argc, const char ** argv) {
 	list<Fonction*> fonctions = (list<Fonction*>)visitor.getFonctions();
 	for(list<Fonction*>::iterator it=fonctions.begin() ; it!=fonctions.end() ; ++it) 
 	{
-	  (*it)->generateST();
+		(*it)->toString();
+	  //(*it)->generateST();
 	  
 	  if (a) {
   	  // Générer que si argument passé en option
-  	  (*it)->generateSA();
+  	  /*(*it)->generateSA();
   	  (*it)->processSA();
   	  (*it)->displaySymbolTable();
   	  cout << endl;
@@ -65,14 +66,14 @@ int main(int argc, const char ** argv) {
   	  cout << endl;
   	  (*it)->displayWarnings();
   	  cout << endl;
-  	  (*it)->displayErrors();
+  	  (*it)->displayErrors();*/
 	  }
 	  
 	  if (c) {
   	  // Générer que si argument passé en option
-	    ofstream myfile("./main.s");
+	    /*ofstream myfile("./main.s");
 	    myfile << (*it)->genererCodeAssembleur() << endl;
-	    myfile.close();
+	    myfile.close();*/
 	  }
 	}
 	

@@ -17,6 +17,11 @@
 #include "Definition.h"
 #include "RightValueId.h"
 #include "RightValueNbr.h"
+#include "ExprMult.h"
+#include "ExprPlus.h"
+#include "ExprMoins.h"
+#include "Expression.h"
+#include "ExprSimple.h"
 
 // TODO Import new classes
 using namespace std;
@@ -54,10 +59,10 @@ public:
 
   virtual antlrcpp::Any visitDeclaration(exprParser::DeclarationContext *context) override {
   // TODO modifier
-    list<string> ids = (list<string>) visit(context->ids());
+    list<string> ids = visit(context->ids());
     list<Instruction*> instructions;
     for(list<string>::iterator it = ids.begin(); it != ids.end(); it++){
-		  Instruction * dec = new Declaration((std::string) (*it)->getText(),(std::string) context->type()->getText());
+		  Instruction * dec = new Declaration((*it),(std::string) context->type()->getText());
       instructions.push_back(dec);
     }
 		return instructions;
@@ -133,7 +138,7 @@ public:
   }
   
   virtual antlrcpp::Any visitExprAdd(exprParser::ExprAddContext *context) override {
-    Expression * expr = new ExprAdd((Expression *) visit(context->expression(0)), (Expression *)visit(context->expression(1)));
+    Expression * expr = new ExprPlus((Expression *) visit(context->expression(0)), (Expression *)visit(context->expression(1)));
     return expr;
   }
   
@@ -143,12 +148,11 @@ public:
   }
   
   virtual antlrcpp::Any visitExprPar(exprParser::ExprParContext *context) override {
-    Expression * expr = new Expr((Expression *) visit(context->expression()));
-    return expr;
+    return visit(context->expression());
   }
   
   virtual antlrcpp::Any visitRightValue(exprParser::RightValueContext *context) override {
-    return visitChildren((RightValue *)visit(context->right()));
+    return new ExprSimple((RightValue *)visit(context->right()));
   }
   
   virtual antlrcpp::Any visitSimpleId(exprParser::SimpleIdContext *context) override {
