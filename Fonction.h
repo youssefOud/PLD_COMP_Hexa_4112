@@ -1,3 +1,4 @@
+#pragma once
 #include <string.h>
 #include <map>
 #include <list>
@@ -5,7 +6,9 @@
 #include "Instruction.h"
 #include "Enum.h"
 
-using namespace std; 
+using namespace std;
+
+extern int nextFree;
 
 class Fonction{
 

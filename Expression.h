@@ -12,7 +12,7 @@ class Expression {
 	public:
 		Expression() {};
 		virtual ~Expression() {};
-		virtual string genererCodeAssembleur(map<string, pair<int, int>> *) =0;
+		virtual int genererCodeAssembleur(map<string, pair<int, int>> *, string *codeAss) =0;
 		virtual string toString() =0;
 		virtual int eval() =0;
 		virtual void analyse(map<string,vector<int>> & staticAnalysis,list<string> & errors,list<string> & warnings) =0;

@@ -7,6 +7,9 @@
 #include <utility>
 
 using namespace std;
+
+int nextFree = -8;
+
 Fonction::Fonction(string nomFct, string typeFct, list<Instruction*> instr) {
 	id = nomFct;
 	type = convertTypeToInt(typeFct);
@@ -65,9 +68,7 @@ string Fonction::toString() {
 
 
 void Fonction::generateST(){
-	int adresseCount = 0;
 	for(list<Instruction*>::iterator it = this->instructions.begin(); it != this->instructions.end(); it++){
-
 		if((*it)->getClassName() == 1){  //Declaration
 			map<string,pair<int,int>>::iterator it2;
 			it2 = this->symbolTable.find(((Declaration*)(*it))->getId());
@@ -78,9 +79,9 @@ void Fonction::generateST(){
 			} else {
 				// On commence les adresses à -8
 				pair<int, int> temp;
-				//temp
-				adresseCount-=8;
-				this->symbolTable.insert(make_pair(((Declaration*)(*it))->getId(), make_pair(((Declaration*)(*it))->getType(),adresseCount)));
+				
+				this->symbolTable.insert(make_pair(((Declaration*)(*it))->getId(), make_pair(((Declaration*)(*it))->getType(),nextFree)));
+				nextFree-=8;
 			}
 		}
 		
@@ -91,8 +92,8 @@ void Fonction::generateST(){
 				errors.push_back("Declarations multiples de la variable "+ ((Definition*)(*it))->getLeft()->getId());
 			} else {
 				// On commence les adresses à -8
-				adresseCount-=8;
-				this->symbolTable.insert(make_pair(((Definition*)(*it))->getLeft()->getId(), make_pair(((Definition*)(*it))->getType(),adresseCount)));
+				this->symbolTable.insert(make_pair(((Definition*)(*it))->getLeft()->getId(), make_pair(((Definition*)(*it))->getType(),nextFree)));
+				nextFree-=8;
 			}
 		}
 	}

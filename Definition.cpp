@@ -13,16 +13,9 @@ int Definition::getClassName(){
 }
 
 string Definition::genererCodeAssembleur(map<string, pair<int, int>> *st){
-	/*if(!right->getId().empty()){
-		string res = "movl " + to_string((st->find(right->getId()))->second.second) + "(%rbp), %eax\r\n";
-		res += "movl %eax, " +to_string((st->find(left->getId()))->second.second)+ "(%rbp)\r\n";
-		return res;
-		//movl	-4(%rbp), %eax
-		//movl	%eax, -8(%rbp)
-	}
-	else{
-		return "movl $" +to_string(right->getNbr())+ ", " + to_string((st->find(left->getId()))->second.second)+ "(%rbp)\r\n";		
-	}
-	*/
-	return "";	
+	string codeAss = "";
+	int offset = expr->genererCodeAssembleur(st , &codeAss);
+	codeAss += "movq " + to_string(offset) + "(%rbp), %rax\r\n";
+	codeAss += "movq %rax, " +to_string((st->find(left->getId()))->second.second)+ "(%rbp)\r\n";
+	return codeAss;
 }
