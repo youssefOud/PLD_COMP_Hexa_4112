@@ -15,6 +15,7 @@ class ExprSimple : public Expression{
 		int genererCodeAssembleur(map<string, pair<int, int>> *, string *codeAss);
 		string toString();
 		int eval();
+		void analyse(map<string,vector<int>> & staticAnalysis,list<string> & errors,list<string> & warnings);
 	
 	protected:
 		RightValue * right;
