@@ -1,5 +1,5 @@
 #pragma once
-
+#include "Fonction.h"
 #include <string.h>
 #include <iostream>
 #include "Expression.h"
@@ -12,7 +12,7 @@ class ExprSimple : public Expression{
 		ExprSimple() {};
 		ExprSimple(RightValue* r) :right(r){};
 		virtual ~ExprSimple() {};
-		string genererCodeAssembleur(map<string, pair<int, int>> *);
+		int genererCodeAssembleur(map<string, pair<int, int>> *, string *codeAss);
 		string toString();
 		int eval();
 	
