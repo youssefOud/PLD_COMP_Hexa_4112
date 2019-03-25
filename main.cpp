@@ -44,38 +44,43 @@ int main(int argc, const char ** argv) {
 
 	exprLexer lexer(&input);
 	CommonTokenStream tokens(&lexer);
+
 	exprParser parser(&tokens);
 	tree::ParseTree* tree = parser.function();
-	calc visitor;
-	visitor.visit(tree);
-	
-	// Une fois l'AST construit, on le parcours pour renseigner la table des symboles
-	list<Fonction*> fonctions = (list<Fonction*>)visitor.getFonctions();
-	for(list<Fonction*>::iterator it=fonctions.begin() ; it!=fonctions.end() ; ++it) 
-	{
-		(*it)->toString();
-	  //(*it)->generateST();
-	  
-	  if (a) {
-  	  // Générer que si argument passé en option
-  	  /*(*it)->generateSA();
-  	  (*it)->processSA();
-  	  (*it)->displaySymbolTable();
-  	  cout << endl;
-  	  (*it)->displayStaticAnalysis();
-  	  cout << endl;
-  	  (*it)->displayWarnings();
-  	  cout << endl;
-  	  (*it)->displayErrors();*/
-	  }
-	  
-	  if (c) {
-  	  // Générer que si argument passé en option
-	    /*ofstream myfile("./main.s");
-	    myfile << (*it)->genererCodeAssembleur() << endl;
-	    myfile.close();*/
-	  }
+
+	if(parser.getNumberOfSyntaxErrors() == 0){
+		calc visitor;
+		visitor.visit(tree);
+		
+		// Une fois l'AST construit, on le parcours pour renseigner la table des symboles
+		list<Fonction*> fonctions = (list<Fonction*>)visitor.getFonctions();
+		for(list<Fonction*>::iterator it=fonctions.begin() ; it!=fonctions.end() ; ++it) 
+		{
+		  (*it)->generateST();
+		  
+		  if (a) {
+	  	  // Générer que si argument passé en option
+	  	  (*it)->generateSA();
+	  	  (*it)->processSA();
+	  	  (*it)->displaySymbolTable();
+	  	  cout << endl;
+	  	  (*it)->displayStaticAnalysis();
+	  	  cout << endl;
+	  	  (*it)->displayWarnings();
+	  	  cout << endl;
+	  	  (*it)->displayErrors();
+		  }
+		  
+		  if (c) {
+	  	  // Générer que si argument passé en option
+		    ofstream myfile("./main.s");
+		    myfile << (*it)->genererCodeAssembleur() << endl;
+		    myfile.close();
+		  }
+		}
+	}else{
+		cerr << "ERROR ! My tree is not visited" << endl;
 	}
-	
+
 	return 0;
 }
