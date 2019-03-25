@@ -27,15 +27,36 @@ else	#Nombre parametres correct, voir si le fichier est .c
 				esac
 			done
 		#Ici observation de parametres pour lancer le programme
-			if [ $ANALYSE -eq 1 ]; then 
+			if [ $ANALYSE -eq 1 -a $OPTIMISATION -eq 0 -a $CODE_GEN -eq 0 ]; then 	# Que Analyse statique
 				./exe -a test/$FICHIER
-			fi
-			if [ $OPTIMISATION -eq 1 ]; then 
+			elif [ $ANALYSE -eq 0 -a $OPTIMISATION -eq 1 -a $CODE_GEN -eq 0 ]; then 
 				echo "OPTIMISATION"
-			fi
-			if [ $CODE_GEN -eq 1 ]; then
+			elif [ $ANALYSE -eq 0 -a $OPTIMISATION -eq 0 -a $CODE_GEN -eq 1 ]; then
 			# 4 instructions sur les sujet
 				./exe -c test/$FICHIER
+				as -o main.o main.s
+				gcc main.o
+				./a.out
+				echo $?
+			elif [ $ANALYSE -eq 1 -a $OPTIMISATION -eq 1 -a $CODE_GEN -eq 0 ]; then
+				./exe -a test/$FICHIER
+				echo "OPTIMISATION"
+			elif [ $ANALYSE -eq 1 -a $OPTIMISATION -eq 0 -a $CODE_GEN -eq 1 ]; then
+				./exe -a -c test/$FICHIER
+				as -o main.o main.s
+				gcc main.o
+				./a.out
+				echo $?
+			elif [ $ANALYSE -eq 0 -a $OPTIMISATION -eq 1 -a $CODE_GEN -eq 1 ]; then
+				echo "OPTIMISATION"
+				./exe -c test/$FICHIER
+				as -o main.o main.s
+				gcc main.o
+				./a.out
+				echo $?
+			elif [ $ANALYSE -eq 1 -a $OPTIMISATION -eq 1 -a $CODE_GEN -eq 1 ]; then
+				echo "OPTIMISATION"
+				./exe -a -c test/$FICHIER
 				as -o main.o main.s
 				gcc main.o
 				./a.out
