@@ -6,6 +6,7 @@
 #include "Instruction.h"
 #include <utility>
 #include <map>
+#include "Expression.h"
 
 using namespace std;
 
@@ -13,7 +14,7 @@ class Affectation : public Instruction {
 
 public:
 
-	Affectation(RightValue *r, LeftValue *l, string t);
+	Affectation(Expression *e, LeftValue *l, string t);
 	Affectation();
 	virtual ~Affectation();
     virtual string toString() {return "Affectation"; };
@@ -22,7 +23,7 @@ public:
 	int getType();	
 	void setType(int t);
 	
-	RightValue *getRight();
+	Expression *getExpr();
     LeftValue *getLeft();	
 int convertTypeToInt(string);
         virtual string genererCodeAssembleur(map<string, pair<int, int>> *)=0;
@@ -31,7 +32,7 @@ int convertTypeToInt(string);
 
 protected:
 	int type;
-	RightValue *right;
+	Expression *expr;
 	LeftValue *left;
 
 private:

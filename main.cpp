@@ -24,7 +24,7 @@ int main(int argc, const char ** argv) {
   }
   
   string nomFichier(argv[argc-1]);
-  
+    cout << nomFichier <<endl;
 	cout<<"lecture fichier: "<<endl;
 	ifstream myReadFile;
 	myReadFile.open(nomFichier);

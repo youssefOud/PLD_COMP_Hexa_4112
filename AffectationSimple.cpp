@@ -4,7 +4,7 @@
 
 std::string AffectationSimple::toString() 
 {
-    return "AffectationSimple RightValue "+right->toString()+" LeftValue "+left->toString()+"\n";
+    return "AffectationSimple Expression "+expr->toString()+" LeftValue "+left->toString()+"\n";
 }
 
 int AffectationSimple::getClassName(){
@@ -12,7 +12,7 @@ int AffectationSimple::getClassName(){
 }
 
 string AffectationSimple::genererCodeAssembleur(map<string, pair<int, int>> *st){
-	if(!right->getId().empty()){
+	/*if(!right->getId().empty()){
 		string res = "movl " + to_string((st->find(right->getId()))->second.second) + "(%rbp), %eax\r\n";
 		res += "movl %eax, " +to_string((st->find(left->getId()))->second.second)+ "(%rbp)\r\n";
 		return res;
@@ -23,4 +23,6 @@ string AffectationSimple::genererCodeAssembleur(map<string, pair<int, int>> *st)
 		return "movl $" +to_string(right->getNbr())+ ", " + to_string((st->find(left->getId()))->second.second)+ "(%rbp)\r\n";
 		//movl	$3, -4(%rbp)	
 	}
+	*/
+	return "";
 }

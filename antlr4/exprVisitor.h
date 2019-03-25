@@ -27,9 +27,23 @@ public:
 
     virtual antlrcpp::Any visitRightValueNBR(exprParser::RightValueNBRContext *context) = 0;
 
+    virtual antlrcpp::Any visitExprPar(exprParser::ExprParContext *context) = 0;
+
+    virtual antlrcpp::Any visitExprAdd(exprParser::ExprAddContext *context) = 0;
+
+    virtual antlrcpp::Any visitExprMinus(exprParser::ExprMinusContext *context) = 0;
+
+    virtual antlrcpp::Any visitRightValue(exprParser::RightValueContext *context) = 0;
+
+    virtual antlrcpp::Any visitExprMult(exprParser::ExprMultContext *context) = 0;
+
     virtual antlrcpp::Any visitLeftValue(exprParser::LeftValueContext *context) = 0;
 
     virtual antlrcpp::Any visitDeclaration(exprParser::DeclarationContext *context) = 0;
+
+    virtual antlrcpp::Any visitSimpleId(exprParser::SimpleIdContext *context) = 0;
+
+    virtual antlrcpp::Any visitMultipleId(exprParser::MultipleIdContext *context) = 0;
 
     virtual antlrcpp::Any visitDefinition(exprParser::DefinitionContext *context) = 0;
 

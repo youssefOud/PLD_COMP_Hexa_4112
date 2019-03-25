@@ -12,13 +12,14 @@
 class  exprParser : public antlr4::Parser {
 public:
   enum {
-    T__0 = 1, T__1 = 2, T__2 = 3, T__3 = 4, T__4 = 5, T__5 = 6, INT = 7, 
-    NBR = 8, RETURN = 9, ID = 10, WS = 11
+    T__0 = 1, T__1 = 2, T__2 = 3, T__3 = 4, T__4 = 5, T__5 = 6, T__6 = 7, 
+    T__7 = 8, T__8 = 9, T__9 = 10, INT = 11, NBR = 12, RETURN = 13, ID = 14, 
+    WS = 15
   };
 
   enum {
-    RuleFunction = 0, RuleType = 1, RuleRight = 2, RuleLeft = 3, RuleDeclare = 4, 
-    RuleAffect = 5, RuleRet = 6, RuleCorps = 7
+    RuleFunction = 0, RuleType = 1, RuleRight = 2, RuleExpression = 3, RuleLeft = 4, 
+    RuleDeclare = 5, RuleIds = 6, RuleAffect = 7, RuleRet = 8, RuleCorps = 9
   };
 
   exprParser(antlr4::TokenStream *input);
@@ -34,8 +35,10 @@ public:
   class FunctionContext;
   class TypeContext;
   class RightContext;
+  class ExpressionContext;
   class LeftContext;
   class DeclareContext;
+  class IdsContext;
   class AffectContext;
   class RetContext;
   class CorpsContext; 
@@ -108,6 +111,64 @@ public:
 
   RightContext* right();
 
+  class  ExpressionContext : public antlr4::ParserRuleContext {
+  public:
+    ExpressionContext(antlr4::ParserRuleContext *parent, size_t invokingState);
+   
+    ExpressionContext() : antlr4::ParserRuleContext() { }
+    void copyFrom(ExpressionContext *context);
+    using antlr4::ParserRuleContext::copyFrom;
+
+    virtual size_t getRuleIndex() const override;
+
+   
+  };
+
+  class  ExprParContext : public ExpressionContext {
+  public:
+    ExprParContext(ExpressionContext *ctx);
+
+    ExpressionContext *expression();
+    virtual antlrcpp::Any accept(antlr4::tree::ParseTreeVisitor *visitor) override;
+  };
+
+  class  ExprAddContext : public ExpressionContext {
+  public:
+    ExprAddContext(ExpressionContext *ctx);
+
+    std::vector<ExpressionContext *> expression();
+    ExpressionContext* expression(size_t i);
+    virtual antlrcpp::Any accept(antlr4::tree::ParseTreeVisitor *visitor) override;
+  };
+
+  class  ExprMinusContext : public ExpressionContext {
+  public:
+    ExprMinusContext(ExpressionContext *ctx);
+
+    std::vector<ExpressionContext *> expression();
+    ExpressionContext* expression(size_t i);
+    virtual antlrcpp::Any accept(antlr4::tree::ParseTreeVisitor *visitor) override;
+  };
+
+  class  RightValueContext : public ExpressionContext {
+  public:
+    RightValueContext(ExpressionContext *ctx);
+
+    RightContext *right();
+    virtual antlrcpp::Any accept(antlr4::tree::ParseTreeVisitor *visitor) override;
+  };
+
+  class  ExprMultContext : public ExpressionContext {
+  public:
+    ExprMultContext(ExpressionContext *ctx);
+
+    std::vector<ExpressionContext *> expression();
+    ExpressionContext* expression(size_t i);
+    virtual antlrcpp::Any accept(antlr4::tree::ParseTreeVisitor *visitor) override;
+  };
+
+  ExpressionContext* expression();
+  ExpressionContext* expression(int precedence);
   class  LeftContext : public antlr4::ParserRuleContext {
   public:
     LeftContext(antlr4::ParserRuleContext *parent, size_t invokingState);
@@ -149,11 +210,43 @@ public:
     DeclarationContext(DeclareContext *ctx);
 
     TypeContext *type();
-    antlr4::tree::TerminalNode *ID();
+    IdsContext *ids();
     virtual antlrcpp::Any accept(antlr4::tree::ParseTreeVisitor *visitor) override;
   };
 
   DeclareContext* declare();
+
+  class  IdsContext : public antlr4::ParserRuleContext {
+  public:
+    IdsContext(antlr4::ParserRuleContext *parent, size_t invokingState);
+   
+    IdsContext() : antlr4::ParserRuleContext() { }
+    void copyFrom(IdsContext *context);
+    using antlr4::ParserRuleContext::copyFrom;
+
+    virtual size_t getRuleIndex() const override;
+
+   
+  };
+
+  class  MultipleIdContext : public IdsContext {
+  public:
+    MultipleIdContext(IdsContext *ctx);
+
+    antlr4::tree::TerminalNode *ID();
+    IdsContext *ids();
+    virtual antlrcpp::Any accept(antlr4::tree::ParseTreeVisitor *visitor) override;
+  };
+
+  class  SimpleIdContext : public IdsContext {
+  public:
+    SimpleIdContext(IdsContext *ctx);
+
+    antlr4::tree::TerminalNode *ID();
+    virtual antlrcpp::Any accept(antlr4::tree::ParseTreeVisitor *visitor) override;
+  };
+
+  IdsContext* ids();
 
   class  AffectContext : public antlr4::ParserRuleContext {
   public:
@@ -174,7 +267,7 @@ public:
 
     TypeContext *type();
     LeftContext *left();
-    RightContext *right();
+    ExpressionContext *expression();
     virtual antlrcpp::Any accept(antlr4::tree::ParseTreeVisitor *visitor) override;
   };
 
@@ -183,7 +276,7 @@ public:
     AffectationContext(AffectContext *ctx);
 
     LeftContext *left();
-    RightContext *right();
+    ExpressionContext *expression();
     virtual antlrcpp::Any accept(antlr4::tree::ParseTreeVisitor *visitor) override;
   };
 
@@ -207,7 +300,7 @@ public:
     ReturnContext(RetContext *ctx);
 
     antlr4::tree::TerminalNode *RETURN();
-    RightContext *right();
+    ExpressionContext *expression();
     virtual antlrcpp::Any accept(antlr4::tree::ParseTreeVisitor *visitor) override;
   };
 
@@ -282,6 +375,7 @@ public:
   CorpsContext* corps(int precedence);
 
   virtual bool sempred(antlr4::RuleContext *_localctx, size_t ruleIndex, size_t predicateIndex) override;
+  bool expressionSempred(ExpressionContext *_localctx, size_t predicateIndex);
   bool corpsSempred(CorpsContext *_localctx, size_t predicateIndex);
 
 private:

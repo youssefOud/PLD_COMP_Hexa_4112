@@ -6,11 +6,12 @@ Return::~Return()
 
 }
 
-RightValue *Return::getRightValue() {
-    return rightValue;
+Expression *Return::getExpr() {
+    return expr;
 }
 
 string Return::genererCodeAssembleur(map<string, pair<int, int>> *st){
+	/*if(!rightValue->getId().empty()){
 	if(!rightValue->getId().empty()){
 		//int res = (st)->find(expression.getId())->;
 		//return "mov     eax, 42\r\n";
@@ -20,5 +21,6 @@ string Return::genererCodeAssembleur(map<string, pair<int, int>> *st){
 	}
 	else{
 		return "movl $"+to_string(rightValue->getNbr())+", %eax\r\n";
-	}
+	}*/
+	return "";
 }

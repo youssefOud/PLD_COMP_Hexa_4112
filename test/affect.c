@@ -1,13 +1,13 @@
 int main (){
-	int c;
-	int a=18;
-	int b=14;
+	int c,d,k;
+	int a=18+3*2-4;
+	int b=14*2;
 	a=b;
-	c=12;
+	c=12-5;
 	int r;
 	int e;
 	r=e;
 	b=r;
 	r=c;
-	return a;
+	return 5*8;
 }

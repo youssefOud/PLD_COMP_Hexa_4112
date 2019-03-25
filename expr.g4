@@ -7,14 +7,23 @@ type : INT # typefct ;
 right : ID # rightValueID
 	| NBR # rightValueNBR ;
 
+expression : expression ('*') expression # exprMult
+	| expression ('+') expression # exprAdd
+	| expression ('-') expression # exprMinus
+	| '('expression')' # exprPar
+	| right  # rightValue;
+
 left : ID # leftValue ;
 
-declare : type ID ';' # declaration ;
+declare : type ids ';' # declaration ;
 
-affect : (type left '=' right ';')  # definition
-	| (left '=' right ';') # affectation ;
+ids : ID # simpleId
+	| ID ',' ids #multipleId ;
 
-ret : RETURN right ';' # return ;
+affect : (type left '=' expression ';')  # definition
+	| (left '=' expression ';') # affectation ;
+
+ret : RETURN expression ';' # return ;
 
 corps : affect ret # corpsAffectRet
 	| affect corps # corpsAffect

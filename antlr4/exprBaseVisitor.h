@@ -31,11 +31,39 @@ public:
     return visitChildren(ctx);
   }
 
+  virtual antlrcpp::Any visitExprPar(exprParser::ExprParContext *ctx) override {
+    return visitChildren(ctx);
+  }
+
+  virtual antlrcpp::Any visitExprAdd(exprParser::ExprAddContext *ctx) override {
+    return visitChildren(ctx);
+  }
+
+  virtual antlrcpp::Any visitExprMinus(exprParser::ExprMinusContext *ctx) override {
+    return visitChildren(ctx);
+  }
+
+  virtual antlrcpp::Any visitRightValue(exprParser::RightValueContext *ctx) override {
+    return visitChildren(ctx);
+  }
+
+  virtual antlrcpp::Any visitExprMult(exprParser::ExprMultContext *ctx) override {
+    return visitChildren(ctx);
+  }
+
   virtual antlrcpp::Any visitLeftValue(exprParser::LeftValueContext *ctx) override {
     return visitChildren(ctx);
   }
 
   virtual antlrcpp::Any visitDeclaration(exprParser::DeclarationContext *ctx) override {
+    return visitChildren(ctx);
+  }
+
+  virtual antlrcpp::Any visitSimpleId(exprParser::SimpleIdContext *ctx) override {
+    return visitChildren(ctx);
+  }
+
+  virtual antlrcpp::Any visitMultipleId(exprParser::MultipleIdContext *ctx) override {
     return visitChildren(ctx);
   }
 
