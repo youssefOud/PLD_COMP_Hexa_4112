@@ -12,7 +12,7 @@ Expression *Return::getExpr() {
 
 string Return::genererCodeAssembleur(map<string, pair<int, int>> *st){
 	/*if(!rightValue->getId().empty()){
-	/*if(!rightValue->getId().empty()){
+	if(!rightValue->getId().empty()){
 		//int res = (st)->find(expression.getId())->;
 		//return "mov     eax, 42\r\n";
 		return "movl " +to_string((st->find(rightValue->getId()))->second.second)+ "(%rbp), %eax\r\n";

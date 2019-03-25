@@ -14,6 +14,7 @@ class ExprSimple : public Expression{
 		virtual ~ExprSimple() {};
 		string genererCodeAssembleur(map<string, pair<int, int>> *);
 		string toString();
+		int eval();
 	
 	protected:
 		RightValue * right;

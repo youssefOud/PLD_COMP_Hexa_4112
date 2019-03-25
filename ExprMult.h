@@ -13,6 +13,7 @@ class ExprMult : public Expression{
 		virtual ~ExprMult() {};
 		string genererCodeAssembleur(map<string, pair<int, int>> *);
 		string toString();
+		int eval();
 	
 	protected:
 		Expression *expr1;

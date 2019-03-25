@@ -7,5 +7,9 @@ string ExprPlus::genererCodeAssembleur(map<string, pair<int, int>> *st){
 }
 
 string ExprPlus::toString (){
-	return "";
+	return " de valeur "+to_string(eval())+"Expression 1 "+expr1->toString()+" Expression 2 "+expr2->toString();
+}
+
+int ExprPlus::eval(){
+	return expr1->eval()+expr2->eval();
 }

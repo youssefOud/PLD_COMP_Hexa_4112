@@ -7,5 +7,9 @@ string ExprSimple::genererCodeAssembleur(map<string, pair<int, int>> *st){
 }
 
 string ExprSimple::toString (){
-	return "";
+	return "Right Value " + right->toString();
+}
+
+int ExprSimple::eval(){
+	return right->getNbr();
 }
