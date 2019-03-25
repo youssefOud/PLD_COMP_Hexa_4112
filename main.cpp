@@ -22,8 +22,7 @@ int main(int argc, const char ** argv) {
         o = true;
     }
   }
-  
-cout << "valeur de c " << c << endl;
+	
   string nomFichier(argv[argc-1]);
     cout << nomFichier <<endl;
 	cout<<"lecture fichier: "<<endl;
