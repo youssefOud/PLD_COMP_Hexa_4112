@@ -14,6 +14,7 @@ class ExprMoins : public Expression{
 		string genererCodeAssembleur(map<string, pair<int, int>> *);
 		string toString();
 		int eval();
+		void analyse(map<string,vector<int>> & staticAnalysis,list<string> & errors,list<string> & warnings);
 	
 	protected:
 		Expression *expr1;

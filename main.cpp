@@ -53,7 +53,7 @@ int main(int argc, const char ** argv) {
 	list<Fonction*> fonctions = (list<Fonction*>)visitor.getFonctions();
 	for(list<Fonction*>::iterator it=fonctions.begin() ; it!=fonctions.end() ; ++it) 
 	{
-		cout<<(*it)->toString()<<endl;
+		(*it)->toString();
 	  //(*it)->generateST();
 	  
 	  if (a) {
