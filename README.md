@@ -18,7 +18,7 @@
     _Exemple_ : Si le fichier test porte le nom "operationArithmetique.c", le fichier compilé aura le nom suivant : "operationArithmetique.s"
     * '-o' : Cette option n'est pas encore disponible. Elle permet d'optimiser le code compilé.
     
-    En plus de ces options, vous devez spécifier en dernier argument le nom du fichier à analyser qui devra se trouver dans le dossier test. Les seuls fichiers autorisés sont de la forme **nomFichier.c**. 
+    En plus de ces options, vous devez spécifier en dernier argument le nom du fichier à analyser. Les seuls fichiers autorisés sont de la forme **/chemin/vers/fichier/nomFichier.c**. 
     
     Pour lancer le script : ouvrir un terminal dans le dossier source et taper la ligne : **./nomScript.sh [-a] [-o] [-c] nomFichierTest.c**
     

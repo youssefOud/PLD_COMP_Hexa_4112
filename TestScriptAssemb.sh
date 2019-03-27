@@ -29,11 +29,11 @@ else	#Nombre parametres correct, voir si le fichier est .c
 			done
 		#Ici observation de parametres pour lancer le programme
 			if [ $ANALYSE -eq 1 -a $OPTIMISATION -eq 0 -a $CODE_GEN -eq 0 ]; then 	# Que Analyse statique
-				./exe -a test/$FICHIER
+				./exe -a $FICHIER
 			elif [ $ANALYSE -eq 0 -a $OPTIMISATION -eq 1 -a $CODE_GEN -eq 0 ]; then 
 				echo "OPTIMISATION"
 			elif [ $ANALYSE -eq 0 -a $OPTIMISATION -eq 0 -a $CODE_GEN -eq 1 ]; then
-				./exe -c test/$FICHIER
+				./exe -c test/input/$FICHIER
 				if [ -f ./executables/$FICHIER_SORTIE.s ]; then
 					as -o ./executables/$FICHIER_SORTIE.o ./executables/$FICHIER_SORTIE.s
 					gcc ./executables/$FICHIER_SORTIE.o
@@ -41,10 +41,10 @@ else	#Nombre parametres correct, voir si le fichier est .c
 					echo "Resultat : $?"
 				fi
 			elif [ $ANALYSE -eq 1 -a $OPTIMISATION -eq 1 -a $CODE_GEN -eq 0 ]; then
-				./exe -a test/$FICHIER
-				echo "OPTIMISATION"
+				./exe -a $FICHIER
+				#echo "OPTIMISATION"
 			elif [ $ANALYSE -eq 1 -a $OPTIMISATION -eq 0 -a $CODE_GEN -eq 1 ]; then
-				./exe -a -c test/$FICHIER
+				./exe -a -c test/input/$FICHIER
 				if [ -f ./executables/$FICHIER_SORTIE.s ]; then
 					as -o ./executables/$FICHIER_SORTIE.o ./executables/$FICHIER_SORTIE.s
 					gcc ./executables/$FICHIER_SORTIE.o
@@ -53,7 +53,7 @@ else	#Nombre parametres correct, voir si le fichier est .c
 				fi
 			elif [ $ANALYSE -eq 0 -a $OPTIMISATION -eq 1 -a $CODE_GEN -eq 1 ]; then
 				echo "OPTIMISATION"
-				./exe -c test/$FICHIER
+				./exe -c test/input/$FICHIER
 				if [ -f ./executables/$FICHIER_SORTIE.s ]; then
 					as -o ./executables/$FICHIER_SORTIE.o ./executables/$FICHIER_SORTIE.s
 					gcc ./executables/$FICHIER_SORTIE.o
@@ -62,7 +62,7 @@ else	#Nombre parametres correct, voir si le fichier est .c
 				fi
 			elif [ $ANALYSE -eq 1 -a $OPTIMISATION -eq 1 -a $CODE_GEN -eq 1 ]; then
 				echo "OPTIMISATION"
-				./exe -a -c test/$FICHIER
+				./exe -a -c test/input/$FICHIER
 				if [ -f ./executables/$FICHIER_SORTIE.s ]; then
 					as -o ./executables/$FICHIER_SORTIE.o ./executables/$FICHIER_SORTIE.s
 					gcc ./executables/$FICHIER_SORTIE.o
@@ -73,7 +73,7 @@ else	#Nombre parametres correct, voir si le fichier est .c
 		#---------------------------------------
 		else
 		# On lance l'exec avec le nom du fichier si tout est ok
-		echo "./exe test/$1"
+		echo "./exe $1"
 		fi
 	fi
 fi
