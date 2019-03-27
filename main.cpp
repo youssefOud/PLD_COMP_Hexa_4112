@@ -22,11 +22,8 @@ int main(int argc, const char ** argv) {
         o = true;
     }
   }
-  
-cout << "valeur de c " << c << endl;
+	
   string nomFichier(argv[argc-1]);
-    cout << nomFichier <<endl;
-	cout<<"lecture fichier: "<<endl;
 	ifstream myReadFile;
 	myReadFile.open(nomFichier);
 	string output="";
@@ -60,16 +57,16 @@ cout << "valeur de c " << c << endl;
 		  (*it)->generateST();
 		  
 		  if (a) {
-	  	  // Générer que si argument passé en option
-	  	  (*it)->generateSA();
-	  	  (*it)->processSA();
-	  	  (*it)->displaySymbolTable();
-	  	  cout << endl;
-	  	  (*it)->displayStaticAnalysis();
-	  	  cout << endl;
-	  	  (*it)->displayWarnings();
-	  	  cout << endl;
-	  	  (*it)->displayErrors();
+			  // Générer que si argument passé en option
+			  (*it)->generateSA();
+			  (*it)->processSA();
+			  (*it)->displaySymbolTable();
+			  cout << endl;
+			  (*it)->displayStaticAnalysis();
+			  cout << endl;
+			  (*it)->displayWarnings();
+			  cout << endl;
+			  (*it)->displayErrors();
 		  }
 		  
 		  if (c) {

@@ -38,7 +38,7 @@ else	#Nombre parametres correct, voir si le fichier est .c
 				as -o ./executables/$FICHIER_SORTIE.o ./executables/$FICHIER_SORTIE.s
 				gcc ./executables/$FICHIER_SORTIE.o
 				./a.out
-				echo $?
+				echo "Resultat : $?"
 			elif [ $ANALYSE -eq 1 -a $OPTIMISATION -eq 1 -a $CODE_GEN -eq 0 ]; then
 				./exe -a test/$FICHIER
 				echo "OPTIMISATION"
@@ -47,7 +47,7 @@ else	#Nombre parametres correct, voir si le fichier est .c
 				as -o ./executables/$FICHIER_SORTIE.o ./executables/$FICHIER_SORTIE.s
 				gcc ./executables/$FICHIER_SORTIE.o
 				./a.out
-				echo $?
+				echo "Resultat : $?"
 			elif [ $ANALYSE -eq 0 -a $OPTIMISATION -eq 1 -a $CODE_GEN -eq 1 ]; then
 				echo "OPTIMISATION"
 				./exe -c test/$FICHIER
@@ -61,7 +61,7 @@ else	#Nombre parametres correct, voir si le fichier est .c
 				as -o ./executables/$FICHIER_SORTIE.o ./executables/$FICHIER_SORTIE.s
 				gcc ./executables/$FICHIER_SORTIE.o
 				./a.out
-				echo $?
+				echo "Resultat : $?"
 			fi
 		#---------------------------------------
 		else
