@@ -29,7 +29,7 @@ void Affectation::setType(int t){
 }
 
 int Affectation::convertTypeToInt(string nom) {
-	type_e t = VIDE;
+	Type t = VIDE;
 	if (nom == "") t = VIDE;
 	else if (nom == "int") t = INT;
 	return t; 

@@ -3,9 +3,10 @@
 
 #ifndef YYTOKENTYPE
 # define YYTOKENTYPE
-enum type_e {
+
+typedef enum {
 	VIDE = 0,
 	INT = 1
-};
+} Type;
 #endif
 #endif //PLD_COMP_ENUM_H

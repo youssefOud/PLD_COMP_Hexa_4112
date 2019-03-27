@@ -31,7 +31,7 @@ list<Instruction*> Fonction::getInstructions() {
 	return instructions;
 }
 
-type_e Fonction::getType(){
+Type Fonction::getType(){
 	return type;
 }
 
@@ -47,8 +47,12 @@ void Fonction::addInstruction(Instruction* instr) {
 	instructions.push_back(instr);
 }
 
-type_e Fonction::convertTypeToInt(string nom) {
-	type_e t = VIDE;
+map<string,pair<int, int>> Fonction::getST() {
+	return symbolTable;
+}
+
+Type Fonction::convertTypeToInt(string nom) {
+	Type t = VIDE;
 	if (nom == "") t = VIDE;
 	else if (nom == "int") t = INT;
 	return t; 
