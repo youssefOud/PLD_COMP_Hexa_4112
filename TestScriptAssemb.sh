@@ -30,7 +30,7 @@ else	#Nombre parametres correct, voir si le fichier est .c
 			if [ $ANALYSE -eq 1 -a $OPTIMISATION -eq 0 -a $CODE_GEN -eq 0 ]; then 	# Que Analyse statique
 				./exe -a $FICHIER
 			elif [ $ANALYSE -eq 0 -a $OPTIMISATION -eq 1 -a $CODE_GEN -eq 0 ]; then 
-				echo "OPTIMISATION"
+			 echo "OPTIMISATION"
 			elif [ $ANALYSE -eq 0 -a $OPTIMISATION -eq 0 -a $CODE_GEN -eq 1 ]; then
 			# 4 instructions sur les sujet
 				./exe -c $FICHIER

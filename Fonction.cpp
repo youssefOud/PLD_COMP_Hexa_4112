@@ -205,18 +205,18 @@ void Fonction::generateSA(){
 	}
 	
 	void Fonction::displayWarnings(){
-	  cout << "StaticAnalysisTable : Display warnings"<< endl;
+	  //cout << "StaticAnalysisTable : Display warnings"<< endl;
 	  for(list<string>::iterator it=warnings.begin() ; it!=warnings.end() ; ++it)
 	  {
-	    cout<< (*it) <<endl;
+	    cout<< "Warning : "<< (*it) <<endl;
 	  }
 	}
 	
 	void Fonction::displayErrors(){
-	  cout << "StaticAnalysisTable : Display errors"<< endl;
+	  //cout << "StaticAnalysisTable : Display errors"<< endl;
 	  for(list<string>::iterator it=errors.begin() ; it!=errors.end() ; ++it)
 	  {
-	    cout<< (*it) <<endl;
+	    cout<< "Error: "<<(*it) <<endl;
 	  }
 	}
 

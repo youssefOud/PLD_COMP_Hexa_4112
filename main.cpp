@@ -60,9 +60,9 @@ int main(int argc, const char ** argv) {
 			  // Générer que si argument passé en option
 			  (*it)->generateSA();
 			  (*it)->processSA();
-			  (*it)->displaySymbolTable();
+			  //(*it)->displaySymbolTable();
 			  //cout << endl;
-			  (*it)->displayStaticAnalysis();
+			  //(*it)->displayStaticAnalysis();
 			  //cout << endl;
 			  (*it)->displayWarnings();
 			  //cout << endl;
