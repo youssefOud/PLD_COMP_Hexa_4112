@@ -220,4 +220,8 @@ void Fonction::generateSA(){
 	  }
 	}
 
+	int Fonction::getNumberOfErrors(){
+		return errors.size();
+	}
+
 

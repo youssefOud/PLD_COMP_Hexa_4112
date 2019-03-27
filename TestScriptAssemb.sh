@@ -7,6 +7,7 @@ else	#Nombre parametres correct, voir si le fichier est .c
 	
 	FICHIER=${@: -1}
 	EXT_FICHIER=${FICHIER##*.}
+	FICHIER_SORTIE=${FICHIER/.c/}
 	if [ $EXT_FICHIER != "c" ] 
 	then
 		echo "Erreur dans l'extension du fichier"
@@ -32,35 +33,42 @@ else	#Nombre parametres correct, voir si le fichier est .c
 			elif [ $ANALYSE -eq 0 -a $OPTIMISATION -eq 1 -a $CODE_GEN -eq 0 ]; then 
 			 echo "OPTIMISATION"
 			elif [ $ANALYSE -eq 0 -a $OPTIMISATION -eq 0 -a $CODE_GEN -eq 1 ]; then
-			# 4 instructions sur les sujet
-				./exe -c $FICHIER
-				as -o main.o main.s
-				gcc main.o
-				./a.out
-				echo $?
+				./exe -c test/input/$FICHIER
+				if [ -f ./executables/$FICHIER_SORTIE.s ]; then
+					as -o ./executables/$FICHIER_SORTIE.o ./executables/$FICHIER_SORTIE.s
+					gcc ./executables/$FICHIER_SORTIE.o
+					./a.out
+					echo "Resultat : $?"
+				fi
 			elif [ $ANALYSE -eq 1 -a $OPTIMISATION -eq 1 -a $CODE_GEN -eq 0 ]; then
 				./exe -a $FICHIER
 				#echo "OPTIMISATION"
 			elif [ $ANALYSE -eq 1 -a $OPTIMISATION -eq 0 -a $CODE_GEN -eq 1 ]; then
-				./exe -a -c $FICHIER
-				as -o main.o main.s
-				gcc main.o
-				./a.out
-				echo $?
+				./exe -a -c test/input/$FICHIER
+				if [ -f ./executables/$FICHIER_SORTIE.s ]; then
+					as -o ./executables/$FICHIER_SORTIE.o ./executables/$FICHIER_SORTIE.s
+					gcc ./executables/$FICHIER_SORTIE.o
+					./a.out
+					echo "Resultat : $?"
+				fi
 			elif [ $ANALYSE -eq 0 -a $OPTIMISATION -eq 1 -a $CODE_GEN -eq 1 ]; then
-				#echo "OPTIMISATION"
-				./exe -c $FICHIER
-				as -o main.o main.s
-				gcc main.o
-				./a.out
-				echo $?
+				echo "OPTIMISATION"
+				./exe -c test/input/$FICHIER
+				if [ -f ./executables/$FICHIER_SORTIE.s ]; then
+					as -o ./executables/$FICHIER_SORTIE.o ./executables/$FICHIER_SORTIE.s
+					gcc ./executables/$FICHIER_SORTIE.o
+					./a.out
+					echo "Resultat : $?"
+				fi
 			elif [ $ANALYSE -eq 1 -a $OPTIMISATION -eq 1 -a $CODE_GEN -eq 1 ]; then
-			#	echo "OPTIMISATION"
-				./exe -a -c $FICHIER
-				as -o main.o main.s
-				gcc main.o
-				./a.out
-				echo $?
+				echo "OPTIMISATION"
+				./exe -a -c test/input/$FICHIER
+				if [ -f ./executables/$FICHIER_SORTIE.s ]; then
+					as -o ./executables/$FICHIER_SORTIE.o ./executables/$FICHIER_SORTIE.s
+					gcc ./executables/$FICHIER_SORTIE.o
+					./a.out
+					echo "Resultat : $?"
+				fi
 			fi
 		#---------------------------------------
 		else
