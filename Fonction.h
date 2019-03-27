@@ -33,6 +33,7 @@ class Fonction{
 		void displayStaticAnalysis();
 		void displayWarnings();
 		void displayErrors();
+		int getNumberOfErrors();
 
 	private:
 		string id;

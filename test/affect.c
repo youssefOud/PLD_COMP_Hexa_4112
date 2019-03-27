@@ -1,13 +1,9 @@
 int main (){
-	int c,d,k;
-	int a=18+3*2-4;
-	int b=14*2;
-	a=b;
-	c=12-5;
-	int r;
-	int e;
-	r=e;
-	b=r;
-	r=c;
-	return 5*8;
+	int c;
+	c=3;
+	int a=c;
+	int b;	
+	b=3*c-a;
+	int f;
+	return f;
 }

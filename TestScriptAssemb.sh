@@ -33,35 +33,42 @@ else	#Nombre parametres correct, voir si le fichier est .c
 			elif [ $ANALYSE -eq 0 -a $OPTIMISATION -eq 1 -a $CODE_GEN -eq 0 ]; then 
 				echo "OPTIMISATION"
 			elif [ $ANALYSE -eq 0 -a $OPTIMISATION -eq 0 -a $CODE_GEN -eq 1 ]; then
-			# 4 instructions sur les sujet
 				./exe -c test/$FICHIER
-				as -o ./executables/$FICHIER_SORTIE.o ./executables/$FICHIER_SORTIE.s
-				gcc ./executables/$FICHIER_SORTIE.o
-				./a.out
-				echo "Resultat : $?"
+				if [ -f ./executables/$FICHIER_SORTIE.s ]; then
+					as -o ./executables/$FICHIER_SORTIE.o ./executables/$FICHIER_SORTIE.s
+					gcc ./executables/$FICHIER_SORTIE.o
+					./a.out
+					echo "Resultat : $?"
+				fi
 			elif [ $ANALYSE -eq 1 -a $OPTIMISATION -eq 1 -a $CODE_GEN -eq 0 ]; then
 				./exe -a test/$FICHIER
 				echo "OPTIMISATION"
 			elif [ $ANALYSE -eq 1 -a $OPTIMISATION -eq 0 -a $CODE_GEN -eq 1 ]; then
 				./exe -a -c test/$FICHIER
-				as -o ./executables/$FICHIER_SORTIE.o ./executables/$FICHIER_SORTIE.s
-				gcc ./executables/$FICHIER_SORTIE.o
-				./a.out
-				echo "Resultat : $?"
+				if [ -f ./executables/$FICHIER_SORTIE.s ]; then
+					as -o ./executables/$FICHIER_SORTIE.o ./executables/$FICHIER_SORTIE.s
+					gcc ./executables/$FICHIER_SORTIE.o
+					./a.out
+					echo "Resultat : $?"
+				fi
 			elif [ $ANALYSE -eq 0 -a $OPTIMISATION -eq 1 -a $CODE_GEN -eq 1 ]; then
 				echo "OPTIMISATION"
 				./exe -c test/$FICHIER
-				as -o ./executables/$FICHIER_SORTIE.o ./executables/$FICHIER_SORTIE.s
-				gcc ./executables/$FICHIER_SORTIE.o
-				./a.out
-				echo $?
+				if [ -f ./executables/$FICHIER_SORTIE.s ]; then
+					as -o ./executables/$FICHIER_SORTIE.o ./executables/$FICHIER_SORTIE.s
+					gcc ./executables/$FICHIER_SORTIE.o
+					./a.out
+					echo "Resultat : $?"
+				fi
 			elif [ $ANALYSE -eq 1 -a $OPTIMISATION -eq 1 -a $CODE_GEN -eq 1 ]; then
 				echo "OPTIMISATION"
 				./exe -a -c test/$FICHIER
-				as -o ./executables/$FICHIER_SORTIE.o ./executables/$FICHIER_SORTIE.s
-				gcc ./executables/$FICHIER_SORTIE.o
-				./a.out
-				echo "Resultat : $?"
+				if [ -f ./executables/$FICHIER_SORTIE.s ]; then
+					as -o ./executables/$FICHIER_SORTIE.o ./executables/$FICHIER_SORTIE.s
+					gcc ./executables/$FICHIER_SORTIE.o
+					./a.out
+					echo "Resultat : $?"
+				fi
 			fi
 		#---------------------------------------
 		else
