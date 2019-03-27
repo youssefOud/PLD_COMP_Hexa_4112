@@ -74,7 +74,10 @@ cout << "valeur de c " << c << endl;
 		  
 		  if (c) {
 	  	  // Générer que si argument passé en option
-		    ofstream myfile("./main.s");
+		    nomFichier.replace(nomFichier.length()-2, 3,".s");
+		    nomFichier.replace(0, 5,"");
+		    cout<< "Nom Fichier "<<nomFichier<<endl;
+		    ofstream myfile("./executables/"+nomFichier);
 		    myfile << (*it)->genererCodeAssembleur() << endl;
 		    myfile.close();
 		  }
