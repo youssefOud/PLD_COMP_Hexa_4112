@@ -37,9 +37,6 @@ public:
     return NULL;
   }
 
-  virtual antlrcpp::Any visitTypefct(exprParser::TypefctContext *context) override {
-    return visit(context->INT());
-  }
 
   //il faut rendre le même type pas string une fois et int une fois
   // plutot utiliser le polymorphisme qui permettra également de vérifier s'il 'agit d'un ID Ou d'un NBR
@@ -154,6 +151,81 @@ public:
     ids.splice(ids.end(),visit(context->ids()));
     return ids;
   }
+
+
+
+
+
+
+  virtual antlrcpp::Any visitFctUnique(exprParser::FctUniqueContext *ctx) override {
+	fonctions.push_back(visit(ctx->function));
+	return NULL;
+  }
+
+  virtual antlrcpp::Any visitFctMult(exprParser::FctMultContext *ctx) override {
+    	fonctions.push_back(visit(ctx->function));
+			visit(ctx->programme);
+			return NULL;
+  }
+
+
+  virtual antlrcpp::Any visitFunction(exprParser::FunctionContext *ctx) override {
+    return new Fonction((std::string) context->ID()->getText(),
+			(string) context->typefct()->getText(), visit(context->corps())));
+  }
+
+  virtual antlrcpp::Any visitRetourInt(exprParser::RetourIntContext *ctx) override {
+    return visit(context->INT());
+  }
+
+  virtual antlrcpp::Any visitRetourVoid(exprParser::RetourVoidContext *ctx) override {
+    return visit(context->VOID());
+  }
+
+	virtual antlrcpp::Any visitTypevar(exprParser::TypevarContext *ctx) override {
+    return visit(context->INT());
+  }
+  
+  
+
+  virtual antlrcpp::Any visitAppelFuncSansParam(exprParser::AppelFuncSansParamContext *ctx) override {
+    return visitChildren(ctx);
+  }
+
+  virtual antlrcpp::Any visitAppelFuncAvecParam(exprParser::AppelFuncAvecParamContext *ctx) override {
+    return visitChildren(ctx);
+  }
+
+  virtual antlrcpp::Any visitParamUnique(exprParser::ParamUniqueContext *ctx) override {
+    return visit(ctx->expression());
+  }
+
+  virtual antlrcpp::Any visitParamMult(exprParser::ParamMultContext *ctx) override {
+    return visit(ctx->expression());
+  }
+
+  virtual antlrcpp::Any visitExprNeg(exprParser::ExprNegContext *ctx) override {
+    return visitChildren(ctx);
+  }
+
+  virtual antlrcpp::Any visitAppelRet(exprParser::AppelRetContext *ctx) override {
+    return visitChildren(ctx);
+  }
+
+  virtual antlrcpp::Any visitCorpsAppel(exprParser::CorpsAppelContext *ctx) override {
+    return visitChildren(ctx);
+  }
+
+
+
+
+
+
+
+
+
+
+
   
   list<Fonction*> getFonctions() {
     return fonctions;
