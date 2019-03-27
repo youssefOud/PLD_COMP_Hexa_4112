@@ -61,11 +61,11 @@ int main(int argc, const char ** argv) {
 			  (*it)->generateSA();
 			  (*it)->processSA();
 			  (*it)->displaySymbolTable();
-			  cout << endl;
+			  //cout << endl;
 			  (*it)->displayStaticAnalysis();
-			  cout << endl;
+			  //cout << endl;
 			  (*it)->displayWarnings();
-			  cout << endl;
+			  //cout << endl;
 			  (*it)->displayErrors();
 		  }
 		  
