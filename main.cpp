@@ -83,8 +83,7 @@ int main(int argc, const char ** argv) {
 			  {
 		  	  // Générer que si argument passé en option
 			    nomFichier.replace(nomFichier.length()-2, 3,".s");
-			    nomFichier.replace(0, 11,"");
-			    ofstream myfile("./executables/"+nomFichier);
+			    ofstream myfile(nomFichier);
 			    myfile << (*it)->genererCodeAssembleur() << endl;
 			    myfile.close();
 			  }else

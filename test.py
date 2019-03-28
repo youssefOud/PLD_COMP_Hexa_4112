@@ -15,7 +15,8 @@ expect_name = '_exp.txt'
 input_files = os.listdir(dir_input)
 file_names = []
 for input_file in input_files:
-	file_names.append(input_file[:-2])
+	if input_file[len(input_file)-2:len(input_file)] == '.c':
+		file_names.append(input_file[:-2])
 
 for in_name in file_names :
 	os.system("rm -f "+dir_output+in_name+expect_name)
@@ -31,7 +32,8 @@ for name in file_names :
 input_files_erwarn = os.listdir(dir_input_erwarn)
 file_names_erwarn = []
 for input_file in input_files_erwarn:
-	file_names_erwarn.append(input_file[:-2])
+	if input_file[len(input_file)-2:len(input_file)] == '.c':
+		file_names_erwarn.append(input_file[:-2])
 
 for in_name in file_names_erwarn :
 	os.system(exec_name+" "+dir_input_erwarn+in_name+input_ext + " > "+dir_output_erwarn+in_name+output_name)

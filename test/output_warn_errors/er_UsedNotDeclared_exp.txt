@@ -1,2 +1,1 @@
 Error: Variable utilisee mais non declaree r
-0

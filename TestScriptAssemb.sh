@@ -1,4 +1,4 @@
-# Lancer le script avec ce format: ./nomScript nomFichier.cpp {-a,-c,-o}
+# Lancer le script avec ce format: ./nomScript /chemin/vers/fichier/nomFichier.cpp {-a,-c,-o}
 #On vérifie la validité du fichier : si plus de 4 ou moins de 1 parametres: erreur, si 1 un argument : on vérifie que c'est un cpp 
 if [ $# -gt 4 ] || [ $# -lt 1 ] 
 then 
@@ -30,44 +30,39 @@ else	#Nombre parametres correct, voir si le fichier est .c
 		#Ici observation de parametres pour lancer le programme
 			if [ $ANALYSE -eq 1 -a $OPTIMISATION -eq 0 -a $CODE_GEN -eq 0 ]; then 	# Que Analyse statique
 				./exe -a $FICHIER
-			elif [ $ANALYSE -eq 0 -a $OPTIMISATION -eq 1 -a $CODE_GEN -eq 0 ]; then 
-			 echo "OPTIMISATION"
 			elif [ $ANALYSE -eq 0 -a $OPTIMISATION -eq 0 -a $CODE_GEN -eq 1 ]; then
-				./exe -c test/input/$FICHIER
-				if [ -f ./executables/$FICHIER_SORTIE.s ]; then
-					as -o ./executables/$FICHIER_SORTIE.o ./executables/$FICHIER_SORTIE.s
-					gcc ./executables/$FICHIER_SORTIE.o
+				./exe -c $FICHIER
+				if [ -f $FICHIER_SORTIE.s ]; then
+					as -o $FICHIER_SORTIE.o $FICHIER_SORTIE.s
+					gcc $FICHIER_SORTIE.o
 					./a.out
-					echo "Resultat : $?"
+					echo $?
 				fi
 			elif [ $ANALYSE -eq 1 -a $OPTIMISATION -eq 1 -a $CODE_GEN -eq 0 ]; then
 				./exe -a $FICHIER
-				#echo "OPTIMISATION"
 			elif [ $ANALYSE -eq 1 -a $OPTIMISATION -eq 0 -a $CODE_GEN -eq 1 ]; then
-				./exe -a -c test/input/$FICHIER
-				if [ -f ./executables/$FICHIER_SORTIE.s ]; then
-					as -o ./executables/$FICHIER_SORTIE.o ./executables/$FICHIER_SORTIE.s
-					gcc ./executables/$FICHIER_SORTIE.o
+				./exe -a -c $FICHIER
+				if [ -f $FICHIER_SORTIE.s ]; then
+					as -o $FICHIER_SORTIE.o $FICHIER_SORTIE.s
+					gcc $FICHIER_SORTIE.o
 					./a.out
-					echo "Resultat : $?"
+					echo $?
 				fi
 			elif [ $ANALYSE -eq 0 -a $OPTIMISATION -eq 1 -a $CODE_GEN -eq 1 ]; then
-				echo "OPTIMISATION"
-				./exe -c test/input/$FICHIER
-				if [ -f ./executables/$FICHIER_SORTIE.s ]; then
-					as -o ./executables/$FICHIER_SORTIE.o ./executables/$FICHIER_SORTIE.s
-					gcc ./executables/$FICHIER_SORTIE.o
+				./exe -c $FICHIER
+				if [ -f $FICHIER_SORTIE.s ]; then
+					as -o $FICHIER_SORTIE.o $FICHIER_SORTIE.s
+					gcc $FICHIER_SORTIE.o
 					./a.out
-					echo "Resultat : $?"
+					echo $?
 				fi
 			elif [ $ANALYSE -eq 1 -a $OPTIMISATION -eq 1 -a $CODE_GEN -eq 1 ]; then
-				echo "OPTIMISATION"
-				./exe -a -c test/input/$FICHIER
-				if [ -f ./executables/$FICHIER_SORTIE.s ]; then
-					as -o ./executables/$FICHIER_SORTIE.o ./executables/$FICHIER_SORTIE.s
-					gcc ./executables/$FICHIER_SORTIE.o
+				./exe -a -c $FICHIER
+				if [ -f $FICHIER_SORTIE.s ]; then
+					as -o $FICHIER_SORTIE.o $FICHIER_SORTIE.s
+					gcc $FICHIER_SORTIE.o
 					./a.out
-					echo "Resultat : $?"
+					echo $?	
 				fi
 			fi
 		#---------------------------------------
