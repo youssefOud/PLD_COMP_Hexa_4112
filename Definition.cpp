@@ -13,7 +13,7 @@ int Definition::getClassName(){
 	return 2;
 }
 
-string Definition::genererCodeAssembleur(map<string, pair<int, int>> *st){
+string Definition::genererCodeAssembleur(map<string, pair<Type, int>> *st){
 	string codeAss = "";
 	int offset = expr->genererCodeAssembleur(st , &codeAss);
 	codeAss += "movq " + to_string(offset) + "(%rbp), %rax\r\n";

@@ -48,7 +48,7 @@ void Fonction::addInstruction(Instruction* instr) {
 	instructions.push_back(instr);
 }
 
-map<string,pair<int, int>> *Fonction::getST() {
+map<string,pair<Type, int>> *Fonction::getST() {
 	return &symbolTable;
 }
 
@@ -75,7 +75,7 @@ string Fonction::toString() {
 void Fonction::generateST(){
 	for(list<Instruction*>::iterator it = this->instructions.begin(); it != this->instructions.end(); it++){
 		if((*it)->getClassName() == 1){  //Declaration
-			map<string,pair<int,int>>::iterator it2;
+			map<string,pair<Type,int>>::iterator it2;
 			it2 = this->symbolTable.find(((Declaration*)(*it))->getId());
 			if (it2 != symbolTable.end()) {	
 				// Existe deja dans la table des symboles : gérer cas d'erreur
@@ -83,7 +83,7 @@ void Fonction::generateST(){
 				errors.push_back("Declarations multiples de la variable "+ ((Declaration*)(*it))->getId());
 			} else {
 				// On commence les adresses à -8
-				pair<int, int> temp;
+				pair<Type, int> temp;
 				
 				this->symbolTable.insert(make_pair(((Declaration*)(*it))->getId(), make_pair(((Declaration*)(*it))->getType(),nextFree)));
 				nextFree-=8;
@@ -91,7 +91,7 @@ void Fonction::generateST(){
 		}
 		
 		else if((*it)->getClassName() == 2){ //Définition (Type d'affectation)
-			map<string,pair<int,int>>::iterator it2;
+			map<string,pair<Type,int>>::iterator it2;
 			it2 = this->symbolTable.find(((Definition*)(*it))->getLeft()->getId());
 			if (it2 != symbolTable.end()) {	
 				errors.push_back("Declarations multiples de la variable "+ ((Definition*)(*it))->getLeft()->getId());
@@ -194,7 +194,7 @@ void Fonction::generateSA(){
 	void Fonction::displaySymbolTable(){
 		cout << "SymbolTable : "<< endl;
 		cout << "ID TYPE ADD"<<endl;
-		for(map<string,pair<int,int>>::iterator it=symbolTable.begin() ; it!=symbolTable.end() ; ++it)
+		for(map<string,pair<Type,int>>::iterator it=symbolTable.begin() ; it!=symbolTable.end() ; ++it)
 		{
 			cout<< (*it).first << " " <<(*it).second.first << "   " << (*it).second.second <<endl;
 		}

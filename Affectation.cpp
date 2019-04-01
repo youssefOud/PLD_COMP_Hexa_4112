@@ -20,18 +20,18 @@ LeftValue *Affectation::getLeft() {
     return left;
 }
 
-int Affectation::getType(){
+Type Affectation::getType(){
 	return type;
 }
 
-void Affectation::setType(int t){
+void Affectation::setType(Type t){
 	type = t;
 }
 
-int Affectation::convertTypeToInt(string nom) {
-	Type t = VIDE;
-	if (nom == "") t = VIDE;
-	else if (nom == "int") t = INT;
+Type Affectation::convertTypeToInt(string nom) {
+	Type t = Type::VIDE;
+	if (nom == "") t = Type::VIDE;
+	else if (nom == "int") t = Type::INT;
 	return t; 
 }
 

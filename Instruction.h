@@ -21,7 +21,7 @@ public:
 	virtual ~Instruction();
   virtual string toString() {return "instruction"; };
   virtual int getClassName()=0;
-  virtual string genererCodeAssembleur(map<string, pair<int, int>> *) =0;
+  virtual string genererCodeAssembleur(map<string, pair<Type, int>> *) =0;
   //virtual string getId();
   //virtual int getType();
   //virtual RightValue *getRight();

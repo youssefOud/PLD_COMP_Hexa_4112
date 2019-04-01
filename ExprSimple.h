@@ -4,6 +4,7 @@
 #include <iostream>
 #include "Expression.h"
 #include "RightValue.h"
+#include "Enum.h"
 
 using namespace std;
 
@@ -13,7 +14,7 @@ class ExprSimple : public Expression{
 		ExprSimple(RightValue* r) :right(r){};
 		virtual ~ExprSimple() {};
 		string buildIR(CFG *cfg);
-		int genererCodeAssembleur(map<string, pair<int, int>> *, string *codeAss);
+		int genererCodeAssembleur(map<string, pair<Type, int>> *, string *codeAss);
 		string toString();
 		int eval();
 		void analyse(map<string,vector<int>> & staticAnalysis,list<string> & errors,list<string> & warnings);

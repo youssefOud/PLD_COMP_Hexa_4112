@@ -50,7 +50,7 @@ int CFG::get_var_type(string name) {
 }
 
 void CFG::addInstruction (IRInstr::Operation mnemo, vector<string> params){
-	//todo
+	current_bb->add_IRInstr(mnemo, symbolTable->find(params[0])->second.first, params);
 }
 
 int CFG::getNextFreeIndex() {
@@ -58,6 +58,11 @@ int CFG::getNextFreeIndex() {
 }
 
 int CFG::getOffsetFromSymbolTable(string id){
-	//todo
-	return 0;
+	map<string,pair<Type, int>>::iterator  it= symbolTable->find(id);
+    	if( it != symbolTable->end() ){
+		return symbolTable->find(id)->second.second;
+	}
+	else{
+		return 1; //1 signifie que aucune variable de ce nom n'a été trouvée
+	}
 }

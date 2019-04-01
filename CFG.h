@@ -43,7 +43,7 @@ class CFG {
 	BasicBlock* current_bb;
 
  protected:
-	map<string,pair<int, int>> *symbolTable; /** The first int in the pair is the type of the variable and the second is its offset */
+	map<string,pair<Type, int>> *symbolTable; /** The first int in the pair is the type of the variable and the second is its offset */
 	int nextFreeSymbolIndex; /**< to allocate new symbols in the symbol table */
 	int nextBBnumber; /**< just for naming */
 	vector <BasicBlock*> bbs; /**< all the basic blocs of this CFG*/

@@ -2,12 +2,12 @@
 
 using namespace std;
 
-int ExprMult::genererCodeAssembleur(map<string, pair<int, int>> *st, string *codeAss){
+int ExprMult::genererCodeAssembleur(map<string, pair<Type, int>> *st, string *codeAss){
 	int offset1 = expr1->genererCodeAssembleur(st, codeAss);
 	int offset2 = expr2->genererCodeAssembleur(st, codeAss);
 	
 	
-	st->insert( make_pair("temp"+to_string(nextFree), make_pair(1, nextFree) )); //1 correspond au type int dans enumeration
+	st->insert( make_pair("temp"+to_string(nextFree), make_pair(Type::INT, nextFree) )); //1 correspond au type int dans enumeration
 
 	*codeAss += "movq " + to_string(offset1) + "(%rbp), %rax\r\n";
 	*codeAss += "imulq " + to_string(offset2) + "(%rbp), %rax\r\n";

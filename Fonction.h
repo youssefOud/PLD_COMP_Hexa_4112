@@ -34,12 +34,12 @@ class Fonction{
 		void displayStaticAnalysis();
 		void displayWarnings();
 		void displayErrors();
-		map<string,pair<int, int>> *getST();
+		map<string,pair<Type, int>> *getST();
 
 	private:
 		string id;
 		list <Instruction*> instructions;
-		map<string,pair<int, int>> symbolTable;
+		map<string,pair<Type, int>> symbolTable;
 		Type type;
 		map<string,vector<int>> staticAnalysis;
 		list<string> errors;
