@@ -14,7 +14,7 @@ class Fonction{
 
 	public:
 		Fonction();
-		Fonction(string, string, list<Instruction*> instructions);
+		Fonction(string, string, list<Instruction*> instructions/*, DefAppel*/);
 		~Fonction();
 		
 		string getId();

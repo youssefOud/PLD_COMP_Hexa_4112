@@ -1,7 +1,11 @@
 // Generated from expr.g4 by ANTLR 4.7.1
+#ifdef DEBUG_ENABLE
+    #define PRINTDEBUG(debugString) std::cout << (debugString) << std::endl;
+#else
+    #define PRINTDEBUG(debugString)
+#endif
 
 #pragma once
-
 
 #include "antlr4-runtime.h"
 #include "exprBaseVisitor.h"
@@ -79,6 +83,7 @@ public:
   }
 
   virtual antlrcpp::Any visitReturn(exprParser::ReturnContext *context) override {
+		PRINTDEBUG("DEBUUUUG");
   		Instruction * ret = new Return((Expression *)visit(context->expression()));
 		return ret;
   }
