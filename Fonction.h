@@ -15,13 +15,13 @@ class Fonction{
 
 	public:
 		Fonction();
-		Fonction(string, string, list<Instruction*> instructions, DefAppel);
+		Fonction(string, string, list<Instruction*> instructions/*, DefAppel*/);
 		~Fonction();
 		
 		string getId();
 		list<Instruction*> getInstructions();
 		type_e getType();
-		DefAppel getDefAppel();
+		//DefAppel getDefAppel();
 		void setId(string id);
 		void setInstructions (list<Instruction*> instructions);
 		void addInstruction(Instruction* instr);
