@@ -17,16 +17,17 @@ public:
 	Affectation(Expression *e, LeftValue *l, string t);
 	Affectation();
 	virtual ~Affectation();
-    virtual string toString() {return "Affectation"; };
-    virtual int getClassName()=0;
-    
+    	virtual string toString() {return "Affectation"; };
+    	virtual int getClassName()=0;
 	int getType();	
 	void setType(int t);
 	
 	Expression *getExpr();
     LeftValue *getLeft();	
 int convertTypeToInt(string);
+	virtual string buildIR(CFG *cfg) = 0;
         virtual string genererCodeAssembleur(map<string, pair<int, int>> *)=0;
+	//virtual string createNewVar()=0;
   
   
 

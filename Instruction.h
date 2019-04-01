@@ -7,6 +7,8 @@
 #include "RightValue.h"
 #include <utility>
 #include <map>
+#include "CFG.h"
+#include "IRInstr.h"
 
 
 using namespace std;

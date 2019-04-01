@@ -16,3 +16,8 @@ string Return::genererCodeAssembleur(map<string, pair<int, int>> *st){
 	codeAss += "movq " +to_string(offset)+ "(%rbp), %rax\r\n";
 	return codeAss;
 }
+
+string Return::buildIR(CFG *cfg){
+	//TODO
+	return "";
+}

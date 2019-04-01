@@ -34,3 +34,4 @@ int Affectation::convertTypeToInt(string nom) {
 	else if (nom == "int") t = INT;
 	return t; 
 }
+

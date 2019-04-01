@@ -11,6 +11,7 @@ IRInstr::IRInstr(BasicBlock* bb_, Operation op_, Type t_, vector<string> params_
 void IRInstr::genererCodeAssembleur(ostream &o) {
 	switch (op) {
 		case (ldconst) :
+			
 			break;
 		case (add) :
 			break;

@@ -27,6 +27,7 @@ public:
     string toString();
 	int convertTypeToInt(string);
 	int getClassName();
+	//string buildIR(CFG *cfg);
         string genererCodeAssembleur(map<string, pair<int, int>>*);
     
 private:

@@ -2,6 +2,7 @@
 #include "Declaration.h"
 #include "Definition.h"
 #include "AffectationSimple.h"
+#include "Instruction.h"
 #include "Return.h"
 #include <iostream>
 #include <utility>
@@ -47,8 +48,8 @@ void Fonction::addInstruction(Instruction* instr) {
 	instructions.push_back(instr);
 }
 
-map<string,pair<int, int>> Fonction::getST() {
-	return symbolTable;
+map<string,pair<int, int>> *Fonction::getST() {
+	return &symbolTable;
 }
 
 Type Fonction::convertTypeToInt(string nom) {

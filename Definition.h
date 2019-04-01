@@ -18,6 +18,7 @@ public:
 	~Definition() {};
      string toString();
      int getClassName();
+	string buildIR(CFG *cfg);
      string genererCodeAssembleur(map<string, pair<int, int>>*);
   
 protected:

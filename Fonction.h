@@ -3,12 +3,13 @@
 #include <map>
 #include <list>
 #include <vector>
-#include "Instruction.h"
 #include "Enum.h"
 
 using namespace std;
 
 extern int nextFree;
+
+class Instruction;
 
 class Fonction{
 
@@ -33,7 +34,7 @@ class Fonction{
 		void displayStaticAnalysis();
 		void displayWarnings();
 		void displayErrors();
-		map<string,pair<int, int>> getST();
+		map<string,pair<int, int>> *getST();
 
 	private:
 		string id;

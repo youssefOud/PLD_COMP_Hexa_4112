@@ -45,3 +45,25 @@ void ExprSimple::analyse(map<string,vector<int>> & staticAnalysis,list<string> &
 			}
 	
 }
+
+string ExprSimple::buildIR (CFG* cfg){
+	if(!right->getId().empty()){
+		return right->getId();
+	}
+	else{
+		string var = cfg->create_new_tempvar(Type::INT); //1 pour type int
+		vector<string> params;
+		params.push_back(var);
+		params.push_back(to_string(right->getNbr()));
+		cfg->addInstruction(IRInstr::Operation::ldconst, params);
+		return var;
+	}
+}
+
+/*
+string ExprSimple::createNewVar(CFG *cfg){
+	
+	string newVarName = "temp" + to_string(nextFree);
+	cfg->add_to_symbol_table(newVarName, 1);
+	return newVarName;
+}*/

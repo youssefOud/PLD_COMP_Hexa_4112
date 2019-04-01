@@ -1,9 +1,9 @@
 #include "CFG.h"
 
 
-CFG::CFG(Fonction* ast) {
-	ast = ast;
-	symbolTable = ast->getST();
+CFG::CFG(Fonction* f) {
+	ast = f;
+	symbolTable = f->getST();
 	nextFreeSymbolIndex = nextFree;
 }
 
@@ -29,15 +29,35 @@ void CFG::gen_asm_epilogue(ostream& o) {
 	
 }
 
+void CFG::add_to_symbol_table(string name, Type t){
+	symbolTable->insert( make_pair(name, make_pair(t, nextFreeSymbolIndex) ));
+	nextFreeSymbolIndex -=8;
+}
+
 // TODO
 string CFG::create_new_tempvar(Type t) {
-	return "";
+	string newVarName = "!temp" + to_string(nextFreeSymbolIndex);
+	add_to_symbol_table(newVarName, t);
+	return newVarName;
 }
 
 int CFG::get_var_index(string name) {
-	return symbolTable.find(name)->second.second;
+	return symbolTable->find(name)->second.second;
 }
 
 int CFG::get_var_type(string name) {
-	return symbolTable.find(name)->second.first;
+	return symbolTable->find(name)->second.first;
+}
+
+void CFG::addInstruction (IRInstr::Operation mnemo, vector<string> params){
+	//todo
+}
+
+int CFG::getNextFreeIndex() {
+	return nextFreeSymbolIndex;
+}
+
+int CFG::getOffsetFromSymbolTable(string id){
+	//todo
+	return 0;
 }

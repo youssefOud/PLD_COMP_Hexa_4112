@@ -16,7 +16,8 @@ public:
     Expression *getExpr();
 	std::string toString() { return "Return "+expr->toString(); };
 	int getClassName(){return 4;};
-string genererCodeAssembleur(map<string, pair<int, int>>*);
+	string buildIR(CFG *cfg);
+	string genererCodeAssembleur(map<string, pair<int, int>>*);
 
 private:
     Expression * expr;
