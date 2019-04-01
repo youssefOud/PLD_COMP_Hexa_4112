@@ -1,3 +1,0 @@
-Warning : Variable utilisee mais non initialisee e
-Warning : Variable non utilisee e
-1

@@ -10,11 +10,10 @@ using namespace std;
 
 int nextFree = -8;
 
-Fonction::Fonction(string nomFct, string typeFct, list<Instruction*> instr, DefAppel da) {
+Fonction::Fonction(string nomFct, string typeFct, list<Instruction*> instr) {
 	id = nomFct;
 	type = convertTypeToInt(typeFct);
-	instructions = instr;
-	defAppel = da;
+	instructions=instr;
 }
 
 Fonction::~Fonction() {
@@ -26,10 +25,6 @@ Fonction::~Fonction() {
 
 string Fonction::getId(){
 	return id;
-}
-
-DefAppel Fonction::getDefAppel(){
-	return defAppel;
 }
 
 list<Instruction*> Fonction::getInstructions() {
