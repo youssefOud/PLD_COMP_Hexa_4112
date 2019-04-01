@@ -1,8 +1,8 @@
 // Generated from expr.g4 by ANTLR 4.7.1
 #ifdef DEBUG_ENABLE
-    #define PRINTDEBUG(debugString) std::cout << (debugString) << std::endl;
+    #define debug(debugString) std::cout << (debugString) << std::endl;
 #else
-    #define PRINTDEBUG(debugString)
+    #define debug(debugString)
 #endif
 
 #pragma once
@@ -34,6 +34,7 @@ class  calc : public exprBaseVisitor {
 public:
 
   virtual antlrcpp::Any visitFunction(exprParser::FunctionContext *context) override {
+	debug("visitFunction");
 		fonctions.push_back(
 			new Fonction((std::string) context->ID()->getText(),
 			(string) context->type()->getText(), visit(context->corps())));
@@ -42,26 +43,31 @@ public:
   }
 
   virtual antlrcpp::Any visitTypefct(exprParser::TypefctContext *context) override {
+	debug("visitTypeFunction");
     return visit(context->INT());
   }
 
   //il faut rendre le même type pas string une fois et int une fois
   // plutot utiliser le polymorphisme qui permettra également de vérifier s'il 'agit d'un ID Ou d'un NBR
   virtual antlrcpp::Any visitRightValueID(exprParser::RightValueIDContext *context) override {
+	debug("visitRightValue");
     RightValue * rvid = new RightValueId((string) context->ID()->getText());
     return rvid;
   }
 
   virtual antlrcpp::Any visitRightValueNBR(exprParser::RightValueNBRContext *context) override {
+	debug("visitRightValueNBR");
      RightValue * rvnbr = new RightValueNbr( (int) stoi(context->NBR()->getText()));
      return rvnbr;
   }
 
   virtual antlrcpp::Any visitLeftValue(exprParser::LeftValueContext *context) override {
+	debug("visitLeftValue");
     return new LeftValue((string) context->ID()->getText());
   }
 
   virtual antlrcpp::Any visitDeclaration(exprParser::DeclarationContext *context) override {
+	debug("visitDeclaration");
   // TODO modifier
     list<string> ids = visit(context->ids());
     list<Instruction*> instructions;
@@ -73,88 +79,102 @@ public:
   }
 
   virtual antlrcpp::Any visitDefinition(exprParser::DefinitionContext *context) override {
+	debug("visitDefinition");
 		Instruction * def = new Definition((Expression *)visit(context->expression()),(LeftValue *)visit(context->left()),(string) context->type()->getText());
 		return def;
   }
 
   virtual antlrcpp::Any visitAffectation(exprParser::AffectationContext *context) override {
+	debug("visitAffectation");
 		Instruction * affS =new AffectationSimple((Expression *)visit(context->expression()),(LeftValue *)visit(context->left()),"");
 		return affS;
   }
 
   virtual antlrcpp::Any visitReturn(exprParser::ReturnContext *context) override {
-		PRINTDEBUG("DEBUUUUG");
+		debug("visitReturn");
   		Instruction * ret = new Return((Expression *)visit(context->expression()));
 		return ret;
   }
 
   virtual antlrcpp::Any visitCorpsAffectRet(exprParser::CorpsAffectRetContext *context) override {
-
+	debug("visitCorpsAffectRet");
     list<Instruction*> instructions = { visit(context->affect()) , visit(context->ret())};
     return instructions ;
   }
 
   virtual antlrcpp::Any visitCorpsRetour(exprParser::CorpsRetourContext *context) override {
+	debug("visitCorpsRetour");
 	 list<Instruction*> instructions;
 	  instructions.push_back(visit(context->ret()));
     return instructions ;
   }
 
   virtual antlrcpp::Any visitCorpsDeclareRet(exprParser::CorpsDeclareRetContext *context) override {
+	debug("visitCorpsDeclareRet");
     list<Instruction*> instructions = visit(context->declare());
     instructions.push_back(visit(context->ret()));
     return instructions ;
   }
 
   virtual antlrcpp::Any visitCorpsAffect(exprParser::CorpsAffectContext *context) override {
+	debug("visitCorpsAffect");
     list<Instruction*> instructions = {visit(context->affect())};
     instructions.splice(instructions.end(),visit(context->corps()));
     return instructions;
   }
 
   virtual antlrcpp::Any visitCorpsRec(exprParser::CorpsRecContext *context) override {
+	debug("visitCorpsRec");
   //TODO VERIFIER SI CA MARCHE
 
     return visit(context->corps());
   }
 
   virtual antlrcpp::Any visitCorpsDeclare(exprParser::CorpsDeclareContext *context) override {
+	debug("visitCorpsDeclare");
     list<Instruction*> instructions = visit(context->declare());
     instructions.splice(instructions.end(),visit(context->corps()));
     return instructions;
   }
   
   virtual antlrcpp::Any visitExprMult(exprParser::ExprMultContext *context) override {
+	debug("visitExprMult");
     Expression * expr = new ExprMult((Expression *) visit(context->expression(0)), (Expression *)visit(context->expression(1)));
     return expr;
   }
   
   virtual antlrcpp::Any visitExprAdd(exprParser::ExprAddContext *context) override {
+	debug("visitExprAdd");
     Expression * expr = new ExprPlus((Expression *) visit(context->expression(0)), (Expression *)visit(context->expression(1)));
     return expr;
   }
   
   virtual antlrcpp::Any visitExprMinus(exprParser::ExprMinusContext *context) override {
+	debug("visitExprMinus");
     Expression * expr = new ExprMoins((Expression *) visit(context->expression(0)), (Expression *)visit(context->expression(1)));
     return expr;
   }
   
   virtual antlrcpp::Any visitExprPar(exprParser::ExprParContext *context) override {
+	debug("visitExprPar");
     return visit(context->expression());
   }
   
   virtual antlrcpp::Any visitRightValue(exprParser::RightValueContext *context) override {
+	debug("visitRightValue");
     Expression * expr = new ExprSimple((RightValue *)visit(context->right()));
     return expr;
   }
   
   virtual antlrcpp::Any visitSimpleId(exprParser::SimpleIdContext *context) override {
+	debug("visitSimpleId");
 	list<string> id;
 	id.push_back((string) context->ID()->getText());
     return id;
   }
   
   virtual antlrcpp::Any visitMultipleId(exprParser::MultipleIdContext *context) override {
+	debug("visitMultipleId");
     list<string> ids = {(string) context->ID()->getText()};
     ids.splice(ids.end(),visit(context->ids()));
     return ids;
