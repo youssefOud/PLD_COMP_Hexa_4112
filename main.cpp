@@ -8,7 +8,7 @@
 using namespace antlr4;
 using namespace std;
 int main(int argc, const char ** argv) {
-  
+	
   bool a,c,o = false;
   for (int i = 1; i<argc ; i++) {
     string s(argv[i]);
@@ -55,7 +55,13 @@ int main(int argc, const char ** argv) {
 		for(list<Fonction*>::iterator it=fonctions.begin() ; it!=fonctions.end() ; ++it) 
 		{
 		  (*it)->generateST();
-		  
+			CGF cfg = new CFG((*it));
+		  cfg->genererIR();
+			ofstream myfiletest("./test.s");
+		    
+		  cfg->genererCodeAssembleur(myfiletest);
+		myfiletest.close();
+			
 		  if (a) {
 			  // Générer que si argument passé en option
 			  (*it)->generateSA();

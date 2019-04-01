@@ -4,12 +4,11 @@
 #include <list>
 #include <vector>
 #include "Enum.h"
+#include "Instruction.h"
 
 using namespace std;
 
 extern int nextFree;
-
-class Instruction;
 
 class Fonction{
 

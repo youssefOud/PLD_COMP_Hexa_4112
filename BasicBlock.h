@@ -10,7 +10,9 @@
 #include "Enum.h"
 #include "IRInstr.h"
 
+
 using namespace std;
+class CFG;
 
 /**  The class for a basic block */
 
@@ -25,8 +27,6 @@ using namespace std;
 				if  exit_false is not a nullptr, and the last instruction is not a cmp, it generates two conditional branches based on the value of the last variable assigned 
         otherwise it generates an unconditional jmp to the exit_true branch 
 */
-
-class CFG;
 
 class BasicBlock {
  public:

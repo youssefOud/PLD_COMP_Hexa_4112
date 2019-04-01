@@ -1,3 +1,5 @@
+#pragma once
+
 #ifndef PLD_COMP_AFFECTATION_SIMPLE_H
 #define PLD_COMP_AFFECTATION_SIMPLE_H
 

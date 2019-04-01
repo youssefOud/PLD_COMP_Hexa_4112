@@ -1,8 +1,9 @@
 #include "BasicBlock.h"
+
 #include "CFG.h"
 
-BasicBlock::BasicBlock(CFG* cfg, string entry_label) {
-	cfg = cfg;
+BasicBlock::BasicBlock(CFG* cfg_, string entry_label) {
+	cfg = cfg_;
 	label = entry_label;
 }
 

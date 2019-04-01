@@ -5,6 +5,15 @@ CFG::CFG(Fonction* f) {
 	ast = f;
 	symbolTable = f->getST();
 	nextFreeSymbolIndex = nextFree;
+	current_bb = new BasicBlock(this, ".main");
+	add_bb(current_bb);
+	
+}
+
+void CFG::genererIR(){
+	for(list<Instruction*>::iterator it = ast->getInstructions().begin(); it != ast->getInstructions().end(); it++){
+		(*it)->buildIR(this);
+	}
 }
 
 void CFG::add_bb(BasicBlock* bb) {

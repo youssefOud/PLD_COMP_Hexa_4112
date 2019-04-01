@@ -4,13 +4,9 @@
 #include <string>
 #include <iostream>
 #include <initializer_list>
+#include "BasicBlock.h"
 
 // TODO : A completer
-
-#include "Fonction.h"
-#include "Enum.h"
-#include "BasicBlock.h"
-#include "IRInstr.h"
 
 using namespace std;
 
@@ -37,6 +33,8 @@ class CFG {
 	int getOffsetFromSymbolTable(string id);
 
 	int getNextFreeIndex();
+
+	void genererIR();
 
 	// basic bloc management
 	string new_BB_name();

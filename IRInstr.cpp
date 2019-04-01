@@ -10,9 +10,12 @@ IRInstr::IRInstr(BasicBlock* bb_, Operation op_, Type t_, vector<string> params_
 
 void IRInstr::genererCodeAssembleur(ostream &o) {
 	switch (op) {
-		case (ldconst) :
-			
+		case (ldconst) : {
+			// récuperer offset du premier argument et le mettre après le -
+			int offsetVar = bb->cfg->getOffsetFromSymbolTable(params[0]);
+			o << "movq $" << params[1] << ", " << to_string(offsetVar) << "(%rbp)\r\n";
 			break;
+		}
 		case (add) :
 			break;
 		case (sub) :
@@ -21,8 +24,12 @@ void IRInstr::genererCodeAssembleur(ostream &o) {
 			break;
 		case (rmem) :
 			break;
-		case (wmem) :
+		case (wmem) : {
+			if (!params[0].compare("!rax")) {
+				o << "movq " << params[1] << "(%rbp), %rax\r\n";
+			} 
 			break;
+		}
 		case (call) :
 			break;
 		case (cmp_eq) :
@@ -31,7 +38,8 @@ void IRInstr::genererCodeAssembleur(ostream &o) {
 			break;
 		case (cmp_le) :
 			break;
-		default:
+		default: {
 			break;
+		}
 	}
 }

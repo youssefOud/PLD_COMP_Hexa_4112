@@ -2,7 +2,6 @@
 #include "Declaration.h"
 #include "Definition.h"
 #include "AffectationSimple.h"
-#include "Instruction.h"
 #include "Return.h"
 #include <iostream>
 #include <utility>
@@ -224,5 +223,4 @@ void Fonction::generateSA(){
 	    cout<< (*it) <<endl;
 	  }
 	}
-
 

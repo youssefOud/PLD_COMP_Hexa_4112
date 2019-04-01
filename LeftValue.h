@@ -1,7 +1,10 @@
+#pragma once
+
 #include <string.h>
 #include <iostream>
 #include <vector>
 #include "CFG.h"
+
 
 using namespace std;
 
