@@ -9,5 +9,16 @@ int main (){
 	r=e;
 	b=r;
 	r=c;
-	return 5*8;
+	char a =18;
+	int h=putchar(a,c);
+	a+b;
+	getchar(a,'c')-k;
+	return w;
 }
+
+void toto(int a,char b){
+	int a;
+	char k='a';
+}
+
+

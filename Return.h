@@ -11,15 +11,14 @@ class Instruction;
 class Return : public Instruction {
 
 public:
-    Return(Expression * expression):expr(expression) {};
+    Return(Instruction * expression):expr(expression) {};
     ~Return();
-    Expression *getExpr();
+    Instruction *getExpr();
 	std::string toString() { return "Return "+expr->toString(); };
 	int getClassName(){return 4;};
-string genererCodeAssembleur(map<string, pair<int, int>>*);
 
 private:
-    Expression * expr;
+    Instruction * expr;
 
 };
 

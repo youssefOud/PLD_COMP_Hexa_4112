@@ -1,17 +1,39 @@
 grammar expr;
 
-function: type ID '(' ')' '{' corps '}' ;
+fichier : programme ;
 
-type : INT # typefct ;
+programme : function programme # fctMult
+	| function # fctUnique ;
+
+appel : ID '('')'   # appelFuncSansParam
+	| ID  '(' vars ')'  # appelFuncAvecParam ;
+
+vars : expression # paramUnique
+	| expression ',' vars # paramMult ;
+
+function : typefct ID '(' defAppel ')' '{' corps '}' # fct 
+	| typefct ID '(' ')' '{' corps '}' # fctSansParam ;
+
+defAppel : type ID # defParamUnique
+	| type ID ',' defAppel # defParamMult ;
+
+typefct : INT # retourInt
+	| VOID # retourVoid ;
+
+type : INT # typeVarInt 
+	| CHAR #typeVarChar;
 
 right : ID # rightValueID
-	| NBR # rightValueNBR ;
+	| NBR # rightValueNBR 
+	|  CARACTERE # rightValueCHAR ;
 
 expression : expression ('*') expression # exprMult
+	| ('-') expression # exprNeg
 	| expression ('+') expression # exprAdd
 	| expression ('-') expression # exprMinus
 	| '('expression')' # exprPar
-	| right  # rightValue;
+	| right  # rightValue
+	| appel # exprApp ;
 
 left : ID # leftValue ;
 
@@ -25,15 +47,19 @@ affect : (type left '=' expression ';')  # definition
 
 ret : RETURN expression ';' # return ;
 
-corps : affect ret # corpsAffectRet
-	| affect corps # corpsAffect
-	| declare ret # corpsDeclareRet
-	| declare corps # corpsDeclare
-	| ret # corpsRetour
-	| corps ';' # corpsRec ;
+instruction : affect  # instrAff
+	| declare   # instrDec
+	| expression ';'   # instrExpr 
+	| ret # instrRet ;
 
+corps : instruction # instr
+	| instruction corps # instrCorps ;
+
+VOID : 'void' ;
 INT : 'int' ;
+CHAR : 'char' ;
 NBR : [0-9]+ ;
 RETURN : 'return' ;
 ID : [A-Za-z]+ ;
+CARACTERE : '\''[A-Za-z]'\'' ;
 WS : [ \t\r\n] -> skip ;

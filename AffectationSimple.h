@@ -14,7 +14,7 @@ class AffectationSimple : public Affectation {
 
 public:
 
-	AffectationSimple(Expression *e, LeftValue *l, string t) : Affectation(e, l, t) {};
+	AffectationSimple(Instruction *e, LeftValue *l, string t) : Affectation(e, l, t) {};
 	~AffectationSimple() {} ;
      string toString();
      int getClassName();

@@ -10,21 +10,27 @@ using namespace std;
 
 int nextFree = -8;
 
-Fonction::Fonction(string nomFct, string typeFct, list<Instruction*> instr) {
+Fonction::Fonction(string nomFct, string typeFct, list<Instruction*> instr, DefAppel * da) {
 	id = nomFct;
 	type = convertTypeToInt(typeFct);
-	instructions=instr;
+	instructions = instr;
+	defAppel = da;
 }
 
 Fonction::~Fonction() {
 	for (list<Instruction*>::iterator it = instructions.begin(); it != instructions.end(); it++) {
 		delete *it;	
 	}
+	delete defAppel;
 	//delete instructions;
 }
 
 string Fonction::getId(){
 	return id;
+}
+
+DefAppel* Fonction::getDefAppel(){
+	return defAppel;
 }
 
 list<Instruction*> Fonction::getInstructions() {
@@ -205,19 +211,23 @@ void Fonction::generateSA(){
 	}
 	
 	void Fonction::displayWarnings(){
-	  cout << "StaticAnalysisTable : Display warnings"<< endl;
+	  //cout << "StaticAnalysisTable : Display warnings"<< endl;
 	  for(list<string>::iterator it=warnings.begin() ; it!=warnings.end() ; ++it)
 	  {
-	    cout<< (*it) <<endl;
+	    cout<< "Warning : "<< (*it) <<endl;
 	  }
 	}
 	
 	void Fonction::displayErrors(){
-	  cout << "StaticAnalysisTable : Display errors"<< endl;
+	  //cout << "StaticAnalysisTable : Display errors"<< endl;
 	  for(list<string>::iterator it=errors.begin() ; it!=errors.end() ; ++it)
 	  {
-	    cout<< (*it) <<endl;
+	    cout<< "Error: "<<(*it) <<endl;
 	  }
+	}
+
+	int Fonction::getNumberOfErrors(){
+		return errors.size();
 	}
 
 

@@ -7,10 +7,10 @@
 
 using namespace std;
 
-class ExprMult : public Expression{
+class ExprMult : public Instruction{
 	public:
 		ExprMult() {};
-		ExprMult(Expression* e1, Expression *e2) :expr1(e1), expr2(e2){};
+		ExprMult(Instruction* e1, Instruction *e2) :expr1(e1), expr2(e2){};
 		virtual ~ExprMult() {};
 		int genererCodeAssembleur(map<string, pair<int, int>> *, string *codeAss);
 		string toString();
@@ -18,6 +18,6 @@ class ExprMult : public Expression{
 		void analyse(map<string,vector<int>> & staticAnalysis,list<string> & errors,list<string> & warnings);
 	
 	protected:
-		Expression *expr1;
-		Expression *expr2;
+		Instruction *expr1;
+		Instruction *expr2;
 };

@@ -19,15 +19,47 @@ public:
   /**
    * Visit parse trees produced by exprParser.
    */
-    virtual antlrcpp::Any visitFunction(exprParser::FunctionContext *context) = 0;
+    virtual antlrcpp::Any visitFichier(exprParser::FichierContext *context) = 0;
 
-    virtual antlrcpp::Any visitTypefct(exprParser::TypefctContext *context) = 0;
+    virtual antlrcpp::Any visitFctMult(exprParser::FctMultContext *context) = 0;
+
+    virtual antlrcpp::Any visitFctUnique(exprParser::FctUniqueContext *context) = 0;
+
+    virtual antlrcpp::Any visitAppelFuncSansParam(exprParser::AppelFuncSansParamContext *context) = 0;
+
+    virtual antlrcpp::Any visitAppelFuncAvecParam(exprParser::AppelFuncAvecParamContext *context) = 0;
+
+    virtual antlrcpp::Any visitParamUnique(exprParser::ParamUniqueContext *context) = 0;
+
+    virtual antlrcpp::Any visitParamMult(exprParser::ParamMultContext *context) = 0;
+
+    virtual antlrcpp::Any visitFct(exprParser::FctContext *context) = 0;
+
+    virtual antlrcpp::Any visitFctSansParam(exprParser::FctSansParamContext *context) = 0;
+
+    virtual antlrcpp::Any visitDefParamUnique(exprParser::DefParamUniqueContext *context) = 0;
+
+    virtual antlrcpp::Any visitDefParamMult(exprParser::DefParamMultContext *context) = 0;
+
+    virtual antlrcpp::Any visitRetourInt(exprParser::RetourIntContext *context) = 0;
+
+    virtual antlrcpp::Any visitRetourVoid(exprParser::RetourVoidContext *context) = 0;
+
+    virtual antlrcpp::Any visitTypeVarInt(exprParser::TypeVarIntContext *context) = 0;
+
+    virtual antlrcpp::Any visitTypeVarChar(exprParser::TypeVarCharContext *context) = 0;
 
     virtual antlrcpp::Any visitRightValueID(exprParser::RightValueIDContext *context) = 0;
 
     virtual antlrcpp::Any visitRightValueNBR(exprParser::RightValueNBRContext *context) = 0;
 
+    virtual antlrcpp::Any visitRightValueCHAR(exprParser::RightValueCHARContext *context) = 0;
+
+    virtual antlrcpp::Any visitExprNeg(exprParser::ExprNegContext *context) = 0;
+
     virtual antlrcpp::Any visitExprPar(exprParser::ExprParContext *context) = 0;
+
+    virtual antlrcpp::Any visitExprApp(exprParser::ExprAppContext *context) = 0;
 
     virtual antlrcpp::Any visitExprAdd(exprParser::ExprAddContext *context) = 0;
 
@@ -51,17 +83,17 @@ public:
 
     virtual antlrcpp::Any visitReturn(exprParser::ReturnContext *context) = 0;
 
-    virtual antlrcpp::Any visitCorpsAffectRet(exprParser::CorpsAffectRetContext *context) = 0;
+    virtual antlrcpp::Any visitInstrAff(exprParser::InstrAffContext *context) = 0;
 
-    virtual antlrcpp::Any visitCorpsRetour(exprParser::CorpsRetourContext *context) = 0;
+    virtual antlrcpp::Any visitInstrDec(exprParser::InstrDecContext *context) = 0;
 
-    virtual antlrcpp::Any visitCorpsDeclareRet(exprParser::CorpsDeclareRetContext *context) = 0;
+    virtual antlrcpp::Any visitInstrExpr(exprParser::InstrExprContext *context) = 0;
 
-    virtual antlrcpp::Any visitCorpsAffect(exprParser::CorpsAffectContext *context) = 0;
+    virtual antlrcpp::Any visitInstrRet(exprParser::InstrRetContext *context) = 0;
 
-    virtual antlrcpp::Any visitCorpsRec(exprParser::CorpsRecContext *context) = 0;
+    virtual antlrcpp::Any visitInstr(exprParser::InstrContext *context) = 0;
 
-    virtual antlrcpp::Any visitCorpsDeclare(exprParser::CorpsDeclareContext *context) = 0;
+    virtual antlrcpp::Any visitInstrCorps(exprParser::InstrCorpsContext *context) = 0;
 
 
 };

@@ -14,7 +14,7 @@ class Affectation : public Instruction {
 
 public:
 
-	Affectation(Expression *e, LeftValue *l, string t);
+	Affectation(Instruction *e, LeftValue *l, string t);
 	Affectation();
 	virtual ~Affectation();
     virtual string toString() {return "Affectation"; };
@@ -23,7 +23,7 @@ public:
 	int getType();	
 	void setType(int t);
 	
-	Expression *getExpr();
+	Instruction *getExpr();
     LeftValue *getLeft();	
 int convertTypeToInt(string);
         virtual string genererCodeAssembleur(map<string, pair<int, int>> *)=0;
@@ -32,7 +32,7 @@ int convertTypeToInt(string);
 
 protected:
 	int type;
-	Expression *expr;
+	Instruction *expr;
 	LeftValue *left;
 
 private:

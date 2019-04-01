@@ -44,7 +44,7 @@ int main(int argc, const char ** argv) {
 	CommonTokenStream tokens(&lexer);
 
 	exprParser parser(&tokens);
-	tree::ParseTree* tree = parser.function();
+	tree::ParseTree* tree = parser.fichier();
 
 	if(parser.getNumberOfSyntaxErrors() == 0){
 		calc visitor;
@@ -52,9 +52,10 @@ int main(int argc, const char ** argv) {
 		
 		// Une fois l'AST construit, on le parcours pour renseigner la table des symboles
 		list<Fonction*> fonctions = (list<Fonction*>)visitor.getFonctions();
-		
+
 		for(list<Fonction*>::iterator it=fonctions.begin() ; it!=fonctions.end() ; ++it) 
 		{
+		cout<<(*it)->toString()<<endl;
 		  (*it)->generateST();
 		  
 		  if (a) {
