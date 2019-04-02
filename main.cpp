@@ -74,12 +74,12 @@ int main(int argc, const char ** argv) {
 
 			  if (a) {
 				  // Générer que si argument passé en option
-				   //(*it)->displaySymbolTable();
-				  //cout << endl;
-				  //(*it)->displayStaticAnalysis();
-				  //cout << endl;
+				  (*it)->displaySymbolTable();
+				  cout << endl;
+				  (*it)->displayStaticAnalysis();
+				  cout << endl;
 				  (*it)->displayWarnings();
-				  //cout << endl;
+				  cout << endl;
 				  (*it)->displayErrors();
 			  }
 			  

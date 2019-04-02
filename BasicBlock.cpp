@@ -11,9 +11,7 @@ void BasicBlock::add_IRInstr(IRInstr::Operation op, Type t, vector<string> param
 }
 
 void BasicBlock::genererCodeAssembleur(ostream &o) {
-	cout << "Generation code assembleur : BB" << endl;
 	for(vector<IRInstr*>::iterator it = this->instrs.begin(); it != this->instrs.end(); it++){
 		(*it)->genererCodeAssembleur(o);	
 	}
-	cout << "Fin Generation code assembleur : CFG" << endl;
 }

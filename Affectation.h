@@ -29,7 +29,6 @@ public:
     LeftValue *getLeft();	
 Type convertTypeToInt(string);
 	virtual string buildIR(CFG *cfg) = 0;
-        virtual string genererCodeAssembleur(map<string, pair<Type, int>> *)=0;
 	//virtual string createNewVar()=0;
   
   

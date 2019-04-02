@@ -28,7 +28,6 @@ class Fonction{
 		Type convertTypeToInt(string nom); 
 		string toString();
 		void generateST();
-		string genererCodeAssembleur();
 		void generateSA();
 		void processSA();
 		void displaySymbolTable();

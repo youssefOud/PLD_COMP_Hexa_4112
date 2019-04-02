@@ -13,7 +13,6 @@ class ExprMoins : public Expression{
 		ExprMoins(Expression* e1, Expression *e2) :expr1(e1), expr2(e2){};
 		virtual ~ExprMoins() {};
 		string buildIR(CFG *cfg);
-		int genererCodeAssembleur(map<string, pair<Type, int>> *, string *codeAss);
 		string toString();
 		int eval();
 		void analyse(map<string,vector<int>> & staticAnalysis,list<string> & errors,list<string> & warnings);

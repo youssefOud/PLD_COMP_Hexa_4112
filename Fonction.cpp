@@ -105,36 +105,6 @@ void Fonction::generateST(){
 		}
 	}
 }
-
-
-string Fonction::genererCodeAssembleur(){
-
-	string assembleur = "";
-	assembleur += ".text                       # section declaration\r\n";
-	assembleur += ".global main                # entry point\r\n";
-	assembleur += "\r\n";
-
-	assembleur += "main: \r\n";
-	assembleur += "# prologue \r\n";
-	assembleur += "pushq %rbp # save %rbp on the stack \r\n";
-	assembleur += "movq %rsp, %rbp # define %rbp for the current function \r\n";
-
-	assembleur += "# body \r\n";
-	
-	for(list<Instruction*>::iterator it = this->instructions.begin(); it != this->instructions.end(); it++){
-		// on ne fait rien quand c'est juste une déclaration
-		//if ((*it)->getClassName() != 1) {
-			assembleur+= (*it)->genererCodeAssembleur(&symbolTable);
-		//}
-	}
-	
-	assembleur += "# epilogue \r\n";
-	assembleur += "popq %rbp # restore %rbp from the stack \r\n";
-	assembleur += "ret # return to the caller (here the shell) \r\n";
-
-	return assembleur;
-}
-
 void Fonction::generateSA(){
 	for(list<Instruction*>::iterator it = this->instructions.begin(); it != this->instructions.end(); it++){
 

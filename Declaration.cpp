@@ -75,9 +75,6 @@ int Declaration::getClassName(){
 	return 1;
 }
 
-string Declaration::genererCodeAssembleur(map<string, pair<Type, int>> *st){
-	return "";
-}
 
 // TODO : A verifier
 string Declaration::buildIR(CFG *cfg) {

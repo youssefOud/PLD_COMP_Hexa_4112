@@ -11,11 +11,9 @@ IRInstr::IRInstr(BasicBlock* bb_, Operation op_, Type t_, vector<string> params_
 void IRInstr::genererCodeAssembleur(ostream &o) {
 	switch (op) {
 		case (ldconst) : {
-			cout << "Generation code assembleur : ldconst" << endl;
 			// récuperer offset du premier argument et le mettre après le -
 			int offsetVar = bb->cfg->getOffsetFromSymbolTable(params[0]);
 			o << "movq $" << params[1] << ", " << to_string(offsetVar) << "(%rbp)\r\n";
-			cout << "Fin Generation code assembleur : ldconst" << endl;
 			break;
 		}
 		case (add) : {
@@ -51,9 +49,6 @@ void IRInstr::genererCodeAssembleur(ostream &o) {
 		case (rmem) :
 			break;
 		case (wmem) : {
-			cout << "Generation code assembleur : wmem" << endl;
-			cout << params[0] << endl;
-			cout << params[1] << endl;
 			int offset = bb->cfg->getOffsetFromSymbolTable(params[1]);
 			if (!params[0].compare("!rax")) {
 				o << "movq " << to_string(offset) << "(%rbp), %rax\r\n";
@@ -62,7 +57,6 @@ void IRInstr::genererCodeAssembleur(ostream &o) {
 				o << "movq " << to_string(offset) << "(%rbp), %rax\r\n";	
 				o << "movq %rax, " << to_string(offsetParams0) << "(%rbp)\r\n";
 			}
-			cout << "Fin Generation code assembleur : wmem" << endl;
 			break;
 		}
 		case (call) :
