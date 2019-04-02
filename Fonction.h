@@ -16,7 +16,7 @@ class Fonction{
 
 	public:
 		Fonction();
-		Fonction(string, string, list<Instruction*> instructions);
+		Fonction(string, string, list<Instruction*> instructions/*, DefAppel*/);
 		~Fonction();
 		
 		string getId();
@@ -36,6 +36,7 @@ class Fonction{
 		void displayWarnings();
 		void displayErrors();
 		map<string,pair<Type, int>> *getST();
+		int getNumberOfErrors();
 
 	private:
 		string id;

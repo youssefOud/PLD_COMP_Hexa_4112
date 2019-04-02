@@ -5,3 +5,6 @@ default:
 	$(ANTLR) -visitor -no-listener -Dlanguage=Cpp -o antlr4  expr.g4
 	clang++ -DTRACE -g -std=c++11 -I antlr4/ -I $(ANTLRRUNTIME)/antlr4-runtime/ *.cpp antlr4/*.cpp -o exe $(ANTLRRUNTIME)/lib/libantlr4-runtime.a
 
+debug:
+	$(ANTLR) -visitor -no-listener -Dlanguage=Cpp -o antlr4  expr.g4
+	clang++ -DTRACE -g -std=c++11 -DDEBUG_ENABLE -I antlr4/ -I $(ANTLRRUNTIME)/antlr4-runtime/ *.cpp antlr4/*.cpp -o exe $(ANTLRRUNTIME)/lib/libantlr4-runtime.a
