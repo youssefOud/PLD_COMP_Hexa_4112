@@ -4,11 +4,13 @@
 #include <list>
 #include <vector>
 #include "Enum.h"
-#include "Instruction.h"
+
 
 using namespace std;
 
 extern int nextFree;
+
+class Instruction;
 
 class Fonction{
 
@@ -18,7 +20,7 @@ class Fonction{
 		~Fonction();
 		
 		string getId();
-		list<Instruction*> getInstructions();
+		list<Instruction*> * getInstructions();
 		Type getType();
 		void setId(string id);
 		void setInstructions (list<Instruction*> instructions);

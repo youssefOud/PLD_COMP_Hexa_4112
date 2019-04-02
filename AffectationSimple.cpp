@@ -20,6 +20,7 @@ string AffectationSimple::genererCodeAssembleur(map<string, pair<Type, int>> *st
 }
 
 string AffectationSimple::buildIR (CFG* cfg){
+	cout << "build IR AffectationSimple " << endl; 
 	string r = expr->buildIR(cfg);
 	string l = left->buildIR(cfg);
 	vector<string> params;

@@ -2,6 +2,7 @@
 #include "Declaration.h"
 #include "Definition.h"
 #include "AffectationSimple.h"
+#include "Instruction.h"
 #include "Return.h"
 #include <iostream>
 #include <utility>
@@ -27,8 +28,8 @@ string Fonction::getId(){
 	return id;
 }
 
-list<Instruction*> Fonction::getInstructions() {
-	return instructions;
+list<Instruction*> * Fonction::getInstructions() {
+	return &instructions;
 }
 
 Type Fonction::getType(){

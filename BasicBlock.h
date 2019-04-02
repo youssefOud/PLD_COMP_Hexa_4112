@@ -10,9 +10,10 @@
 #include "Enum.h"
 #include "IRInstr.h"
 
+#include "CFG.h"
+
 
 using namespace std;
-class CFG;
 
 /**  The class for a basic block */
 

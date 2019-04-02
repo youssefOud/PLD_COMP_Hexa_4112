@@ -22,12 +22,14 @@ string Definition::genererCodeAssembleur(map<string, pair<Type, int>> *st){
 }
 
 string Definition::buildIR (CFG* cfg){
+	cout << "build IR Definition " << endl; 
 	string r = expr->buildIR(cfg);
 	string l = left->buildIR(cfg);
 	vector<string> params;
 	params.push_back(l);
 	params.push_back(r);
 	cfg->addInstruction( IRInstr::Operation::wmem, params);
+	cout << "Fin build IR Definition " << endl; 
 	return r;
 }
 

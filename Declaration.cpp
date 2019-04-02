@@ -78,3 +78,8 @@ int Declaration::getClassName(){
 string Declaration::genererCodeAssembleur(map<string, pair<Type, int>> *st){
 	return "";
 }
+
+// TODO : A verifier
+string Declaration::buildIR(CFG *cfg) {
+	return "25";
+}

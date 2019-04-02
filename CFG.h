@@ -4,11 +4,17 @@
 #include <string>
 #include <iostream>
 #include <initializer_list>
-#include "BasicBlock.h"
 
 // TODO : A completer
 
+#include "Fonction.h"
+#include "Enum.h"
+
+#include "IRInstr.h"
+
 using namespace std;
+
+class BacicBlock;
 
 class CFG {
  public:

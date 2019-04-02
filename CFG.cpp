@@ -1,5 +1,5 @@
 #include "CFG.h"
-
+#include "BasicBlock.h"
 
 CFG::CFG(Fonction* f) {
 	ast = f;
@@ -11,9 +11,9 @@ CFG::CFG(Fonction* f) {
 }
 
 void CFG::genererIR(){
-	for(list<Instruction*>::iterator it = ast->getInstructions().begin(); it != ast->getInstructions().end(); it++){
-		(*it)->buildIR(this);
-	}
+	//for(list<Instruction*>::iterator it = ast->getInstructions().begin(); it != ast->getInstructions().end(); it++){
+	//	(*it)->buildIR(this);
+	//}
 }
 
 void CFG::add_bb(BasicBlock* bb) {
@@ -21,9 +21,11 @@ void CFG::add_bb(BasicBlock* bb) {
 }
 
 void CFG::genererCodeAssembleur(ostream& o) {
+	cout << "Generation code assembleur : CFG" << endl;
 	for(vector <BasicBlock*>::iterator it = this->bbs.begin(); it != this->bbs.end(); it++){
 		(*it)->genererCodeAssembleur(o);	
 	}
+	cout << "Fin Generation code assembleur : CFG" << endl;
 
 	// Au minimum deux basics blocs dans chaque CFG car ils convergent tous sur un basic bloc qui sera celui du return ou si c'est un void vers une étiquette qui correspondra à l'épilogue
 }
@@ -71,7 +73,7 @@ int CFG::getOffsetFromSymbolTable(string id){
     	if( it != symbolTable->end() ){
 		return symbolTable->find(id)->second.second;
 	}
-	else{
+	else {
 		return 1; //1 signifie que aucune variable de ce nom n'a été trouvée
 	}
 }

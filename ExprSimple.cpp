@@ -47,6 +47,7 @@ void ExprSimple::analyse(map<string,vector<int>> & staticAnalysis,list<string> &
 }
 
 string ExprSimple::buildIR (CFG* cfg){
+	cout << "build IR ExpressionSimple " << endl; 
 	if(!right->getId().empty()){
 		return right->getId();
 	}
