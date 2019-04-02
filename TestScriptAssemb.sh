@@ -1,4 +1,4 @@
-# Lancer le script avec ce format: ./nomScript nomFichier.cpp {-a,-c,-o}
+# Lancer le script avec ce format: ./nomScript /chemin/vers/fichier/nomFichier.cpp {-a,-c,-o}
 #On vérifie la validité du fichier : si plus de 4 ou moins de 1 parametres: erreur, si 1 un argument : on vérifie que c'est un cpp 
 if [ $# -gt 4 ] || [ $# -lt 1 ] 
 then 
@@ -7,6 +7,7 @@ else	#Nombre parametres correct, voir si le fichier est .c
 	
 	FICHIER=${@: -1}
 	EXT_FICHIER=${FICHIER##*.}
+	FICHIER_SORTIE=${FICHIER/.c/}
 	if [ $EXT_FICHIER != "c" ] 
 	then
 		echo "Erreur dans l'extension du fichier"
@@ -28,44 +29,46 @@ else	#Nombre parametres correct, voir si le fichier est .c
 			done
 		#Ici observation de parametres pour lancer le programme
 			if [ $ANALYSE -eq 1 -a $OPTIMISATION -eq 0 -a $CODE_GEN -eq 0 ]; then 	# Que Analyse statique
-				./exe -a test/$FICHIER
-			elif [ $ANALYSE -eq 0 -a $OPTIMISATION -eq 1 -a $CODE_GEN -eq 0 ]; then 
-				echo "OPTIMISATION"
+				./exe -a $FICHIER
 			elif [ $ANALYSE -eq 0 -a $OPTIMISATION -eq 0 -a $CODE_GEN -eq 1 ]; then
-			# 4 instructions sur les sujet
-				./exe -c test/$FICHIER
-				as -o main.o main.s
-				gcc main.o
-				./a.out
-				echo "Resultat : $?"
+				./exe -c $FICHIER
+				if [ -f $FICHIER_SORTIE.s ]; then
+					as -o $FICHIER_SORTIE.o $FICHIER_SORTIE.s
+					gcc $FICHIER_SORTIE.o
+					./a.out
+					echo $?
+				fi
 			elif [ $ANALYSE -eq 1 -a $OPTIMISATION -eq 1 -a $CODE_GEN -eq 0 ]; then
-				./exe -a test/$FICHIER
-				echo "OPTIMISATION"
+				./exe -a $FICHIER
 			elif [ $ANALYSE -eq 1 -a $OPTIMISATION -eq 0 -a $CODE_GEN -eq 1 ]; then
-				./exe -a -c test/$FICHIER
-				as -o main.o main.s
-				gcc main.o
-				./a.out
-				echo "Resultat : $?"
+				./exe -a -c $FICHIER
+				if [ -f $FICHIER_SORTIE.s ]; then
+					as -o $FICHIER_SORTIE.o $FICHIER_SORTIE.s
+					gcc $FICHIER_SORTIE.o
+					./a.out
+					echo $?
+				fi
 			elif [ $ANALYSE -eq 0 -a $OPTIMISATION -eq 1 -a $CODE_GEN -eq 1 ]; then
-				echo "OPTIMISATION"
-				./exe -c test/$FICHIER
-				as -o main.o main.s
-				gcc main.o
-				./a.out
-				echo $?
+				./exe -c $FICHIER
+				if [ -f $FICHIER_SORTIE.s ]; then
+					as -o $FICHIER_SORTIE.o $FICHIER_SORTIE.s
+					gcc $FICHIER_SORTIE.o
+					./a.out
+					echo $?
+				fi
 			elif [ $ANALYSE -eq 1 -a $OPTIMISATION -eq 1 -a $CODE_GEN -eq 1 ]; then
-				echo "OPTIMISATION"
-				./exe -a -c test/$FICHIER
-				as -o main.o main.s
-				gcc main.o
-				./a.out
-				echo "Resultat : $?"
+				./exe -a -c $FICHIER
+				if [ -f $FICHIER_SORTIE.s ]; then
+					as -o $FICHIER_SORTIE.o $FICHIER_SORTIE.s
+					gcc $FICHIER_SORTIE.o
+					./a.out
+					echo $?	
+				fi
 			fi
 		#---------------------------------------
 		else
 		# On lance l'exec avec le nom du fichier si tout est ok
-		echo "./exe test/$1"
+		echo "./exe $1"
 		fi
 	fi
 fi

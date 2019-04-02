@@ -1,11 +1,14 @@
+#pragma once
+
 #ifndef PLD_COMP_ENUM_H
 #define PLD_COMP_ENUM_H
 
 #ifndef YYTOKENTYPE
 # define YYTOKENTYPE
-enum type_e {
+
+typedef enum {
 	VIDE = 0,
 	INT = 1
-};
+} Type;
 #endif
 #endif //PLD_COMP_ENUM_H

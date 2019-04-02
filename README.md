@@ -18,9 +18,9 @@
     _Exemple_ : Si le fichier test porte le nom "operationArithmetique.c", le fichier compilé aura le nom suivant : "operationArithmetique.s"
     * '-o' : Cette option n'est pas encore disponible. Elle permet d'optimiser le code compilé.
     
-    En plus de ces options, vous devez spécifier en dernier argument le nom du fichier à analyser qui devra se trouver dans le dossier test. Les seuls fichiers autorisés sont de la forme **nomFichier.c**. 
+    En plus de ces options, vous devez spécifier en dernier argument le nom du fichier à analyser. Les seuls fichiers autorisés sont de la forme **/chemin/vers/fichier/nomFichier.c**. 
     
-    Pour lancer le script : ouvrir un terminal dans le dossier source et taper la ligne : **./nomScript.sh [-a] [-o] [-c] nomFichierTest.c**
+    Pour lancer le script : ouvrir un terminal dans le dossier source et taper la ligne : **./nomScript.sh [-a] [-o] [-c] chemin/vers/fichier/nomFichierTest.c**
     
 ## Fonctionnalités actuelles du compilateur
 
@@ -43,8 +43,9 @@
     * les variables utilisées mais non déclarées 
     * les variables utilisées mais non initialisées
     
-    Dans le cas où la syntaxe n'est pas respecté dans le fichier, une erreur sera relevée
+    Dans le cas où la syntaxe n'est pas respecté dans le fichier, une erreur sera relevée.
     
 ## Tests automatiques
 
-    Il est possible de lancer un set de test afin de vérifier après chaque changement que le compilateur fonctionne toujours correctement. .... (TODO : à compléter)
+    Il est possible de lancer un set de tests automatiques afin de vérifier après chaque changement que le compilateur fonctionne toujours correctement. Pour le faire, il faut lancer le script test.py en tapant la commande suivante : python test.py 
+    Vous obtiendrez une liste avec le nom du fichier testé suivi d'un "True" ou "False" spécifiant si le test est passé ou pas.

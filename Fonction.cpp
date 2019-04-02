@@ -2,6 +2,7 @@
 #include "Declaration.h"
 #include "Definition.h"
 #include "AffectationSimple.h"
+#include "Instruction.h"
 #include "Return.h"
 #include <iostream>
 #include <utility>
@@ -9,6 +10,7 @@
 using namespace std;
 
 int nextFree = -8;
+
 
 Fonction::Fonction(string nomFct, string typeFct, list<Instruction*> instr, DefAppel * da) {
 	id = nomFct;
@@ -22,7 +24,6 @@ Fonction::~Fonction() {
 		delete *it;	
 	}
 	delete defAppel;
-	//delete instructions;
 }
 
 string Fonction::getId(){
@@ -33,11 +34,11 @@ DefAppel* Fonction::getDefAppel(){
 	return defAppel;
 }
 
-list<Instruction*> Fonction::getInstructions() {
-	return instructions;
+list<Instruction*> * Fonction::getInstructions() {
+	return &instructions;
 }
 
-type_e Fonction::getType(){
+Type Fonction::getType(){
 	return type;
 }
 
@@ -53,8 +54,12 @@ void Fonction::addInstruction(Instruction* instr) {
 	instructions.push_back(instr);
 }
 
-type_e Fonction::convertTypeToInt(string nom) {
-	type_e t = VIDE;
+map<string,pair<Type, int>> *Fonction::getST() {
+	return &symbolTable;
+}
+
+Type Fonction::convertTypeToInt(string nom) {
+	Type t = VIDE;
 	if (nom == "") t = VIDE;
 	else if (nom == "int") t = INT;
 	return t; 
@@ -76,7 +81,7 @@ string Fonction::toString() {
 void Fonction::generateST(){
 	for(list<Instruction*>::iterator it = this->instructions.begin(); it != this->instructions.end(); it++){
 		if((*it)->getClassName() == 1){  //Declaration
-			map<string,pair<int,int>>::iterator it2;
+			map<string,pair<Type,int>>::iterator it2;
 			it2 = this->symbolTable.find(((Declaration*)(*it))->getId());
 			if (it2 != symbolTable.end()) {	
 				// Existe deja dans la table des symboles : gérer cas d'erreur
@@ -84,7 +89,7 @@ void Fonction::generateST(){
 				errors.push_back("Declarations multiples de la variable "+ ((Declaration*)(*it))->getId());
 			} else {
 				// On commence les adresses à -8
-				pair<int, int> temp;
+				pair<Type, int> temp;
 				
 				this->symbolTable.insert(make_pair(((Declaration*)(*it))->getId(), make_pair(((Declaration*)(*it))->getType(),nextFree)));
 				nextFree-=8;
@@ -92,7 +97,7 @@ void Fonction::generateST(){
 		}
 		
 		else if((*it)->getClassName() == 2){ //Définition (Type d'affectation)
-			map<string,pair<int,int>>::iterator it2;
+			map<string,pair<Type,int>>::iterator it2;
 			it2 = this->symbolTable.find(((Definition*)(*it))->getLeft()->getId());
 			if (it2 != symbolTable.end()) {	
 				errors.push_back("Declarations multiples de la variable "+ ((Definition*)(*it))->getLeft()->getId());
@@ -104,39 +109,8 @@ void Fonction::generateST(){
 		}
 	}
 }
-
-
-string Fonction::genererCodeAssembleur(){
-
-	string assembleur = "";
-	assembleur += ".text                       # section declaration\r\n";
-	assembleur += ".global main                # entry point\r\n";
-	assembleur += "\r\n";
-
-	assembleur += "main: \r\n";
-	assembleur += "# prologue \r\n";
-	assembleur += "pushq %rbp # save %rbp on the stack \r\n";
-	assembleur += "movq %rsp, %rbp # define %rbp for the current function \r\n";
-
-	assembleur += "# body \r\n";
-	
-	for(list<Instruction*>::iterator it = this->instructions.begin(); it != this->instructions.end(); it++){
-		// on ne fait rien quand c'est juste une déclaration
-		//if ((*it)->getClassName() != 1) {
-			assembleur+= (*it)->genererCodeAssembleur(&symbolTable);
-		//}
-	}
-	
-	assembleur += "# epilogue \r\n";
-	assembleur += "popq %rbp # restore %rbp from the stack \r\n";
-	assembleur += "ret # return to the caller (here the shell) \r\n";
-
-	return assembleur;
-}
-
 void Fonction::generateSA(){
 	for(list<Instruction*>::iterator it = this->instructions.begin(); it != this->instructions.end(); it++){
-
 		if((*it)->getClassName() == 1){  //Declaration
 			map<string,vector<int>>::iterator it2;
 			it2 = this->staticAnalysis.find(((Declaration*)(*it))->getId());
@@ -195,7 +169,7 @@ void Fonction::generateSA(){
 	void Fonction::displaySymbolTable(){
 		cout << "SymbolTable : "<< endl;
 		cout << "ID TYPE ADD"<<endl;
-		for(map<string,pair<int,int>>::iterator it=symbolTable.begin() ; it!=symbolTable.end() ; ++it)
+		for(map<string,pair<Type,int>>::iterator it=symbolTable.begin() ; it!=symbolTable.end() ; ++it)
 		{
 			cout<< (*it).first << " " <<(*it).second.first << "   " << (*it).second.second <<endl;
 		}
@@ -229,5 +203,3 @@ void Fonction::generateSA(){
 	int Fonction::getNumberOfErrors(){
 		return errors.size();
 	}
-
-

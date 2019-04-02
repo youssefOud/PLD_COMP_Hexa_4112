@@ -15,6 +15,7 @@ class ExprNeg : public Instruction{
 		string toString();
 		int eval();
 		void analyse(map<string,vector<int>> & staticAnalysis,list<string> & errors,list<string> & warnings);
+		virtual string buildIR(CFG *cfg) { return ""; };
 	
 	protected:
 		Instruction *expr;

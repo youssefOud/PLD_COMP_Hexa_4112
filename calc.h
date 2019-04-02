@@ -1,4 +1,9 @@
 // Generated from expr.g4 by ANTLR 4.7.1
+#ifdef DEBUG_ENABLE
+    #define debug(debugString) std::cout << (debugString) << std::endl;
+#else
+    #define debug(debugString)
+#endif
 
 #pragma once
 
@@ -248,8 +253,3 @@ protected :
   list<Fonction*> fonctions ;
 
 };
-
-
-
-
-
