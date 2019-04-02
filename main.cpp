@@ -88,7 +88,7 @@ int main(int argc, const char ** argv) {
 		  	  // Générer que si argument passé en option
 			    nomFichier.replace(nomFichier.length()-2, 3,".s");
 			    ofstream myfile(nomFichier);
-			    cfg->genererCodeAssembleur(nomFichier);
+			    cfg->genererCodeAssembleur(myfile);
 			    myfile.close();
 			  }else
 			  {
