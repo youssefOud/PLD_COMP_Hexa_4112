@@ -3,6 +3,7 @@
 #include <string.h>
 #include <iostream>
 #include "Expression.h"
+#include "Enum.h"
 
 using namespace std;
 
@@ -11,7 +12,8 @@ class ExprPlus : public Expression{
 		ExprPlus() {};
 		ExprPlus(Expression* e1, Expression *e2) :expr1(e1), expr2(e2){};
 		virtual ~ExprPlus() {};
-		int genererCodeAssembleur(map<string, pair<int, int>> *, string *codeAss);
+		string buildIR(CFG *cfg);
+		int genererCodeAssembleur(map<string, pair<Type, int>> *, string *codeAss);
 		string toString();
 		int eval();
 		void analyse(map<string,vector<int>> & staticAnalysis,list<string> & errors,list<string> & warnings);

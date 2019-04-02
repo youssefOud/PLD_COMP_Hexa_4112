@@ -1,3 +1,5 @@
+#pragma once
+
 #ifndef PLD_COMP_AFFECTATION_SIMPLE_H
 #define PLD_COMP_AFFECTATION_SIMPLE_H
 
@@ -16,9 +18,11 @@ public:
 
 	AffectationSimple(Expression *e, LeftValue *l, string t) : Affectation(e, l, t) {};
 	~AffectationSimple() {} ;
-     string toString();
-     int getClassName();
-     string genererCodeAssembleur(map<string, pair<int, int>>*);
+     	string toString();
+     	int getClassName();
+	string buildIR(CFG *cfg);
+    	string genererCodeAssembleur(map<string, pair<Type, int>>*);
+	//string createNewVar();
   
 protected:
 

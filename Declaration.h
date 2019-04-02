@@ -1,3 +1,5 @@
+#pragma once
+
 #ifndef PLD_COMP_DECLARATION_H
 #define PLD_COMP_DECLARATION_H
 
@@ -6,6 +8,7 @@
 #include <string>
 #include <utility>
 #include <map>
+#include "Enum.h"
 
 using namespace std;
 
@@ -19,19 +22,20 @@ public:
     void setId(string nV);
     string getId();
 
-    void setType(int t);
-    int getType();
+    void setType(Type t);
+    Type getType();
     
    string stringifyType();
 	string toSmallString();
     string toString();
-	int convertTypeToInt(string);
+	Type convertTypeToInt(string);
 	int getClassName();
-        string genererCodeAssembleur(map<string, pair<int, int>>*);
+	string buildIR(CFG *cfg);
+        string genererCodeAssembleur(map<string, pair<Type, int>>*);
     
 private:
     string id;
-    int type;
+    Type type;
 };
 
 #endif //PLD_COMP_DECLARATION_H

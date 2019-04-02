@@ -1,3 +1,5 @@
+#pragma once
+
 #ifndef PLD_COMP_AFFECTATION_H
 #define PLD_COMP_AFFECTATION_H
 
@@ -7,6 +9,7 @@
 #include <utility>
 #include <map>
 #include "Expression.h"
+#include "Enum.h"
 
 using namespace std;
 
@@ -17,21 +20,22 @@ public:
 	Affectation(Expression *e, LeftValue *l, string t);
 	Affectation();
 	virtual ~Affectation();
-    virtual string toString() {return "Affectation"; };
-    virtual int getClassName()=0;
-    
-	int getType();	
-	void setType(int t);
+    	virtual string toString() {return "Affectation"; };
+    	virtual int getClassName()=0;
+	Type getType();	
+	void setType(Type t);
 	
 	Expression *getExpr();
     LeftValue *getLeft();	
-int convertTypeToInt(string);
-        virtual string genererCodeAssembleur(map<string, pair<int, int>> *)=0;
+Type convertTypeToInt(string);
+	virtual string buildIR(CFG *cfg) = 0;
+        virtual string genererCodeAssembleur(map<string, pair<Type, int>> *)=0;
+	//virtual string createNewVar()=0;
   
   
 
 protected:
-	int type;
+	Type type;
 	Expression *expr;
 	LeftValue *left;
 

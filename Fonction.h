@@ -3,12 +3,14 @@
 #include <map>
 #include <list>
 #include <vector>
-#include "Instruction.h"
 #include "Enum.h"
+
 
 using namespace std;
 
 extern int nextFree;
+
+class Instruction;
 
 class Fonction{
 
@@ -18,12 +20,12 @@ class Fonction{
 		~Fonction();
 		
 		string getId();
-		list<Instruction*> getInstructions();
-		type_e getType();
+		list<Instruction*> * getInstructions();
+		Type getType();
 		void setId(string id);
 		void setInstructions (list<Instruction*> instructions);
 		void addInstruction(Instruction* instr);
-		type_e convertTypeToInt(string nom); 
+		Type convertTypeToInt(string nom); 
 		string toString();
 		void generateST();
 		string genererCodeAssembleur();
@@ -33,13 +35,14 @@ class Fonction{
 		void displayStaticAnalysis();
 		void displayWarnings();
 		void displayErrors();
+		map<string,pair<Type, int>> *getST();
 		int getNumberOfErrors();
 
 	private:
 		string id;
 		list <Instruction*> instructions;
-		map<string,pair<int, int>> symbolTable;
-		type_e type;
+		map<string,pair<Type, int>> symbolTable;
+		Type type;
 		map<string,vector<int>> staticAnalysis;
 		list<string> errors;
 		list<string> warnings;

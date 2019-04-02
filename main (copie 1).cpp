@@ -1,16 +1,14 @@
 #include <iostream>
 #include <fstream>
-#include <string.h>
 #include "antlr4-runtime.h"
 #include "exprLexer.h"
 #include "exprParser.h"
 #include "exprBaseVisitor.h"
 #include "calc.h"
-
 using namespace antlr4;
 using namespace std;
 int main(int argc, const char ** argv) {
-  
+	
   bool a,c,o = false;
   for (int i = 1; i<argc ; i++) {
     string s(argv[i]);
@@ -24,7 +22,7 @@ int main(int argc, const char ** argv) {
         o = true;
     }
   }
-	
+	cout << "nomFichier" << endl;
   string nomFichier(argv[argc-1]);
 	ifstream myReadFile;
 	myReadFile.open(nomFichier);
@@ -35,6 +33,7 @@ int main(int argc, const char ** argv) {
 		while (!myReadFile.eof()) {
 				getline(myReadFile,temp);
 				output = output + temp;
+		       // myReadFile >> output;
 		}
 	}
 	myReadFile.close();
@@ -46,58 +45,55 @@ int main(int argc, const char ** argv) {
 
 	exprParser parser(&tokens);
 	tree::ParseTree* tree = parser.function();
-
+	cout << "Avant visite de l'arbre" << endl;
 	if(parser.getNumberOfSyntaxErrors() == 0){
 		calc visitor;
 		visitor.visit(tree);
 		
 		// Une fois l'AST construit, on le parcours pour renseigner la table des symboles
 		list<Fonction*> fonctions = (list<Fonction*>)visitor.getFonctions();
-		
-		//A partir des fonctions que nous avons, nous nous assurons d'abord qu'il existe bien une fonction main ! 
-		bool mainFound = false;
-		for(list<Fonction*>::iterator it=fonctions.begin() ; it!=fonctions.end() ; ++it){
-			if((*it)->getId() == "main"){
-				mainFound = true;
+		for(list<Fonction*>::iterator it=fonctions.begin() ; it!=fonctions.end() ; ++it) 
+		{
+		  (*it)->generateST();
+			cout << "creation cfg" << endl;
+			CFG * cfg = new CFG((*it));
+		  //cfg->genererIR();
+		int compteur = 0;
+			for(list<Instruction*>::iterator it2 = (*it)->getInstructions()->begin(); it2 != (*it)->getInstructions()->end(); it2++){
+				cout << "instruction numero " << compteur++ << " " << (*it2)->toString() << endl;
+				cout << (*it2)->buildIR(cfg);
+				cout << endl;
 			}
-		}
-		if(mainFound){
-			for(list<Fonction*>::iterator it=fonctions.begin() ; it!=fonctions.end() ; ++it) 
-			{
-			  (*it)->generateST();
-				CFG * cfg = new CFG((*it));
-				for(list<Instruction*>::iterator it2 = (*it)->getInstructions()->begin(); it2 != (*it)->getInstructions()->end(); it2++){
-					(*it2)->buildIR(cfg);
-				}
-			  (*it)->generateSA();
-			  (*it)->processSA();
-
+			ofstream myfiletest("./test.s");
+		    	cout << "Generation code assembleur" << endl;
+		  	cfg->genererCodeAssembleur(myfiletest);
+			
+			myfiletest.close();
+			cout << "code assembleur terminé" << endl;
+			
 			  if (a) {
 				  // Générer que si argument passé en option
-				   //(*it)->displaySymbolTable();
-				  //cout << endl;
-				  //(*it)->displayStaticAnalysis();
-				  //cout << endl;
+				  (*it)->generateSA();
+				  (*it)->processSA();
+				  (*it)->displaySymbolTable();
+				  cout << endl;
+				  (*it)->displayStaticAnalysis();
+				  cout << endl;
 				  (*it)->displayWarnings();
-				  //cout << endl;
+				  cout << endl;
 				  (*it)->displayErrors();
 			  }
 			  
-			  if (c && ((*it)->getNumberOfErrors()==0)) 
-			  {
+			  if (c) {
 		  	  // Générer que si argument passé en option
-			    nomFichier.replace(nomFichier.length()-2, 3,".s");
-			    ofstream myfile(nomFichier);
-			    cfg->genererCodeAssembleur(nomFichier);
+			    ofstream myfile("./main.s");
+			    myfile << (*it)->genererCodeAssembleur() << endl;
 			    myfile.close();
-			  }else
-			  {
-			    cerr << "Erreur ! Le fichier assembleur n'a pas été généré !" <<endl;
 			  }
-			}
-		}else{
-			cerr << "Erreur ! Aucune fonction main n'a été trouvé!" <<endl;
 		}
+	}else{
+		cerr << "ERROR ! My tree is not visited" << endl;
 	}
+
 	return 0;
 }

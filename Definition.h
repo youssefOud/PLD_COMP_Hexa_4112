@@ -1,3 +1,5 @@
+#pragma once
+
 #ifndef PLD_COMP_DEFINITION_H
 #define PLD_COMP_DEFINITION_H
 
@@ -18,7 +20,8 @@ public:
 	~Definition() {};
      string toString();
      int getClassName();
-     string genererCodeAssembleur(map<string, pair<int, int>>*);
+	string buildIR(CFG *cfg);
+     string genererCodeAssembleur(map<string, pair<Type, int>>*);
   
 protected:
 

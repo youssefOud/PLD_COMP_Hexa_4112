@@ -2,7 +2,7 @@
 
 Declaration::Declaration(std::string nomVar, std::string varType)
 {
-    id = nomVar;
+    	id = nomVar;
 	type = convertTypeToInt(varType);
 }
 
@@ -20,12 +20,12 @@ std::string Declaration::getId()
     return id;
 }
 
-void Declaration::setType(int t)
+void Declaration::setType(Type t)
 {
     type = t;
 }
 
-int Declaration::getType()
+Type Declaration::getType()
 {
     return type;
 }
@@ -64,10 +64,10 @@ std::string Declaration::toString()
     return print;
 }
 
-int Declaration::convertTypeToInt(string nom) {
-	type_e t = VIDE;
-	if (nom == "") t = VIDE;
-	else if (nom == "int") t = INT;
+Type Declaration::convertTypeToInt(string nom) {
+	Type t = Type::VIDE;
+	if (nom == "") t = Type::VIDE;
+	else if (nom == "int") t = Type::INT;
 	return t; 
 }
 
@@ -75,6 +75,11 @@ int Declaration::getClassName(){
 	return 1;
 }
 
-string Declaration::genererCodeAssembleur(map<string, pair<int, int>> *st){
+string Declaration::genererCodeAssembleur(map<string, pair<Type, int>> *st){
 	return "";
+}
+
+// TODO : A verifier
+string Declaration::buildIR(CFG *cfg) {
+	return "25";
 }
