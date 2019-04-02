@@ -8,7 +8,7 @@
 
 using namespace std;
 
-class ExprSimple : public Expression{
+class ExprSimple : public Instruction{
 	public:
 		ExprSimple() {};
 		ExprSimple(RightValue* r) :right(r){};

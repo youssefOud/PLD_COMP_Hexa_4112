@@ -7,10 +7,9 @@ Return::~Return()
 
 }
 
-Expression *Return::getExpr() {
+Instruction *Return::getExpr() {
     return expr;
 }
-
 
 string Return::buildIR(CFG *cfg){
 	//TODO

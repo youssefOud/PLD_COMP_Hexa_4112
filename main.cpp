@@ -1,3 +1,9 @@
+#ifdef DEBUG_ENABLE
+    #define debug(debugString) std::cout << (debugString) << std::endl;
+#else
+    #define debug(debugString)
+#endif
+
 #include <iostream>
 #include <fstream>
 #include <string.h>
@@ -45,7 +51,7 @@ int main(int argc, const char ** argv) {
 	CommonTokenStream tokens(&lexer);
 
 	exprParser parser(&tokens);
-	tree::ParseTree* tree = parser.function();
+	tree::ParseTree* tree = parser.fichier();
 
 	if(parser.getNumberOfSyntaxErrors() == 0){
 		calc visitor;
@@ -55,22 +61,23 @@ int main(int argc, const char ** argv) {
 		list<Fonction*> fonctions = (list<Fonction*>)visitor.getFonctions();
 		
 		//A partir des fonctions que nous avons, nous nous assurons d'abord qu'il existe bien une fonction main ! 
-		bool mainFound = false;
-		for(list<Fonction*>::iterator it=fonctions.begin() ; it!=fonctions.end() ; ++it){
+		int numberOfMains =0;
+		for(list<Fonction*>::iterator it=fonctions.begin() ; it!=fonctions.end() && numberOfMains<2 ; ++it){
 			if((*it)->getId() == "main"){
-				mainFound = true;
+				numberOfMains++;
 			}
 		}
-		if(mainFound){
+		if(numberOfMains==1){
 			for(list<Fonction*>::iterator it=fonctions.begin() ; it!=fonctions.end() ; ++it) 
 			{
-			  (*it)->generateST();
+				debug((*it)->toString());
+			  	(*it)->generateST();
 				CFG * cfg = new CFG((*it));
 				for(list<Instruction*>::iterator it2 = (*it)->getInstructions()->begin(); it2 != (*it)->getInstructions()->end(); it2++){
 					(*it2)->buildIR(cfg);
 				}
-			  (*it)->generateSA();
-			  (*it)->processSA();
+				  (*it)->generateSA();
+				  (*it)->processSA();
 
 			  if (a) {
 				  // Générer que si argument passé en option
@@ -90,14 +97,21 @@ int main(int argc, const char ** argv) {
 			    ofstream myfile(nomFichier);
 			    cfg->genererCodeAssembleur(myfile);
 			    myfile.close();
-			  }else
+			  }else if ((*it)->getNumberOfErrors()>0 && c)
 			  {
 			    cerr << "Erreur ! Le fichier assembleur n'a pas été généré !" <<endl;
 			  }
 			}
-		}else{
-			cerr << "Erreur ! Aucune fonction main n'a été trouvé!" <<endl;
 		}
+		else if(numberOfMains ==0){
+			cerr << "Erreur ! Aucune fonction main n'a été trouvé !" <<endl;
+		}
+		else{
+			cerr << "Erreur ! Plusieurs fonctions main ont été trouvé !" <<endl;
+		}
+	}
+	else{
+		cerr << "Erreur ! L'arbre est mal formé, il ne pourra pas être visité." <<endl;
 	}
 	return 0;
 }

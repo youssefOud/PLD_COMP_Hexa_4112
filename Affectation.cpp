@@ -1,6 +1,6 @@
 #include "Affectation.h"
 
-Affectation::Affectation(Expression *e, LeftValue *l, string t) {
+Affectation::Affectation(Instruction *e, LeftValue *l, string t) {
 	expr=e;
 	left=l;
 	type=convertTypeToInt(t);
@@ -12,7 +12,7 @@ Affectation::~Affectation()
 	
 }
 
-Expression *Affectation::getExpr() {
+Instruction *Affectation::getExpr() {
     return expr;
 }
 

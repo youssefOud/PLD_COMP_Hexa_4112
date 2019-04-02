@@ -17,7 +17,7 @@ class Affectation : public Instruction {
 
 public:
 
-	Affectation(Expression *e, LeftValue *l, string t);
+	Affectation(Instruction *e, LeftValue *l, string t);
 	Affectation();
 	virtual ~Affectation();
     	virtual string toString() {return "Affectation"; };
@@ -25,7 +25,7 @@ public:
 	Type getType();	
 	void setType(Type t);
 	
-	Expression *getExpr();
+	Instruction *getExpr();
     LeftValue *getLeft();	
 Type convertTypeToInt(string);
 	virtual string buildIR(CFG *cfg) = 0;
@@ -34,8 +34,8 @@ Type convertTypeToInt(string);
   
 
 protected:
+	Instruction *expr;
 	Type type;
-	Expression *expr;
 	LeftValue *left;
 
 private:

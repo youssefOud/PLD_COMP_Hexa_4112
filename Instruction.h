@@ -8,6 +8,8 @@
 #include "RightValue.h"
 #include <utility>
 #include <map>
+#include <vector>
+#include <list>
 #include "CFG.h"
 #include "IRInstr.h"
 
@@ -20,13 +22,14 @@ public:
 
 	Instruction();
 	virtual ~Instruction();
-  virtual string toString() {return "instruction"; };
-  virtual int getClassName()=0;
+  	virtual string toString() {return "instruction"; };
+ 	virtual int getClassName(){return -1;};
+	virtual int eval() {return 0;};
 	virtual string buildIR(CFG *cfg) = 0;
-  //virtual string getId();
-  //virtual int getType();
-  //virtual RightValue *getRight();
-  //virtual LeftValue *getLeft();	
+
+	virtual int genererCodeAssembleur(map<string, pair<int, int>> *, string *codeAss) {return 0;};
+	virtual void analyse(map<string,vector<int>> & staticAnalysis,list<string> & errors,list<string> & warnings) {};
+  	virtual string genererCodeAssembleur(map<string, pair<int, int>> *) {return "";};
 
 protected:
 

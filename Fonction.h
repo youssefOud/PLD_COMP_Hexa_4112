@@ -4,6 +4,7 @@
 #include <list>
 #include <vector>
 #include "Enum.h"
+#include "DefAppel.h"
 
 
 using namespace std;
@@ -16,10 +17,11 @@ class Fonction{
 
 	public:
 		Fonction();
-		Fonction(string, string, list<Instruction*> instructions/*, DefAppel*/);
+		Fonction(string, string, list<Instruction*> instructions, DefAppel *);
 		~Fonction();
-		
 		string getId();
+		DefAppel* getDefAppel();
+		
 		list<Instruction*> * getInstructions();
 		Type getType();
 		void setId(string id);
@@ -45,4 +47,5 @@ class Fonction{
 		map<string,vector<int>> staticAnalysis;
 		list<string> errors;
 		list<string> warnings;
+		DefAppel* defAppel;
 };

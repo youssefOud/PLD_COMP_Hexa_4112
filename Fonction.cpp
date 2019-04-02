@@ -12,22 +12,26 @@ using namespace std;
 int nextFree = -8;
 
 
-Fonction::Fonction(string nomFct, string typeFct, list<Instruction*> instr/*, DefAppel da*/) {
+Fonction::Fonction(string nomFct, string typeFct, list<Instruction*> instr, DefAppel * da) {
 	id = nomFct;
 	type = convertTypeToInt(typeFct);
 	instructions = instr;
-	//defAppel = da;
+	defAppel = da;
 }
 
 Fonction::~Fonction() {
 	for (list<Instruction*>::iterator it = instructions.begin(); it != instructions.end(); it++) {
 		delete *it;	
 	}
-	//delete instructions;
+	delete defAppel;
 }
 
 string Fonction::getId(){
 	return id;
+}
+
+DefAppel* Fonction::getDefAppel(){
+	return defAppel;
 }
 
 list<Instruction*> * Fonction::getInstructions() {
@@ -107,7 +111,6 @@ void Fonction::generateST(){
 }
 void Fonction::generateSA(){
 	for(list<Instruction*>::iterator it = this->instructions.begin(); it != this->instructions.end(); it++){
-
 		if((*it)->getClassName() == 1){  //Declaration
 			map<string,vector<int>>::iterator it2;
 			it2 = this->staticAnalysis.find(((Declaration*)(*it))->getId());

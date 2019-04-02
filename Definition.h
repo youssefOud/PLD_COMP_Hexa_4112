@@ -16,7 +16,7 @@ class Definition : public Affectation {
 
 public:
 
-	Definition(Expression *e, LeftValue *l, string t):Affectation(e, l, t) {};
+	Definition(Instruction *e, LeftValue *l, string t):Affectation(e, l, t) {};
 	~Definition() {};
      string toString();
      int getClassName();

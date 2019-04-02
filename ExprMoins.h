@@ -7,10 +7,10 @@
 
 using namespace std;
 
-class ExprMoins : public Expression{
+class ExprMoins : public Instruction{
 	public:
 		ExprMoins() {};
-		ExprMoins(Expression* e1, Expression *e2) :expr1(e1), expr2(e2){};
+		ExprMoins(Instruction* e1, Instruction *e2) :expr1(e1), expr2(e2){};
 		virtual ~ExprMoins() {};
 		string buildIR(CFG *cfg);
 		string toString();
@@ -18,6 +18,6 @@ class ExprMoins : public Expression{
 		void analyse(map<string,vector<int>> & staticAnalysis,list<string> & errors,list<string> & warnings);
 	
 	protected:
-		Expression *expr1;
-		Expression *expr2;
+		Instruction *expr1;
+		Instruction *expr2;
 };
