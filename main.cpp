@@ -7,11 +7,14 @@
 #include <iostream>
 #include <fstream>
 #include <string.h>
+#include <utility>
+#include <map>
 #include "antlr4-runtime.h"
 #include "exprLexer.h"
 #include "exprParser.h"
 #include "exprBaseVisitor.h"
 #include "calc.h"
+#include "DefAppel.h"
 
 using namespace antlr4;
 using namespace std;
@@ -53,21 +56,32 @@ int main(int argc, const char ** argv) {
 	exprParser parser(&tokens);
 	tree::ParseTree* tree = parser.fichier();
 
+	
+
 	if(parser.getNumberOfSyntaxErrors() == 0){
+
 		calc visitor;
 		visitor.visit(tree);
 		
 		// Une fois l'AST construit, on le parcours pour renseigner la table des symboles
 		list<Fonction*> fonctions = (list<Fonction*>)visitor.getFonctions();
-		
+		multimap<string,pair<Type,DefAppel *>> declarations;
 		//A partir des fonctions que nous avons, nous nous assurons d'abord qu'il existe bien une fonction main ! 
 		int numberOfMains =0;
 		for(list<Fonction*>::iterator it=fonctions.begin() ; it!=fonctions.end() && numberOfMains<2 ; ++it){
+			declarations.insert(make_pair((*it)->getId(),make_pair((*it)->getType(),(*it)->getDefAppel())));
 			if((*it)->getId() == "main"){
 				numberOfMains++;
 			}
 		}
-		if(numberOfMains==1){
+		//On vérifie qu'il ny a pas eu de définitions multiples d'une fonction
+		set<string> fctRedef;
+		for(auto it=declarations.begin() ; it!=declarations.end()  ; ++it){
+			if(declarations.count(it->first)>1){
+				fctRedef.insert(it->first);
+			}
+		}
+		if(fctRedef.size()==0 && numberOfMains==1){
 			for(list<Fonction*>::iterator it=fonctions.begin() ; it!=fonctions.end() ; ++it) 
 			{
 				debug((*it)->toString());
@@ -103,11 +117,19 @@ int main(int argc, const char ** argv) {
 			  }
 			}
 		}
-		else if(numberOfMains ==0){
+
+		if(numberOfMains ==0){
 			cerr << "Erreur ! Aucune fonction main n'a été trouvé !" <<endl;
 		}
-		else{
+		else if(numberOfMains ==2){
 			cerr << "Erreur ! Plusieurs fonctions main ont été trouvé !" <<endl;
+		}
+		if(fctRedef.size()!=0){
+			cerr << "Erreur ! Multiples définitions des fonctions " ;
+			for(auto it=fctRedef.begin() ; it!=fctRedef.end()  ; ++it){
+				cout<<*it<<" ";
+			}
+			cerr << "!"<<endl;
 		}
 	}
 	else{

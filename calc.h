@@ -142,25 +142,29 @@ cout<<"visitfctsansparam"<<endl;
     return new LeftValue((string) context->ID()->getText());
   }
 
-  virtual antlrcpp::Any visitExprNeg(exprParser::ExprNegContext *ctx) override {
+  /*virtual antlrcpp::Any visitExprNeg(exprParser::ExprNegContext *ctx) override {
     Instruction * expr = new ExprNeg((Instruction *) visit(ctx->expression()));
     return expr;
-  }
+  }*/
   
   virtual antlrcpp::Any visitExprApp(exprParser::ExprAppContext *ctx) override {
     return visit(ctx->appel());
   }
   
-  virtual antlrcpp::Any visitExprAdd(exprParser::ExprAddContext *context) override {
-    Instruction * expr = new ExprPlus((Instruction *) visit(context->expression(0)), (Instruction *)visit(context->expression(1)));
+
+	virtual antlrcpp::Any visitExprAddMinus(exprParser::ExprAddMinusContext *ctx) override {
+		Instruction * expr;
+		//debug ((string) ctx->op());
+		if( ctx->op->getText() == "+"){
+			 expr = new ExprPlus((Instruction *) visit(ctx->expression(0)), (Instruction *)visit(ctx->expression(1)));
+		}
+		else {
+			expr = new ExprMoins((Instruction *) visit(ctx->expression(0)), (Instruction *)visit(ctx->expression(1)));
+		}
+    
     return expr;
   }
-  
-  virtual antlrcpp::Any visitExprMinus(exprParser::ExprMinusContext *context) override {
-    Instruction * expr = new ExprMoins((Instruction *) visit(context->expression(0)), (Instruction *)visit(context->expression(1)));
-    return expr;
-  }
-  
+ 
   virtual antlrcpp::Any visitExprPar(exprParser::ExprParContext *context) override {
     return visit(context->expression());
   }

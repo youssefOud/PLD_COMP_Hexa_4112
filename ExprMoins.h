@@ -15,7 +15,10 @@ class ExprMoins : public Instruction{
 		string buildIR(CFG *cfg);
 		string toString();
 		int eval();
+		int getClassName(){return 5;};
 		void analyse(map<string,vector<int>> & staticAnalysis,list<string> & errors,list<string> & warnings);
+		Instruction * getExpr1() { return expr1;}
+		Instruction * getExpr2() { return expr2;}
 	
 	protected:
 		Instruction *expr1;

@@ -4,6 +4,12 @@
 #include "AffectationSimple.h"
 #include "Instruction.h"
 #include "Return.h"
+#include "ExprMoins.h"
+#include "ExprPlus.h"
+#include "ExprMult.h"
+#include "ExprNeg.h"
+#include "ExprSimple.h"
+#include "Appel.h"
 #include <iostream>
 #include <utility>
 
@@ -151,6 +157,27 @@ void Fonction::generateSA(){
 		else if( (*it)->getClassName() == 4  ){ //Return
 			((Return*)(*it))->getExpr()->analyse(staticAnalysis,errors,warnings);			
 		}
+		else if( (*it)->getClassName() == 5 ){
+			((ExprMoins*)(*it))->getExpr1()->analyse(staticAnalysis,errors,warnings);
+			((ExprMoins*)(*it))->getExpr2()->analyse(staticAnalysis,errors,warnings);
+		}
+		else if( (*it)->getClassName() == 6 ){
+			((ExprPlus*)(*it))->getExpr1()->analyse(staticAnalysis,errors,warnings);
+			((ExprPlus*)(*it))->getExpr2()->analyse(staticAnalysis,errors,warnings);
+		}
+		else if( (*it)->getClassName() == 7 ){
+			((ExprMult*)(*it))->getExpr1()->analyse(staticAnalysis,errors,warnings);
+			((ExprMult*)(*it))->getExpr2()->analyse(staticAnalysis,errors,warnings);
+		}
+		else if( (*it)->getClassName() == 8 ){
+			((ExprNeg*)(*it))->getExpr()->analyse(staticAnalysis,errors,warnings);
+		}
+		else if( (*it)->getClassName() == 9 ){
+			((ExprSimple*)(*it))->analyse(staticAnalysis,errors,warnings);
+		}
+		/*else if( (*it)->getClassName() == 10 ){
+			((Appel*)(*it))->getExpr1()->analyse(staticAnalysis,errors,warnings);
+		}*/
 	}
 
 }

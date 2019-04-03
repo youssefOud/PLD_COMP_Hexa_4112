@@ -20,7 +20,7 @@ public:
 	void setInstructions (list<Instruction*>);
 	void addInstruction(Instruction* e);
 	string toString();
-	//TODO MODIFIER
+	int getClassName(){return 10;};
 	virtual int genererCodeAssembleur(map<string, pair<int, int>> *, string *codeAss) {return 0;};
 	virtual int eval() {return 0;};
 	virtual void analyse(map<string,vector<int>> & staticAnalysis,list<string> & errors,list<string> & warnings) {};
