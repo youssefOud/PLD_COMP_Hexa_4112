@@ -44,13 +44,13 @@ public:
   }
 
    virtual antlrcpp::Any visitFctUnique(exprParser::FctUniqueContext *ctx) override {
-	cout<<"visitfctunique"<<endl;
+
 	fonctions.push_back(visit(ctx->function()));
 	return NULL;
   }
 
   virtual antlrcpp::Any visitFctMult(exprParser::FctMultContext *ctx) override {
-	cout<<"fctfctmult"<<endl;	
+
 	fonctions.push_back(visit(ctx->function()));
 	visit(ctx->programme());
 	return NULL;
@@ -80,7 +80,7 @@ public:
   }
 
   virtual antlrcpp::Any visitFct(exprParser::FctContext *ctx) override {
-		cout<<"visitfct"<<endl;
+
 		DefAppel * defAppel=new DefAppel();
 		defAppel->setParameters(visit(ctx->defAppel()));
     return new Fonction((string) ctx->ID()->getText(),
@@ -88,7 +88,7 @@ public:
   }
   
   virtual antlrcpp::Any visitFctSansParam(exprParser::FctSansParamContext *ctx) override {
-cout<<"visitfctsansparam"<<endl;
+
     return new Fonction((string) ctx->ID()->getText(),
 			(string) ctx->typefct()->getText(), visit(ctx->corps()),new DefAppel());
   }
