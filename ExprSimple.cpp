@@ -10,7 +10,7 @@ int ExprSimple::eval(){
 	return right->getNbr();
 }
 
-void ExprSimple::analyse(map<string,vector<int>> & staticAnalysis,list<string> & errors,list<string> & warnings, multimap<string,pair<Type,DefAppel*>> & prototypes) {
+void ExprSimple::analyse(map<string,vector<int>> & staticAnalysis,list<string> & errors,list<string> & warnings, multimap<string,pair<Type,DefAppel*>> & prototypes, bool returnType) {
 
 	map<string,vector<int>>::iterator it2;
 	if(right->getId() != "")//c'est une variable

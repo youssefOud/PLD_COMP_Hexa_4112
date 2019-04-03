@@ -17,7 +17,7 @@ class ExprMult : public Instruction{
 		string toString();
 		int eval();
 		int getClassName(){return 6;};
-		virtual void analyse(map<string,vector<int>> & staticAnalysis,list<string> & errors,list<string> & warnings, multimap<string,pair<Type,DefAppel*>> & prototypes);
+		virtual void analyse(map<string,vector<int>> & staticAnalysis,list<string> & errors,list<string> & warnings, multimap<string,pair<Type,DefAppel*>> & prototypes,bool returnType);
 		Instruction * getExpr1() { return expr1;}
 		Instruction * getExpr2() { return expr2;}
 	

@@ -23,8 +23,9 @@ public:
 
 	int getClassName(){return 10;};
 	virtual int eval() {return 0;};
-	virtual void analyse(map<string,vector<int>> & staticAnalysis,list<string> & errors,list<string> & warnings, multimap<string,pair<Type,DefAppel*>> & 	prototypes) ;
+	virtual void analyse(map<string,vector<int>> & staticAnalysis,list<string> & errors,list<string> & warnings, multimap<string,pair<Type,DefAppel*>> & prototypes,bool returnType) ;
 	virtual string buildIR(CFG *cfg) { return ""; };
+
 
 	
 protected:

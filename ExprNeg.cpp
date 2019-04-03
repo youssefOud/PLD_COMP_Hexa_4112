@@ -28,6 +28,6 @@ int ExprNeg::eval(){
 	return -(expr->eval());
 }
 
-void ExprNeg::analyse(map<string,vector<int>> & staticAnalysis,list<string> & errors,list<string> & warnings, multimap<string,pair<Type,DefAppel*>> & prototypes) {
-	expr->analyse(staticAnalysis,errors,warnings,prototypes);
+void ExprNeg::analyse(map<string,vector<int>> & staticAnalysis,list<string> & errors,list<string> & warnings, multimap<string,pair<Type,DefAppel*>> & prototypes,bool returnType) {
+	expr->analyse(staticAnalysis,errors,warnings,prototypes,returnType);
 }
