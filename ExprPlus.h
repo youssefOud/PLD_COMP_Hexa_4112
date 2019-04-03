@@ -2,7 +2,7 @@
 #include "Fonction.h"
 #include <string.h>
 #include <iostream>
-#include "Expression.h"
+#include "Instruction.h"
 #include "Enum.h"
 
 using namespace std;
@@ -16,7 +16,8 @@ class ExprPlus : public Instruction{
 		string toString();
 		int eval();
 		int getClassName(){return 7;};
-		void analyse(map<string,vector<int>> & staticAnalysis,list<string> & errors,list<string> & warnings);
+		void analyse(map<string,vector<int>> & staticAnalysis,list<string> & errors,list<string> & warnings, multimap<string,pair<Type,DefAppel*>> & prototypes,bool returnType);	
+
 		Instruction * getExpr1() { return expr1;}
 		Instruction * getExpr2() { return expr2;}
 	

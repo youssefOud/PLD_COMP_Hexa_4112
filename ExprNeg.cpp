@@ -20,7 +20,6 @@ using namespace std;
 	//movq %rax, -32(%rbp) 
 }*/
 
-
 string ExprNeg::toString (){
 	return " de valeur "+to_string(eval())+"Expression "+expr->toString();
 }
@@ -29,6 +28,6 @@ int ExprNeg::eval(){
 	return -(expr->eval());
 }
 
-void ExprNeg::analyse(map<string,vector<int>> & staticAnalysis,list<string> & errors,list<string> & warnings){
-	expr->analyse(staticAnalysis,errors,warnings);
+void ExprNeg::analyse(map<string,vector<int>> & staticAnalysis,list<string> & errors,list<string> & warnings, multimap<string,pair<Type,DefAppel*>> & prototypes,bool returnType) {
+	expr->analyse(staticAnalysis,errors,warnings,prototypes,returnType);
 }

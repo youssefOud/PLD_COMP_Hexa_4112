@@ -26,7 +26,15 @@ for in_name in file_names :
 
 # compare output files with expected output
 for name in file_names :
+	print "-----------------------------------"
 	print name + ": " + str(filecmp.cmp(dir_output+name+output_name, dir_output+name+expect_name))
+	with open(dir_input+"/"+name+input_ext, 'r') as fin:
+    		print fin.read()
+	with open(dir_output+"/"+name+output_name, 'r') as fout:
+    		print "Resultat obtenu: " + fout.read()
+	with open(dir_output+"/"+name+expect_name, 'r') as fexp:
+    		print "Resultat attendu: " + fexp.read()
+	
 
 # execute input files containing warnings and errors
 input_files_erwarn = os.listdir(dir_input_erwarn)
@@ -39,5 +47,14 @@ for in_name in file_names_erwarn :
 	os.system(exec_name+" "+dir_input_erwarn+in_name+input_ext + " > "+dir_output_erwarn+in_name+output_name)
 
 for name in file_names_erwarn :
+	print "-----------------------------------"
 	print name + ": " + str(filecmp.cmp(dir_output_erwarn+name+output_name, dir_output_erwarn+name+expect_name))
+	with open(dir_input_erwarn+"/"+name+input_ext, 'r') as fin:
+    		print fin.read()
+	with open(dir_output_erwarn+"/"+name+output_name, 'r') as fout:
+    		print "Resultat obtenu: \n" + fout.read()
+	with open(dir_output_erwarn+"/"+name+expect_name, 'r') as fexp:
+    		print "Resultat attendu: \n" + fexp.read()
+	
+	
 

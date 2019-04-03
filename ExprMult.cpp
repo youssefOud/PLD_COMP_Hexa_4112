@@ -10,9 +10,9 @@ int ExprMult::eval(){
 	return expr1->eval()*expr2->eval();
 }
 
-void ExprMult::analyse(map<string,vector<int>> & staticAnalysis,list<string> & errors,list<string> & warnings){
-	expr1->analyse(staticAnalysis,errors,warnings);
-	expr2->analyse(staticAnalysis,errors,warnings);
+void ExprMult::analyse(map<string,vector<int>> & staticAnalysis,list<string> & errors,list<string> & warnings, multimap<string,pair<Type,DefAppel*>> & prototypes, bool returnType) {
+	expr1->analyse(staticAnalysis,errors,warnings,prototypes,returnType);
+	expr2->analyse(staticAnalysis,errors,warnings,prototypes,returnType);
 }
 
 string ExprMult::buildIR(CFG *cfg){
