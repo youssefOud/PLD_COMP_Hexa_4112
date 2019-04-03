@@ -26,7 +26,6 @@
 #include "ExprMult.h"
 #include "ExprPlus.h"
 #include "ExprMoins.h"
-#include "Expression.h"
 #include "ExprSimple.h"
 #include "ExprNeg.h"
 #include "Appel.h"

@@ -53,5 +53,27 @@ string Appel::toString() {
 	return print;
 }
 
+void Appel::analyse(map<string,vector<int>> & staticAnalysis,list<string> & errors,list<string> & warnings, multimap<string,pair<Type,DefAppel*>> & 	prototypes) {
+	//On commence par vérifier que la fonction a déjà été définie
+	bool hasBeenDefined=false;
+	for(auto it=prototypes.begin() ; !hasBeenDefined && it!=prototypes.end() ; ++it){
+			if(!it->first.compare(id)){
+				hasBeenDefined=true;
+			}
+	}
+	//Si elle n'a pas été définie, on s'arrête
+	if(!hasBeenDefined){
+		warnings.push_back("Fonction "+ id +" utilisee mais non definie");
+	}
+	//Si elle a déjà été définie
+	else{
+		//On 
+		for (list<Instruction*>::iterator it = expressions.begin(); it != expressions.end(); it++) {
+		analyse( staticAnalysis, errors, warnings,prototypes);	
+		}
+	}
+	
+}
+
 
 

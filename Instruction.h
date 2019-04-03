@@ -26,8 +26,7 @@ public:
  	virtual int getClassName(){return -1;};
 	virtual int eval() {return 0;};
 	virtual string buildIR(CFG *cfg) = 0;
-
-	virtual void analyse(map<string,vector<int>> & staticAnalysis,list<string> & errors,list<string> & warnings) {};
+	virtual void analyse(map<string,vector<int>> & staticAnalysis,list<string> & errors,list<string> & warnings, multimap<string,pair<Type,DefAppel*>> & 	prototypes) {};
 
 protected:
 

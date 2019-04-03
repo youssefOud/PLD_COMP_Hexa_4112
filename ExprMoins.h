@@ -1,9 +1,9 @@
 #pragma once
 
 #include "Fonction.h"
+#include "Instruction.h"
 #include <string.h>
 #include <iostream>
-#include "Expression.h"
 
 using namespace std;
 
@@ -16,7 +16,7 @@ class ExprMoins : public Instruction{
 		string toString();
 		int eval();
 		int getClassName(){return 5;};
-		void analyse(map<string,vector<int>> & staticAnalysis,list<string> & errors,list<string> & warnings);
+		virtual void analyse(map<string,vector<int>> & staticAnalysis,list<string> & errors,list<string> & warnings, multimap<string,pair<Type,DefAppel*>> & prototypes);
 		Instruction * getExpr1() { return expr1;}
 		Instruction * getExpr2() { return expr2;}
 	

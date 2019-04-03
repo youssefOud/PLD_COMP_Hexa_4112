@@ -2,7 +2,7 @@
 
 using namespace std;
 
-int ExprNeg::genererCodeAssembleur(map<string, pair<int, int>> *st, string *codeAss){
+/*int ExprNeg::genererCodeAssembleur(map<string, pair<int, int>> *st, string *codeAss){
 	int offset1 = expr->genererCodeAssembleur(st, codeAss);
 	
 	
@@ -18,7 +18,7 @@ int ExprNeg::genererCodeAssembleur(map<string, pair<int, int>> *st, string *code
 	//movq -16(%rbp), %rax # offset of a is -16
 	//addq -24(%rbp), %rax
 	//movq %rax, -32(%rbp) 
-}
+}*/
 
 string ExprNeg::toString (){
 	return " de valeur "+to_string(eval())+"Expression "+expr->toString();
@@ -28,6 +28,6 @@ int ExprNeg::eval(){
 	return -(expr->eval());
 }
 
-void ExprNeg::analyse(map<string,vector<int>> & staticAnalysis,list<string> & errors,list<string> & warnings){
-	expr->analyse(staticAnalysis,errors,warnings);
+void ExprNeg::analyse(map<string,vector<int>> & staticAnalysis,list<string> & errors,list<string> & warnings, multimap<string,pair<Type,DefAppel*>> & prototypes) {
+	expr->analyse(staticAnalysis,errors,warnings,prototypes);
 }

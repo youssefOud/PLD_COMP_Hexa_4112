@@ -2,7 +2,7 @@
 
 #include <string.h>
 #include <iostream>
-#include "Expression.h"
+#include "Instruction.h"
 #include "Fonction.h"
 #include "Enum.h"
 
@@ -17,7 +17,7 @@ class ExprMult : public Instruction{
 		string toString();
 		int eval();
 		int getClassName(){return 6;};
-		void analyse(map<string,vector<int>> & staticAnalysis,list<string> & errors,list<string> & warnings);
+		virtual void analyse(map<string,vector<int>> & staticAnalysis,list<string> & errors,list<string> & warnings, multimap<string,pair<Type,DefAppel*>> & prototypes);
 		Instruction * getExpr1() { return expr1;}
 		Instruction * getExpr2() { return expr2;}
 	
