@@ -59,8 +59,18 @@ void IRInstr::genererCodeAssembleur(ostream &o) {
 			}
 			break;
 		}
-		case (call) :
+		case (call) :{
+			if(!params[1].compare("putchar")){
+				int offsetParam = bb->cfg->getOffsetFromSymbolTable(params[2]);
+				int offsetDest = bb->cfg->getOffsetFromSymbolTable(params[0]);
+				o << "movq " << to_string(offsetParam) << "(%rbp), %edi\r\n";
+				o << "call putchar\r\n";
+				o << "movl %eax, " << to_string(offsetDest) << "(%rbp)\r\n";
+			}
+			else{
+			}
 			break;
+		}
 		case (cmp_eq) :
 			break;
 		case (cmp_lt) :

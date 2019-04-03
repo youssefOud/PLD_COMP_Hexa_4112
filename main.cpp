@@ -18,6 +18,13 @@
 
 using namespace antlr4;
 using namespace std;
+
+void gen_asm_prologue_general(ostream& o) {
+	o << ".text                       # section declaration\r\n";
+	o << ".global main                # entry point\r\n";
+	o << "\r\n";
+}
+
 int main(int argc, const char ** argv) {
   
   bool a,c,o = false;
@@ -81,12 +88,19 @@ int main(int argc, const char ** argv) {
 				fctRedef.insert(it->first);
 			}
 		}
+		ofstream myfile;
 		if(fctRedef.size()==0 && numberOfMains==1){
+			 //TODO Que faire en cas d'erreur dans une fonction, a changer pour le nombre d'erreur et création .s
+			if (c) {
+				nomFichier.replace(nomFichier.length()-2, 3,".s");
+			    	myfile.open(nomFichier);
+				gen_asm_prologue_general(myfile);			
+			}
 			for(list<Fonction*>::iterator it=fonctions.begin() ; it!=fonctions.end() ; ++it) 
 			{
 				debug((*it)->toString());
 			  	(*it)->generateST();
-				CFG * cfg = new CFG((*it));
+				CFG * cfg = new CFG((*it), &prototypes);
 				for(list<Instruction*>::iterator it2 = (*it)->getInstructions()->begin(); it2 != (*it)->getInstructions()->end(); it2++){
 					(*it2)->buildIR(cfg);
 				}
@@ -107,17 +121,15 @@ int main(int argc, const char ** argv) {
 			  if (c && ((*it)->getNumberOfErrors()==0)) 
 			  {
 		  	  // Générer que si argument passé en option
-			    nomFichier.replace(nomFichier.length()-2, 3,".s");
-			    ofstream myfile(nomFichier);
 			    cfg->genererCodeAssembleur(myfile);
-			    myfile.close();
-			  }else if ((*it)->getNumberOfErrors()>0 && c)
+			    
+			  } else if ((*it)->getNumberOfErrors()>0 && c)
 			  {
 			    cerr << "Erreur ! Le fichier assembleur n'a pas été généré !" <<endl;
 			  }
 			}
 		}
-
+		myfile.close();
 		if(numberOfMains ==0){
 			cerr << "Erreur ! Aucune fonction main n'a été trouvé !" <<endl;
 		}
