@@ -84,12 +84,12 @@ void Appel::analyse(map<string,vector<int>> & staticAnalysis,list<string> & erro
 	else{
 		//On commence par vérifier la compatiblité entre le prototype et l'appel au niveau du nombre de paramètres (comme int et char sont compatibles, 
 		//aucune vérification à faire au niveau des types
-		int nbParam = expressions.size();
-		int nbParamExpected = it->second.second->getParameters().size();
+		int nbParam = parametres.size();
+		int nbParamExpected = it->second.second->getParameters()->size();
 		if( nbParam == nbParamExpected ){ // Si on a le bon nombre de paramètres
 
 			//On vérifie chaque expression passée en paramètre
-			for (list<Instruction*>::iterator instr = expressions.begin(); instr != expressions.end(); instr++) {
+			for (list<Instruction*>::iterator instr = parametres.begin(); instr != parametres.end(); instr++) {
 				
 				(*instr)->analyse( staticAnalysis, errors, warnings,prototypes,returnType);	
 			}
