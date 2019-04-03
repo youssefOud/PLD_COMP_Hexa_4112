@@ -87,7 +87,7 @@ string Fonction::toString() {
 
 void Fonction::generateST(){
 	int compteurParam = 1;
-	for (unordered_multimap<string,string>::iterator itParam = defAppel->getParameters().begin(); itParam != defAppel->getParameters().end(); itParam++) {
+	for (unordered_multimap<string,string>::iterator itParam = defAppel->getParameters()->begin(); itParam != defAppel->getParameters()->end(); itParam++) {
 		// 1er : nom ; 2eme : type
 		Type t = convertStringToType((*itParam).second);
 		this->symbolTable.insert(make_pair ( (*itParam).first, make_pair(t,compteurParam++) ) );

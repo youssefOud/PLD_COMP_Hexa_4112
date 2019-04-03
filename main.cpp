@@ -107,6 +107,7 @@ int main(int argc, const char ** argv) {
 			{
 				debug((*it)->toString());
 			  	(*it)->generateST();
+				debug("apres ST");
 				CFG * cfg = new CFG((*it), &prototypes);
 				for(list<Instruction*>::iterator it2 = (*it)->getInstructions()->begin(); it2 != (*it)->getInstructions()->end(); it2++){
 					(*it2)->buildIR(cfg);

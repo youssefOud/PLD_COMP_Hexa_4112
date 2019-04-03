@@ -13,7 +13,7 @@ public:
 	DefAppel(unordered_multimap<string,string> par);
 	~DefAppel();
 	
-	unordered_multimap<string,string> getParameters(); 
+	unordered_multimap<string,string> * getParameters(); 
 	void setParameters(unordered_multimap<string,string>);
 	void addParameter(string type, string name);
 	string toString();

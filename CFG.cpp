@@ -52,6 +52,7 @@ void CFG::gen_asm_epilogue(ostream& o) {
 	o << "# epilogue \r\n";
 	o << "leave # restore %rbp from the stack \r\n";
 	o << "ret # return to the caller (here the shell) \r\n";
+	o << "\r\n";
 }
 
 void CFG::add_to_symbol_table(string name, Type t){

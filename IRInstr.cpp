@@ -13,7 +13,7 @@ void IRInstr::genererCodeAssembleur(ostream &o) {
 		case (ldconst) : {
 			// récuperer offset du premier argument et le mettre après le -
 			string offsetVar = getMemoryOffset(params[0]);
-			o << "movq $" << params[1] << ", " << offsetVar << "(%rbp)\r\n";
+			o << "movq $" << params[1] << ", " << offsetVar << "\r\n";
 			break;
 		}
 		case (add) : {
