@@ -61,11 +61,9 @@ public:
 
     virtual antlrcpp::Any visitExprApp(exprParser::ExprAppContext *context) = 0;
 
-    virtual antlrcpp::Any visitExprAdd(exprParser::ExprAddContext *context) = 0;
-
-    virtual antlrcpp::Any visitExprMinus(exprParser::ExprMinusContext *context) = 0;
-
     virtual antlrcpp::Any visitRightValue(exprParser::RightValueContext *context) = 0;
+
+    virtual antlrcpp::Any visitExprAddMinus(exprParser::ExprAddMinusContext *context) = 0;
 
     virtual antlrcpp::Any visitExprMult(exprParser::ExprMultContext *context) = 0;
 
@@ -83,6 +81,8 @@ public:
 
     virtual antlrcpp::Any visitReturn(exprParser::ReturnContext *context) = 0;
 
+    virtual antlrcpp::Any visitInstrMult(exprParser::InstrMultContext *context) = 0;
+
     virtual antlrcpp::Any visitInstrAff(exprParser::InstrAffContext *context) = 0;
 
     virtual antlrcpp::Any visitInstrDec(exprParser::InstrDecContext *context) = 0;
@@ -90,6 +90,10 @@ public:
     virtual antlrcpp::Any visitInstrExpr(exprParser::InstrExprContext *context) = 0;
 
     virtual antlrcpp::Any visitInstrRet(exprParser::InstrRetContext *context) = 0;
+
+    virtual antlrcpp::Any visitIfInstr(exprParser::IfInstrContext *context) = 0;
+
+    virtual antlrcpp::Any visitWhileInstr(exprParser::WhileInstrContext *context) = 0;
 
     virtual antlrcpp::Any visitInstr(exprParser::InstrContext *context) = 0;
 

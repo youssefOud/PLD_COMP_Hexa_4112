@@ -99,15 +99,11 @@ public:
     return visitChildren(ctx);
   }
 
-  virtual antlrcpp::Any visitExprAdd(exprParser::ExprAddContext *ctx) override {
-    return visitChildren(ctx);
-  }
-
-  virtual antlrcpp::Any visitExprMinus(exprParser::ExprMinusContext *ctx) override {
-    return visitChildren(ctx);
-  }
-
   virtual antlrcpp::Any visitRightValue(exprParser::RightValueContext *ctx) override {
+    return visitChildren(ctx);
+  }
+
+  virtual antlrcpp::Any visitExprAddMinus(exprParser::ExprAddMinusContext *ctx) override {
     return visitChildren(ctx);
   }
 
@@ -143,6 +139,10 @@ public:
     return visitChildren(ctx);
   }
 
+  virtual antlrcpp::Any visitInstrMult(exprParser::InstrMultContext *ctx) override {
+    return visitChildren(ctx);
+  }
+
   virtual antlrcpp::Any visitInstrAff(exprParser::InstrAffContext *ctx) override {
     return visitChildren(ctx);
   }
@@ -156,6 +156,14 @@ public:
   }
 
   virtual antlrcpp::Any visitInstrRet(exprParser::InstrRetContext *ctx) override {
+    return visitChildren(ctx);
+  }
+
+  virtual antlrcpp::Any visitIfInstr(exprParser::IfInstrContext *ctx) override {
+    return visitChildren(ctx);
+  }
+
+  virtual antlrcpp::Any visitWhileInstr(exprParser::WhileInstrContext *ctx) override {
     return visitChildren(ctx);
   }
 

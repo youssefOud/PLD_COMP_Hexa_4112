@@ -87,6 +87,11 @@ public:
 			(string) ctx->typefct()->getText(), visit(ctx->corps()),defAppel);
   }
   
+    
+	virtual antlrcpp::Any visitIfInstr(exprParser::IfInstrContext *context) override {
+    //return new Instruction(visit(ctx->IF());
+  }
+  
   virtual antlrcpp::Any visitFctSansParam(exprParser::FctSansParamContext *ctx) override {
 
     return new Fonction((string) ctx->ID()->getText(),
@@ -248,7 +253,19 @@ public:
     list<Instruction*> instructions = {visit(ctx->ret())};
     return instructions;
   }
-  
+
+
+	//TODO
+	virtual antlrcpp::Any visitWhileInstr(exprParser::WhileInstrContext *context) override {
+    return visit(ctx->IF());
+  }
+
+	//TODO
+  virtual antlrcpp::Any visitInstrMult(exprParser::InstrContext *context) override {
+   // list<Instruction*> instructions = {visit(ctx->ret())};
+    return NULL;
+  }
+
   list<Fonction*> getFonctions() {
     return fonctions;
   } 
