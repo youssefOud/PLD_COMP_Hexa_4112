@@ -64,6 +64,14 @@ else	#Nombre parametres correct, voir si le fichier est .c
 					./a.out
 					echo $?	
 				fi
+			elif [ $ANALYSE -eq 0 -a $OPTIMISATION -eq 0 -a $CODE_GEN -eq 0 ]; then
+				./exe -c $FICHIER
+				if [ -f $FICHIER_SORTIE.s ]; then
+					as -o $FICHIER_SORTIE.o $FICHIER_SORTIE.s
+					gcc $FICHIER_SORTIE.o
+					./a.out
+					echo $?
+				fi
 			fi
 		#---------------------------------------
 		else
