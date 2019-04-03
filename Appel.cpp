@@ -10,12 +10,12 @@ Appel::Appel(string nomFct) {
 Appel::Appel(string nomFct, list<Instruction*> l) {
 	id = nomFct;
 	for (list<Instruction*>::iterator it = l.begin(); it != l.end(); it++) {
-		expressions.push_back(*it);	
+		parametres.push_back(*it);	
 	}
 }
 
 Appel::~Appel() {
-	for (list<Instruction*>::iterator it = expressions.begin(); it != expressions.end(); it++) {
+	for (list<Instruction*>::iterator it = parametres.begin(); it != parametres.end(); it++) {
 		delete *it;	
 	}
 }
@@ -25,7 +25,7 @@ string Appel::getId(){
 }
 
 list<Instruction*> Appel::getExpressions() {
-	return expressions;
+	return parametres;
 }
 
 void Appel::setId(string nomFct) {
@@ -33,11 +33,11 @@ void Appel::setId(string nomFct) {
 }
 
 void Appel::setInstructions (list<Instruction*> e) {
-	expressions=e;
+	parametres=e;
 }
 
 void Appel::addInstruction(Instruction* e) {
-	expressions.push_back(e);
+	parametres.push_back(e);
 }
 
 
@@ -45,7 +45,7 @@ string Appel::toString() {
 	string print;
     	print += " Appel de la fct "+id;
     	print += " \r\n List<Expression*> \r\n ";
-	for (list<Instruction*>::iterator it = expressions.begin(); it != expressions.end(); it++) {
+	for (list<Instruction*>::iterator it = parametres.begin(); it != parametres.end(); it++) {
 		print += (*it)->toString()+"\r\n";	
 	}
 

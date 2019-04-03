@@ -109,11 +109,11 @@ int main(int argc, const char ** argv) {
 			  if (a) {
 				  // Générer que si argument passé en option
 				  (*it)->displaySymbolTable();
-				  cout << endl;
+				  //cout << endl;
 				  (*it)->displayStaticAnalysis();
-				  cout << endl;
+				  //cout << endl;
 				  (*it)->displayWarnings();
-				  cout << endl;
+				  //cout << endl;
 				  (*it)->displayErrors();
 			  }
 			  
@@ -140,7 +140,7 @@ int main(int argc, const char ** argv) {
 			if(fctRedef.size()!=0){
 				cerr << "Erreur ! Multiples définitions des fonctions " ;
 				for(auto it=fctRedef.begin() ; it!=fctRedef.end()  ; ++it){
-					cout<<*it<<" ";
+					cerr<<*it<<" ";
 				}
 				cerr << "!"<<endl;
 			}

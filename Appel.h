@@ -30,7 +30,7 @@ public:
 	
 protected:
 	string id;
-	list<Instruction*> expressions;
+	list<Instruction*> parametres;
 
 private:
 

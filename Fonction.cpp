@@ -202,20 +202,20 @@ void Fonction::generateSA(multimap<string,pair<Type,DefAppel*>> & prototypes){
 	}
 	
 	void Fonction::displaySymbolTable(){
-		cout << "SymbolTable : "<< endl;
-		cout << "ID TYPE ADD"<<endl;
+		//cout << "SymbolTable : "<< endl;
+		//cout << "ID TYPE ADD"<<endl;
 		for(map<string,pair<Type,int>>::iterator it=symbolTable.begin() ; it!=symbolTable.end() ; ++it)
 		{
-			cout<< (*it).first << " " <<(*it).second.first << "   " << (*it).second.second <<endl;
+			//cout<< (*it).first << " " <<(*it).second.first << "   " << (*it).second.second <<endl;
 		}
 	}
 	
 	void Fonction::displayStaticAnalysis(){
-		cout << "StaticAnalysisTable : "<< endl;
-		cout << "ID INIT UTI"<<endl;
+		//cout << "StaticAnalysisTable : "<< endl;
+		//cout << "ID INIT UTI"<<endl;
 		for(map<string,vector<int>>::iterator it=staticAnalysis.begin() ; it!=staticAnalysis.end() ; ++it)
 		{
-			cout<< (*it).first << " " << (*it).second[0] << "   " << (*it).second[1] <<endl;
+			//cout<< (*it).first << " " << (*it).second[0] << "   " << (*it).second[1] <<endl;
 		}
 	}
 	
