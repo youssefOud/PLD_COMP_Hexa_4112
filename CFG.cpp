@@ -22,6 +22,7 @@ void CFG::add_bb(BasicBlock* bb) {
 }
 
 void CFG::genererCodeAssembleur(ostream& o) {
+	
 	gen_asm_prologue(o);
 	for(vector <BasicBlock*>::iterator it = this->bbs.begin(); it != this->bbs.end(); it++){
 		(*it)->genererCodeAssembleur(o);	
@@ -32,17 +33,24 @@ void CFG::genererCodeAssembleur(ostream& o) {
 }
 
 void CFG::gen_asm_prologue(ostream& o) {
+	//calcule la taille nécessaire pour l'AR
+	maxSizeAR = 8 * symbolTable->size();
+	if(maxSizeAR % 16 !=0){
+		maxSizeAR += 8;
+	}
+
 	o << ast->getId() << ": \r\n";
 	o << "# prologue \r\n";
 	o << "pushq %rbp # save %rbp on the stack \r\n";
 	o << "movq %rsp, %rbp # define %rbp for the current function \r\n";
-
+	o << "subq $" << to_string(maxSizeAR) << ", %rsp\r\n";
+	o << "\r\n";
 	o << "# body \r\n";
 }
 
 void CFG::gen_asm_epilogue(ostream& o) {
 	o << "# epilogue \r\n";
-	o << "popq %rbp # restore %rbp from the stack \r\n";
+	o << "leave # restore %rbp from the stack \r\n";
 	o << "ret # return to the caller (here the shell) \r\n";
 }
 

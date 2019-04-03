@@ -63,11 +63,48 @@ void IRInstr::genererCodeAssembleur(ostream &o) {
 			if(!params[1].compare("putchar")){
 				int offsetParam = bb->cfg->getOffsetFromSymbolTable(params[2]);
 				int offsetDest = bb->cfg->getOffsetFromSymbolTable(params[0]);
-				o << "movq " << to_string(offsetParam) << "(%rbp), %edi\r\n";
+				o << "movq " << to_string(offsetParam) << "(%rbp), %rdi\r\n";
 				o << "call putchar\r\n";
-				o << "movl %eax, " << to_string(offsetDest) << "(%rbp)\r\n";
+				o << "movq %rax, " << to_string(offsetDest) << "(%rbp)\r\n";
 			}
 			else{
+				for (int i=2; i<params.size(); i++) {
+					int offsetParam = bb->cfg->getOffsetFromSymbolTable(params[i]);
+					switch(i) {
+						case 2: {
+							o << "movq " << to_string(offsetParam) << "(%rbp), %rdi\r\n";
+							break;
+						}
+						case 3: {
+							o << "movq " << to_string(offsetParam) << "(%rbp), %rsi\r\n";
+							break;
+						}
+						case 4: {
+							o << "movq " << to_string(offsetParam) << "(%rbp), %rdx\r\n";
+							break;
+						}
+						case 5: {
+							o << "movq " << to_string(offsetParam) << "(%rbp), %rcx\r\n";
+							break;						
+						}
+						case 6: {
+							o << "movq " << to_string(offsetParam) << "(%rbp), %r8\r\n";
+							break;						
+						}
+						case 7: {
+							o << "movq " << to_string(offsetParam) << "(%rbp), %r9\r\n";	
+							break;
+						}
+						default:
+							cerr << "Trop de paramètres dans la fonction, non géré actuellement" << endl;
+							break;	
+					}				
+				}
+				
+				int offsetDest = bb->cfg->getOffsetFromSymbolTable(params[0]);
+				
+				o << "call " << params[1] << "\r\n";
+				o << "movq %rax, " << to_string(offsetDest) << "(%rbp)\r\n";
 			}
 			break;
 		}
