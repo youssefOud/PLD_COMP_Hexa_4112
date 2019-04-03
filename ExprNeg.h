@@ -14,8 +14,10 @@ class ExprNeg : public Instruction{
 		int genererCodeAssembleur(map<string, pair<int, int>> *, string *codeAss);
 		string toString();
 		int eval();
+		int getClassName(){return 8;};
 		void analyse(map<string,vector<int>> & staticAnalysis,list<string> & errors,list<string> & warnings);
-		virtual string buildIR(CFG *cfg) { return ""; };
+		virtual string buildIR(CFG *cfg) { return ""; }
+		Instruction * getExpr(){ return expr;}
 	
 	protected:
 		Instruction *expr;

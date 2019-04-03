@@ -29,8 +29,7 @@ right : ID # rightValueID
 
 expression : expression ('*') expression # exprMult
 	| ('-') expression # exprNeg
-	| expression ('+') expression # exprAdd
-	| expression ('-') expression # exprMinus
+	| expression op = ('+'|'-') expression # exprAddMinus
 	| '('expression')' # exprPar
 	| right  # rightValue
 	| appel # exprApp ;

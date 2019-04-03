@@ -16,6 +16,7 @@ class ExprSimple : public Instruction{
 		string buildIR(CFG *cfg);
 		string toString();
 		int eval();
+		int getClassName(){return 9;};
 		void analyse(map<string,vector<int>> & staticAnalysis,list<string> & errors,list<string> & warnings);
 	
 	protected:
