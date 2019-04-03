@@ -27,7 +27,7 @@ class Fonction{
 		void setId(string id);
 		void setInstructions (list<Instruction*> instructions);
 		void addInstruction(Instruction* instr);
-		Type convertTypeToInt(string nom); 
+		Type convertStringToType(string nom); 
 		string toString();
 		void generateST();
 		void generateSA();

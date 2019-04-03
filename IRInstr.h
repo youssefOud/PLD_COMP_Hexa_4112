@@ -36,6 +36,8 @@ class IRInstr {
 	
 	/** Actual code generation */
 	void genererCodeAssembleur(ostream &o); /**< x86 assembly code generation for this IR instruction */
+
+	string getMemoryOffset(string param);
 	
  private:
 	BasicBlock* bb; /**< The BB this instruction belongs to, which provides a pointer to the CFG this instruction belong to */

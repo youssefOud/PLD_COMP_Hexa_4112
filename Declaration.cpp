@@ -41,6 +41,9 @@ std::string Declaration::stringifyType() {
       case VIDE :
         print = "VOID";
         break;
+	case CHAR :
+        print = "CHAR";
+        break;
     }
   
     return print;

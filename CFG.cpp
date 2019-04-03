@@ -88,7 +88,7 @@ int CFG::getOffsetFromSymbolTable(string id){
 		return symbolTable->find(id)->second.second;
 	}
 	else {
-		return 1; //1 signifie que aucune variable de ce nom n'a été trouvée
+		return 0; //0 signifie que aucune variable de ce nom n'a été trouvée
 	}
 }
 

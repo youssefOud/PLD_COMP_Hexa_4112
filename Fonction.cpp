@@ -20,7 +20,7 @@ int nextFree = -8;
 
 Fonction::Fonction(string nomFct, string typeFct, list<Instruction*> instr, DefAppel * da) {
 	id = nomFct;
-	type = convertTypeToInt(typeFct);
+	type = convertStringToType(typeFct);
 	instructions = instr;
 	defAppel = da;
 }
@@ -64,10 +64,11 @@ map<string,pair<Type, int>> *Fonction::getST() {
 	return &symbolTable;
 }
 
-Type Fonction::convertTypeToInt(string nom) {
+Type Fonction::convertStringToType(string nom) {
 	Type t = VIDE;
 	if (nom == "") t = VIDE;
 	else if (nom == "int") t = INT;
+	else if (nom == "char") t = CHAR;
 	return t; 
 }
 
@@ -85,6 +86,12 @@ string Fonction::toString() {
 
 
 void Fonction::generateST(){
+	int compteurParam = 1;
+	for (unordered_multimap<string,string>::iterator itParam = defAppel->getParameters().begin(); itParam != defAppel->getParameters().end(); itParam++) {
+		// 1er : nom ; 2eme : type
+		Type t = convertStringToType((*itParam).second);
+		this->symbolTable.insert(make_pair ( (*itParam).first, make_pair(t,compteurParam++) ) );
+	}
 	for(list<Instruction*>::iterator it = this->instructions.begin(); it != this->instructions.end(); it++){
 		if((*it)->getClassName() == 1){  //Declaration
 			map<string,pair<Type,int>>::iterator it2;
@@ -95,8 +102,6 @@ void Fonction::generateST(){
 				errors.push_back("Declarations multiples de la variable "+ ((Declaration*)(*it))->getId());
 			} else {
 				// On commence les adresses à -8
-				pair<Type, int> temp;
-				
 				this->symbolTable.insert(make_pair(((Declaration*)(*it))->getId(), make_pair(((Declaration*)(*it))->getType(),nextFree)));
 				nextFree-=8;
 			}
@@ -230,3 +235,4 @@ void Fonction::generateSA(){
 	int Fonction::getNumberOfErrors(){
 		return errors.size();
 	}
+

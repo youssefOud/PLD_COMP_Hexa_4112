@@ -19,7 +19,7 @@ public:
 	string toString();
 	
 protected:
-	unordered_multimap<string,string> parameters;
+	unordered_multimap<string,string> parameters; // 1er : nom ; 2eme : type
 
 private:
 
