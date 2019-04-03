@@ -81,7 +81,20 @@ int main(int argc, const char ** argv) {
 				fctRedef.insert(it->first);
 			}
 		}
+		
 		if(fctRedef.size()==0 && numberOfMains==1){
+		
+			//On rajoute les fonctions de la librairie C que l'on souhaite gérer à nos prototypes 
+			unordered_multimap<string,string> par;
+
+			//Fonction putchar
+			par.insert({"char","int"});
+			prototypes.insert(make_pair("putchar",make_pair(INT,new DefAppel(par))));
+
+			//Fonction getchar
+			prototypes.insert(make_pair("getchar",make_pair(INT,new DefAppel())));
+
+
 			for(list<Fonction*>::iterator it=fonctions.begin() ; it!=fonctions.end() ; ++it) 
 			{
 				debug((*it)->toString());
@@ -90,7 +103,7 @@ int main(int argc, const char ** argv) {
 				for(list<Instruction*>::iterator it2 = (*it)->getInstructions()->begin(); it2 != (*it)->getInstructions()->end(); it2++){
 					(*it2)->buildIR(cfg);
 				}
-				  (*it)->generateSA();
+				  (*it)->generateSA(prototypes);
 				  (*it)->processSA();
 
 			  if (a) {
@@ -117,20 +130,22 @@ int main(int argc, const char ** argv) {
 			  }
 			}
 		}
-
-		if(numberOfMains ==0){
-			cerr << "Erreur ! Aucune fonction main n'a été trouvé !" <<endl;
-		}
-		else if(numberOfMains ==2){
-			cerr << "Erreur ! Plusieurs fonctions main ont été trouvé !" <<endl;
-		}
-		if(fctRedef.size()!=0){
-			cerr << "Erreur ! Multiples définitions des fonctions " ;
-			for(auto it=fctRedef.begin() ; it!=fctRedef.end()  ; ++it){
-				//cout<<*it<<" ";
+		else {
+			if(numberOfMains ==0){
+				cerr << "Erreur ! Aucune fonction main n'a été trouvé !" <<endl;
 			}
-			cerr << "!"<<endl;
+			else if(numberOfMains ==2){
+				cerr << "Erreur ! Plusieurs fonctions main ont été trouvé !" <<endl;
+			}
+			if(fctRedef.size()!=0){
+				cerr << "Erreur ! Multiples définitions des fonctions " ;
+				for(auto it=fctRedef.begin() ; it!=fctRedef.end()  ; ++it){
+					cerr<<*it<<" ";
+				}
+				cerr << "!"<<endl;
+			}
 		}
+		
 	}
 	else{
 		cerr << "Erreur ! L'arbre est mal formé, il ne pourra pas être visité." <<endl;

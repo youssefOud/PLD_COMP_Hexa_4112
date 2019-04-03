@@ -2,7 +2,6 @@
 #include "Declaration.h"
 #include "Definition.h"
 #include "AffectationSimple.h"
-#include "Instruction.h"
 #include "Return.h"
 #include "ExprMoins.h"
 #include "ExprPlus.h"
@@ -115,7 +114,8 @@ void Fonction::generateST(){
 		}
 	}
 }
-void Fonction::generateSA(){
+void Fonction::generateSA(multimap<string,pair<Type,DefAppel*>> & prototypes){
+	bool retFound=false;
 	for(list<Instruction*>::iterator it = this->instructions.begin(); it != this->instructions.end(); it++){
 		if((*it)->getClassName() == 1){  //Declaration
 			map<string,vector<int>>::iterator it2;
@@ -129,7 +129,7 @@ void Fonction::generateSA(){
 		}
 		else if((*it)->getClassName() == 2){ //Définition (Type d'affectation)
 			map<string,vector<int>>::iterator it2;
-			((Definition*)(*it))->getExpr()->analyse(staticAnalysis,errors,warnings);
+			((Definition*)(*it))->getExpr()->analyse(staticAnalysis,errors,warnings,prototypes,1);
 			// traitement de la left value quel que soit le retour de la partie droite
 			it2 = this->staticAnalysis.find(((Definition*)(*it))->getLeft()->getId());
 			if (it2 == staticAnalysis.end()) {// elle n'a jamais été déclarée
@@ -140,7 +140,7 @@ void Fonction::generateSA(){
 			//ATTENTION LES DECLARATIONS MULTIPLES SONT GEREES PAR LA ST	
 		}
 		else if( (*it)->getClassName() == 3  ){ //Affectation Simple (Type d'affectation)
-			((AffectationSimple*)(*it))->getExpr()->analyse(staticAnalysis,errors,warnings);
+			((AffectationSimple*)(*it))->getExpr()->analyse(staticAnalysis,errors,warnings,prototypes,1);
 			map<string,vector<int>>::iterator it2;
 			// traitement de la left value
 			it2 = this->staticAnalysis.find(((AffectationSimple*)(*it))->getLeft()->getId());
@@ -155,29 +155,37 @@ void Fonction::generateSA(){
 			}	
 		}
 		else if( (*it)->getClassName() == 4  ){ //Return
-			((Return*)(*it))->getExpr()->analyse(staticAnalysis,errors,warnings);			
+			((Return*)(*it))->getExpr()->analyse(staticAnalysis,errors,warnings,prototypes,0);
+			retFound=true;			
 		}
 		else if( (*it)->getClassName() == 5 ){
-			((ExprMoins*)(*it))->getExpr1()->analyse(staticAnalysis,errors,warnings);
-			((ExprMoins*)(*it))->getExpr2()->analyse(staticAnalysis,errors,warnings);
+			((ExprMoins*)(*it))->getExpr1()->analyse(staticAnalysis,errors,warnings,prototypes,0);
+			((ExprMoins*)(*it))->getExpr2()->analyse(staticAnalysis,errors,warnings,prototypes,0);
 		}
 		else if( (*it)->getClassName() == 6 ){
-			((ExprPlus*)(*it))->getExpr1()->analyse(staticAnalysis,errors,warnings);
-			((ExprPlus*)(*it))->getExpr2()->analyse(staticAnalysis,errors,warnings);
+			((ExprPlus*)(*it))->getExpr1()->analyse(staticAnalysis,errors,warnings,prototypes,0);
+			((ExprPlus*)(*it))->getExpr2()->analyse(staticAnalysis,errors,warnings,prototypes,0);
 		}
 		else if( (*it)->getClassName() == 7 ){
-			((ExprMult*)(*it))->getExpr1()->analyse(staticAnalysis,errors,warnings);
-			((ExprMult*)(*it))->getExpr2()->analyse(staticAnalysis,errors,warnings);
+			((ExprMult*)(*it))->getExpr1()->analyse(staticAnalysis,errors,warnings,prototypes,0);
+			((ExprMult*)(*it))->getExpr2()->analyse(staticAnalysis,errors,warnings,prototypes,0);
 		}
 		else if( (*it)->getClassName() == 8 ){
-			((ExprNeg*)(*it))->getExpr()->analyse(staticAnalysis,errors,warnings);
+			((ExprNeg*)(*it))->getExpr()->analyse(staticAnalysis,errors,warnings,prototypes,0);
 		}
 		else if( (*it)->getClassName() == 9 ){
-			((ExprSimple*)(*it))->analyse(staticAnalysis,errors,warnings);
+			((ExprSimple*)(*it))->analyse(staticAnalysis,errors,warnings,prototypes,0);
 		}
-		/*else if( (*it)->getClassName() == 10 ){
-			((Appel*)(*it))->getExpr1()->analyse(staticAnalysis,errors,warnings);
-		}*/
+		else if( (*it)->getClassName() == 10 ){
+			((Appel*)(*it))->analyse(staticAnalysis,errors,warnings,prototypes,0);
+		}
+		
+	}
+	if(type==0 && retFound){
+		warnings.push_back("Fonction "+id+" de type void avec retour"  );
+	}
+	else if(type!=0 && !retFound){
+		warnings.push_back("Retour attendu pour la fonction "+id+" ");
 	}
 
 }

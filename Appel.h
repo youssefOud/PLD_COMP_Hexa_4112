@@ -1,7 +1,7 @@
 #ifndef PLD_COMP_APPEL_H
 #define PLD_COMP_APPEL_H
 
-#include "Expression.h"
+#include "Instruction.h"
 #include <string>
 #include <list>
 
@@ -22,10 +22,10 @@ public:
 	string toString();
 
 	int getClassName(){return 10;};
-	virtual int genererCodeAssembleur(map<string, pair<int, int>> *, string *codeAss) {return 0;};
 	virtual int eval() {return 0;};
-	virtual void analyse(map<string,vector<int>> & staticAnalysis,list<string> & errors,list<string> & warnings) {};
+	virtual void analyse(map<string,vector<int>> & staticAnalysis,list<string> & errors,list<string> & warnings, multimap<string,pair<Type,DefAppel*>> & prototypes,bool returnType) ;
 	virtual string buildIR(CFG *cfg) { return ""; };
+
 
 	
 protected:

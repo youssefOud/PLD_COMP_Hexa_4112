@@ -30,7 +30,7 @@ class Fonction{
 		Type convertTypeToInt(string nom); 
 		string toString();
 		void generateST();
-		void generateSA();
+		void generateSA(multimap<string,pair<Type,DefAppel*>> & prototypes);
 		void processSA();
 		void displaySymbolTable();
 		void displayStaticAnalysis();

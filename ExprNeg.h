@@ -2,7 +2,7 @@
 #include "Fonction.h"
 #include <string.h>
 #include <iostream>
-#include "Expression.h"
+#include "Instruction.h"
 
 using namespace std;
 
@@ -14,7 +14,7 @@ class ExprNeg : public Instruction{
 		string toString();
 		int eval();
 		int getClassName(){return 8;};
-		void analyse(map<string,vector<int>> & staticAnalysis,list<string> & errors,list<string> & warnings);
+		virtual void analyse(map<string,vector<int>> & staticAnalysis,list<string> & errors,list<string> & warnings, multimap<string,pair<Type,DefAppel*>> & prototypes,bool returnType) ;
 		virtual string buildIR(CFG *cfg) { return ""; }
 		Instruction * getExpr(){ return expr;}
 	
