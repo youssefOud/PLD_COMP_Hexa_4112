@@ -11,8 +11,8 @@ DefAppel::~DefAppel(){
 
 }
 	
-unordered_multimap<string,string> DefAppel::getParameters(){
-	return parameters;
+unordered_multimap<string,string> * DefAppel::getParameters(){
+	return &parameters;
 }
  
 void DefAppel::setParameters(unordered_multimap<string,string> par){

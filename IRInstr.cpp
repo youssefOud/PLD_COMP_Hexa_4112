@@ -12,55 +12,102 @@ void IRInstr::genererCodeAssembleur(ostream &o) {
 	switch (op) {
 		case (ldconst) : {
 			// récuperer offset du premier argument et le mettre après le -
-			int offsetVar = bb->cfg->getOffsetFromSymbolTable(params[0]);
-			o << "movq $" << params[1] << ", " << to_string(offsetVar) << "(%rbp)\r\n";
+			string offsetVar = getMemoryOffset(params[0]);
+			o << "movq $" << params[1] << ", " << offsetVar << "\r\n";
 			break;
 		}
 		case (add) : {
-			int offset1 = bb->cfg->getOffsetFromSymbolTable(params[1]);
-			int offset2 = bb->cfg->getOffsetFromSymbolTable(params[2]);
-			int offset3 = bb->cfg->getOffsetFromSymbolTable(params[0]);
+			string offset1 = getMemoryOffset(params[1]);
+			string offset2 = getMemoryOffset(params[2]);
+			string offset3 = getMemoryOffset(params[0]);
 
-			o << "movq " << to_string(offset1) << "(%rbp), %rax\r\n";
-			o << "addq " << to_string(offset2) << "(%rbp), %rax\r\n";
-			o << "movq %rax, " << to_string(offset3) << "(%rbp)\r\n";
+			o << "movq " << offset1 << ", %rax\r\n";
+			o << "addq " << offset2 << ", %rax\r\n";
+			o << "movq %rax, " << offset3 << "\r\n";
 			break;
 		}
 		case (sub) : {
-			int offset1 = bb->cfg->getOffsetFromSymbolTable(params[1]);
-			int offset2 = bb->cfg->getOffsetFromSymbolTable(params[2]);
-			int offset3 = bb->cfg->getOffsetFromSymbolTable(params[0]);
+			string offset1 = getMemoryOffset(params[1]);
+			string offset2 = getMemoryOffset(params[2]);
+			string offset3 = getMemoryOffset(params[0]);
 
-			o << "movq " << to_string(offset1) << "(%rbp), %rax\r\n";
-			o << "subq " << to_string(offset2) << "(%rbp), %rax\r\n";
-			o << "movq %rax, " << to_string(offset3) << "(%rbp)\r\n";
+			o << "movq " << offset1 << ", %rax\r\n";
+			o << "subq " << offset2 << ", %rax\r\n";
+			o << "movq %rax, " << offset3 << "\r\n";
 			break;
 		}
 		case (mul) : {
-			int offset1 = bb->cfg->getOffsetFromSymbolTable(params[1]);
-			int offset2 = bb->cfg->getOffsetFromSymbolTable(params[2]);
-			int offset3 = bb->cfg->getOffsetFromSymbolTable(params[0]);
+			string offset1 = getMemoryOffset(params[1]);
+			string offset2 = getMemoryOffset(params[2]);
+			string offset3 = getMemoryOffset(params[0]);
 
-			o << "movq " << to_string(offset1) << "(%rbp), %rax\r\n";
-			o << "imulq " << to_string(offset2) << "(%rbp), %rax\r\n";
-			o << "movq %rax, " << to_string(offset3) << "(%rbp)\r\n";
+			o << "movq " << offset1 << ", %rax\r\n";
+			o << "imulq " << offset2 << ", %rax\r\n";
+			o << "movq %rax, " << offset3 << "\r\n";
 			break;
 		}
 		case (rmem) :
 			break;
 		case (wmem) : {
-			int offset = bb->cfg->getOffsetFromSymbolTable(params[1]);
+			string offset = getMemoryOffset(params[1]);
 			if (!params[0].compare("!rax")) {
-				o << "movq " << to_string(offset) << "(%rbp), %rax\r\n";
+				o << "movq " << offset << ", %rax\r\n";
 			} else {
-				int offsetParams0 = bb->cfg->getOffsetFromSymbolTable(params[0]);
-				o << "movq " << to_string(offset) << "(%rbp), %rax\r\n";	
-				o << "movq %rax, " << to_string(offsetParams0) << "(%rbp)\r\n";
+				string offsetParams0 = getMemoryOffset(params[0]);
+				o << "movq " << offset << ", %rax\r\n";	
+				o << "movq %rax, " << offsetParams0 << "\r\n";
 			}
 			break;
 		}
-		case (call) :
+		case (call) :{
+			if(!params[1].compare("putchar")){
+				string offsetParam = getMemoryOffset(params[2]);
+				string offsetDest = getMemoryOffset(params[0]);
+				o << "movq " << offsetParam << ", %rdi\r\n";
+				o << "call putchar\r\n";
+				o << "movq %rax, " << offsetDest << "\r\n";
+			}
+			else{
+				for (int i=2; i<params.size(); i++) {
+					string offsetParam = getMemoryOffset(params[i]);
+					switch(i) {
+						case 2: {
+							o << "movq " << offsetParam << ", %rdi\r\n";
+							break;
+						}
+						case 3: {
+							o << "movq " << offsetParam << ", %rsi\r\n";
+							break;
+						}
+						case 4: {
+							o << "movq " << offsetParam << ", %rdx\r\n";
+							break;
+						}
+						case 5: {
+							o << "movq " << offsetParam << ", %rcx\r\n";
+							break;						
+						}
+						case 6: {
+							o << "movq " << offsetParam << ", %r8\r\n";
+							break;						
+						}
+						case 7: {
+							o << "movq " << offsetParam << ", %r9\r\n";	
+							break;
+						}
+						default:
+							cerr << "Trop de paramètres dans la fonction, non géré actuellement" << endl;
+							break;	
+					}				
+				}
+				
+				string offsetDest = getMemoryOffset(params[0]);
+				
+				o << "call " << params[1] << "\r\n";
+				o << "movq %rax, " << offsetDest << "\r\n";
+			}
 			break;
+		}
 		case (cmp_eq) :
 			break;
 		case (cmp_lt) :
@@ -71,4 +118,28 @@ void IRInstr::genererCodeAssembleur(ostream &o) {
 			break;
 		}
 	}
+}
+
+string IRInstr::getMemoryOffset(string param) {
+	int memoryCase = bb->cfg->getOffsetFromSymbolTable(param);
+	switch (memoryCase) {
+		case 0:
+			cerr << "N'existe pas dans la symbolTable" << endl;
+			break;
+		case 1:	
+			return "%rdi";
+		case 2:
+			return "%rsi";
+		case 3:
+			return "%rdx";
+		case 4:
+			return "%rcx";
+		case 5:
+			return "%r8";
+		case 6:
+			return "%r9";
+		default:
+			return to_string(memoryCase) + "(%rbp)"; // Cas ou c'est un offset negatif généré par nous même
+	}
+	return 0;
 }

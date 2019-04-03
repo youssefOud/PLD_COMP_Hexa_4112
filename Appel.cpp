@@ -53,6 +53,19 @@ string Appel::toString() {
 	return print;
 }
 
+string Appel::buildIR(CFG *cfg) {
+	string dest = cfg->create_new_tempvar(cfg->getPrototypeType(id));
+	vector<string> params;
+	params.push_back(dest);
+	params.push_back(id);
+	for (list<Instruction*>::iterator it = parametres.begin(); it != parametres.end(); it++) {
+		string param = (*it)->buildIR(cfg);
+		params.push_back(param);
+	}
+	cfg->addInstruction(IRInstr::Operation::call, params);
+	return dest; 
+};
+
 void Appel::analyse(map<string,vector<int>> & staticAnalysis,list<string> & errors,list<string> & warnings, multimap<string,pair<Type,DefAppel*>> & prototypes, bool returnType) {
 	//On commence par vérifier que la fonction a déjà été définie
 	bool hasBeenDefined=false;
@@ -98,7 +111,6 @@ void Appel::analyse(map<string,vector<int>> & staticAnalysis,list<string> & erro
 		
 	}
 }
-
 
 
 

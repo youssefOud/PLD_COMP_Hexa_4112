@@ -8,7 +8,8 @@
 
 typedef enum {
 	VIDE = 0,
-	INT = 1
+	INT = 1,
+	CHAR = 2
 } Type;
 #endif
 #endif //PLD_COMP_ENUM_H

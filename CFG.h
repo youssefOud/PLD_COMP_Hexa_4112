@@ -4,7 +4,7 @@
 #include <string>
 #include <iostream>
 #include <initializer_list>
-
+#include <map>
 // TODO : A completer
 
 #include "Fonction.h"
@@ -18,7 +18,7 @@ class BacicBlock;
 
 class CFG {
  public:
-	CFG(Fonction* ast);
+	CFG(Fonction* ast, multimap<string,pair<Type,DefAppel *>> *protos);
 
 	Fonction* ast; /**< The AST this CFG comes from */
 	
@@ -27,7 +27,7 @@ class CFG {
 
 	// x86 code generation: could be encapsulated in a processor class in a retargetable compiler
 	void genererCodeAssembleur(ostream& o);
-	string IR_reg_to_asm(string reg); /**< helper method: inputs a IR reg or input variable, returns e.g. "-24(%rbp)" for the proper value of 24 */
+	string IR_reg_to_asm(string reg); /**< helper method: inputs a IR reg or input variable, returns e.g. "-24(%rbp)" for the proper value of 24 */	
 	void gen_asm_prologue(ostream& o);
 	void gen_asm_epilogue(ostream& o);
 
@@ -45,10 +45,14 @@ class CFG {
 	// basic bloc management
 	string new_BB_name();
 	BasicBlock* current_bb;
+	Type getPrototypeType(string label);
+	
 
  protected:
 	map<string,pair<Type, int>> *symbolTable; /** The first int in the pair is the type of the variable and the second is its offset */
 	int nextFreeSymbolIndex; /**< to allocate new symbols in the symbol table */
 	int nextBBnumber; /**< just for naming */
 	vector <BasicBlock*> bbs; /**< all the basic blocs of this CFG*/
+	multimap<string,pair<Type,DefAppel *>> *prototypes;
+	int maxSizeAR;
 };

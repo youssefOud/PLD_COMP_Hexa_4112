@@ -1,10 +1,11 @@
 #include "CFG.h"
 #include "BasicBlock.h"
 
-CFG::CFG(Fonction* f) {
+CFG::CFG(Fonction* f, multimap<string,pair<Type,DefAppel *>> *protos) {
 	ast = f;
 	symbolTable = f->getST();
 	nextFreeSymbolIndex = nextFree;
+	prototypes = protos;
 	current_bb = new BasicBlock(this, ".main");
 	add_bb(current_bb);
 	
@@ -21,6 +22,7 @@ void CFG::add_bb(BasicBlock* bb) {
 }
 
 void CFG::genererCodeAssembleur(ostream& o) {
+	
 	gen_asm_prologue(o);
 	for(vector <BasicBlock*>::iterator it = this->bbs.begin(); it != this->bbs.end(); it++){
 		(*it)->genererCodeAssembleur(o);	
@@ -30,26 +32,27 @@ void CFG::genererCodeAssembleur(ostream& o) {
 	// Au minimum deux basics blocs dans chaque CFG car ils convergent tous sur un basic bloc qui sera celui du return ou si c'est un void vers une étiquette qui correspondra à l'épilogue
 }
 
-// TODO
 void CFG::gen_asm_prologue(ostream& o) {
-	o << ".text                       # section declaration\r\n";
-	o << ".global main                # entry point\r\n";
-	o << "\r\n";
+	//calcule la taille nécessaire pour l'AR
+	maxSizeAR = 8 * symbolTable->size();
+	if(maxSizeAR % 16 !=0){
+		maxSizeAR += 8;
+	}
 
-	// TODO : a modifier par la suite
-	o << "main: \r\n";
+	o << ast->getId() << ": \r\n";
 	o << "# prologue \r\n";
 	o << "pushq %rbp # save %rbp on the stack \r\n";
 	o << "movq %rsp, %rbp # define %rbp for the current function \r\n";
-
+	o << "subq $" << to_string(maxSizeAR) << ", %rsp\r\n";
+	o << "\r\n";
 	o << "# body \r\n";
 }
 
-// TODO
 void CFG::gen_asm_epilogue(ostream& o) {
 	o << "# epilogue \r\n";
-	o << "popq %rbp # restore %rbp from the stack \r\n";
+	o << "leave # restore %rbp from the stack \r\n";
 	o << "ret # return to the caller (here the shell) \r\n";
+	o << "\r\n";
 }
 
 void CFG::add_to_symbol_table(string name, Type t){
@@ -86,6 +89,10 @@ int CFG::getOffsetFromSymbolTable(string id){
 		return symbolTable->find(id)->second.second;
 	}
 	else {
-		return 1; //1 signifie que aucune variable de ce nom n'a été trouvée
+		return 0; //0 signifie que aucune variable de ce nom n'a été trouvée
 	}
+}
+
+Type CFG::getPrototypeType(string label){
+	return prototypes->find(label)->second.first;
 }
