@@ -11,7 +11,6 @@ class ExprNeg : public Instruction{
 		ExprNeg() {};
 		ExprNeg(Instruction* e) :expr(e){};
 		virtual ~ExprNeg() {};
-		int genererCodeAssembleur(map<string, pair<int, int>> *, string *codeAss);
 		string toString();
 		int eval();
 		int getClassName(){return 8;};

@@ -65,19 +65,19 @@ int main(int argc, const char ** argv) {
 		
 		// Une fois l'AST construit, on le parcours pour renseigner la table des symboles
 		list<Fonction*> fonctions = (list<Fonction*>)visitor.getFonctions();
-		multimap<string,pair<Type,DefAppel *>> declarations;
+		multimap<string,pair<Type,DefAppel *>> prototypes;
 		//A partir des fonctions que nous avons, nous nous assurons d'abord qu'il existe bien une fonction main ! 
 		int numberOfMains =0;
 		for(list<Fonction*>::iterator it=fonctions.begin() ; it!=fonctions.end() && numberOfMains<2 ; ++it){
-			declarations.insert(make_pair((*it)->getId(),make_pair((*it)->getType(),(*it)->getDefAppel())));
+			prototypes.insert(make_pair((*it)->getId(),make_pair((*it)->getType(),(*it)->getDefAppel())));
 			if((*it)->getId() == "main"){
 				numberOfMains++;
 			}
 		}
 		//On vérifie qu'il ny a pas eu de définitions multiples d'une fonction
 		set<string> fctRedef;
-		for(auto it=declarations.begin() ; it!=declarations.end()  ; ++it){
-			if(declarations.count(it->first)>1){
+		for(auto it=prototypes.begin() ; it!=prototypes.end()  ; ++it){
+			if(prototypes.count(it->first)>1){
 				fctRedef.insert(it->first);
 			}
 		}
