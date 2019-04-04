@@ -29,9 +29,10 @@ void Affectation::setType(Type t){
 }
 
 Type Affectation::convertTypeToInt(string nom) {
-	Type t = Type::VIDE;
-	if (nom == "") t = Type::VIDE;
-	else if (nom == "int") t = Type::INT;
+	Type t = VIDE;
+	if (nom == "int") t = INT;
+	else if (nom == "void") t = VOID;
+	else if (nom == "char") t = CHAR;
 	return t; 
 }
 

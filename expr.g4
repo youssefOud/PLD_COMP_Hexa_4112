@@ -18,7 +18,8 @@ defAppel : type ID # defParamUnique
 	| type ID ',' defAppel # defParamMult ;
 
 typefct : INT # retourInt
-	| VOID # retourVoid ;
+	| VOID # retourVoid 
+	| CHAR # retourChar ;
 
 type : INT # typeVarInt 
 	| CHAR #typeVarChar;
@@ -68,4 +69,5 @@ WHILE : 'while' ;
 ID : [A-Za-z]+ ;
 CARACTERE : '\''[A-Za-z]'\'' ;
 WS : [ \t\r\n] -> skip ;
+
 

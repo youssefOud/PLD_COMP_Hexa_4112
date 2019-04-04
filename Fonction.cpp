@@ -66,8 +66,9 @@ map<string,pair<Type, int>> *Fonction::getST() {
 
 Type Fonction::convertTypeToInt(string nom) {
 	Type t = VIDE;
-	if (nom == "") t = VIDE;
-	else if (nom == "int") t = INT;
+	if (nom == "int") t = INT;
+	else if (nom == "void") t = VOID;
+	else if (nom == "char") t = CHAR;
 	return t; 
 }
 

@@ -116,6 +116,10 @@ public:
   virtual antlrcpp::Any visitRetourVoid(exprParser::RetourVoidContext *ctx) override {
     return visit(ctx->VOID());
   }
+  
+  virtual antlrcpp::Any visitRetourChar(exprParser::RetourCharContext *ctx) override {
+    return visit(ctx->CHAR());
+  }
 
   virtual antlrcpp::Any visitTypeVarChar(exprParser::TypeVarCharContext *ctx) override {
      return visit(ctx->CHAR());

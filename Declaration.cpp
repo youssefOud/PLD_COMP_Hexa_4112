@@ -39,8 +39,16 @@ std::string Declaration::stringifyType() {
         print = "INT";
         break;
       case VIDE :
+        print = "VIDE";
+        break;
+      case CHAR :
+        print = "CHAR";
+        break;
+      case VOID :
         print = "VOID";
         break;
+	
+
     }
   
     return print;
@@ -65,10 +73,11 @@ std::string Declaration::toString()
 }
 
 Type Declaration::convertTypeToInt(string nom) {
-	Type t = Type::VIDE;
-	if (nom == "") t = Type::VIDE;
-	else if (nom == "int") t = Type::INT;
-	return t; 
+	Type t = VIDE;
+	if (nom == "int") t = INT;
+	else if (nom == "void") t = VOID;
+	else if (nom == "char") t = CHAR;
+	return t;  
 }
 
 int Declaration::getClassName(){
