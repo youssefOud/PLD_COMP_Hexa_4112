@@ -14,7 +14,8 @@ public:
   enum {
     T__0 = 1, T__1 = 2, T__2 = 3, T__3 = 4, T__4 = 5, T__5 = 6, T__6 = 7, 
     T__7 = 8, T__8 = 9, T__9 = 10, VOID = 11, INT = 12, CHAR = 13, NBR = 14, 
-    RETURN = 15, ID = 16, CARACTERE = 17, WS = 18
+    RETURN = 15, IF = 16, ELSE = 17, WHILE = 18, ID = 19, CARACTERE = 20, 
+    WS = 21
   };
 
   enum {
@@ -368,29 +369,21 @@ public:
     virtual antlrcpp::Any accept(antlr4::tree::ParseTreeVisitor *visitor) override;
   };
 
-  class  ExprAddContext : public ExpressionContext {
-  public:
-    ExprAddContext(ExpressionContext *ctx);
-
-    std::vector<ExpressionContext *> expression();
-    ExpressionContext* expression(size_t i);
-    virtual antlrcpp::Any accept(antlr4::tree::ParseTreeVisitor *visitor) override;
-  };
-
-  class  ExprMinusContext : public ExpressionContext {
-  public:
-    ExprMinusContext(ExpressionContext *ctx);
-
-    std::vector<ExpressionContext *> expression();
-    ExpressionContext* expression(size_t i);
-    virtual antlrcpp::Any accept(antlr4::tree::ParseTreeVisitor *visitor) override;
-  };
-
   class  RightValueContext : public ExpressionContext {
   public:
     RightValueContext(ExpressionContext *ctx);
 
     RightContext *right();
+    virtual antlrcpp::Any accept(antlr4::tree::ParseTreeVisitor *visitor) override;
+  };
+
+  class  ExprAddMinusContext : public ExpressionContext {
+  public:
+    ExprAddMinusContext(ExpressionContext *ctx);
+
+    antlr4::Token *op = nullptr;
+    std::vector<ExpressionContext *> expression();
+    ExpressionContext* expression(size_t i);
     virtual antlrcpp::Any accept(antlr4::tree::ParseTreeVisitor *visitor) override;
   };
 
@@ -555,6 +548,25 @@ public:
    
   };
 
+  class  InstrMultContext : public InstructionContext {
+  public:
+    InstrMultContext(InstructionContext *ctx);
+
+    std::vector<InstructionContext *> instruction();
+    InstructionContext* instruction(size_t i);
+    virtual antlrcpp::Any accept(antlr4::tree::ParseTreeVisitor *visitor) override;
+  };
+
+  class  WhileInstrContext : public InstructionContext {
+  public:
+    WhileInstrContext(InstructionContext *ctx);
+
+    antlr4::tree::TerminalNode *WHILE();
+    ExpressionContext *expression();
+    InstructionContext *instruction();
+    virtual antlrcpp::Any accept(antlr4::tree::ParseTreeVisitor *visitor) override;
+  };
+
   class  InstrAffContext : public InstructionContext {
   public:
     InstrAffContext(InstructionContext *ctx);
@@ -576,6 +588,18 @@ public:
     InstrRetContext(InstructionContext *ctx);
 
     RetContext *ret();
+    virtual antlrcpp::Any accept(antlr4::tree::ParseTreeVisitor *visitor) override;
+  };
+
+  class  IfInstrContext : public InstructionContext {
+  public:
+    IfInstrContext(InstructionContext *ctx);
+
+    antlr4::tree::TerminalNode *IF();
+    ExpressionContext *expression();
+    std::vector<InstructionContext *> instruction();
+    InstructionContext* instruction(size_t i);
+    antlr4::tree::TerminalNode *ELSE();
     virtual antlrcpp::Any accept(antlr4::tree::ParseTreeVisitor *visitor) override;
   };
 
