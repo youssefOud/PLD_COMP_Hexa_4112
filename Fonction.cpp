@@ -120,6 +120,13 @@ void Fonction::generateST(){
 	}
 }
 void Fonction::generateSA(multimap<string,pair<Type,DefAppel*>> & prototypes){
+	//Insertion des paramètres dans la table d'analyse statique 
+	vector<int> flagsParam{1,0};
+	for (unordered_multimap<string,string>::iterator itParam = defAppel->getParameters()->begin(); itParam != defAppel->getParameters()->end(); itParam++) {
+		// 1er : nom ; 2eme : type
+		Type t = convertStringToType((*itParam).second);
+		this->staticAnalysis.insert(make_pair ( (*itParam).first, flagsParam) );
+	}
 	bool retFound=false;
 	for(list<Instruction*>::iterator it = this->instructions.begin(); it != this->instructions.end(); it++){
 		if((*it)->getClassName() == 1){  //Declaration
@@ -207,25 +214,25 @@ void Fonction::generateSA(multimap<string,pair<Type,DefAppel*>> & prototypes){
 	}
 	
 	void Fonction::displaySymbolTable(){
-		//cout << "SymbolTable : "<< endl;
-		//cout << "ID TYPE ADD"<<endl;
+		cerr << "SymbolTable : "<< endl;
+		cerr << "ID TYPE ADD"<<endl;
 		for(map<string,pair<Type,int>>::iterator it=symbolTable.begin() ; it!=symbolTable.end() ; ++it)
 		{
-			//cout<< (*it).first << " " <<(*it).second.first << "   " << (*it).second.second <<endl;
+			cerr<< (*it).first << " " <<(*it).second.first << "   " << (*it).second.second <<endl;
 		}
 	}
 	
 	void Fonction::displayStaticAnalysis(){
-		//cout << "StaticAnalysisTable : "<< endl;
-		//cout << "ID INIT UTI"<<endl;
+		cerr << "StaticAnalysisTable : "<< endl;
+		cerr << "ID INIT UTI"<<endl;
 		for(map<string,vector<int>>::iterator it=staticAnalysis.begin() ; it!=staticAnalysis.end() ; ++it)
 		{
-			//cout<< (*it).first << " " << (*it).second[0] << "   " << (*it).second[1] <<endl;
+			cerr<< (*it).first << " " << (*it).second[0] << "   " << (*it).second[1] <<endl;
 		}
 	}
 	
 	void Fonction::displayWarnings(){
-	  //cout << "StaticAnalysisTable : Display warnings"<< endl;
+	  cerr << "StaticAnalysisTable : Display warnings"<< endl;
 	  for(list<string>::iterator it=warnings.begin() ; it!=warnings.end() ; ++it)
 	  {
 	    cout<< "Warning : "<< (*it) <<endl;
@@ -233,7 +240,7 @@ void Fonction::generateSA(multimap<string,pair<Type,DefAppel*>> & prototypes){
 	}
 	
 	void Fonction::displayErrors(){
-	  //cout << "StaticAnalysisTable : Display errors"<< endl;
+	  cerr << "StaticAnalysisTable : Display errors"<< endl;
 	  for(list<string>::iterator it=errors.begin() ; it!=errors.end() ; ++it)
 	  {
 	    cout<< "Error: "<<(*it) <<endl;
