@@ -143,10 +143,10 @@ public:
     return new LeftValue((string) context->ID()->getText());
   }
 
-  /*virtual antlrcpp::Any visitExprNeg(exprParser::ExprNegContext *ctx) override {
+  virtual antlrcpp::Any visitExprNeg(exprParser::ExprNegContext *ctx) override {
     Instruction * expr = new ExprNeg((Instruction *) visit(ctx->expression()));
     return expr;
-  }*/
+  }
   
   virtual antlrcpp::Any visitExprApp(exprParser::ExprAppContext *ctx) override {
     return visit(ctx->appel());

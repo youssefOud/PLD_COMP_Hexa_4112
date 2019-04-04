@@ -114,6 +114,14 @@ void IRInstr::genererCodeAssembleur(ostream &o) {
 			break;
 		case (cmp_le) :
 			break;
+		case (neg) :{
+			string offsetExprNeg = getMemoryOffset(params[0]);
+			string offsetExpr = getMemoryOffset(params[1]);
+			o << "movq " << offsetExpr << ", %rax\r\n";
+			o << "negq %rax\r\n";
+			o << "movq %rax, " << offsetExprNeg << "\r\n";
+			break;
+		}
 		default: {
 			break;
 		}
