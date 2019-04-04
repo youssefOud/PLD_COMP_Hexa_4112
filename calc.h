@@ -30,6 +30,8 @@
 #include "ExprSimple.h"
 #include "ExprNeg.h"
 #include "Appel.h"
+#include "IFInstruction.h"
+#include "WhileInstruction.h"
 #include <unordered_map> 
 #include <utility> 
 
@@ -86,12 +88,7 @@ public:
     return new Fonction((string) ctx->ID()->getText(),
 			(string) ctx->typefct()->getText(), visit(ctx->corps()),defAppel);
   }
-  
-    
-	virtual antlrcpp::Any visitIfInstr(exprParser::IfInstrContext *context) override {
-    //return new Instruction(visit(ctx->IF());
-  }
-  
+   
   virtual antlrcpp::Any visitFctSansParam(exprParser::FctSansParamContext *ctx) override {
 
     return new Fonction((string) ctx->ID()->getText(),
@@ -244,6 +241,7 @@ public:
   }
 
   virtual antlrcpp::Any visitInstrCorps(exprParser::InstrCorpsContext *ctx) override {
+  	//debug( ( (Instruction*) (visit(ctx->instruction())->front() )->toString() );
     list<Instruction*> instructions = visit(ctx->instruction());
     instructions.splice(instructions.end(),visit(ctx->corps()));
     return instructions;
@@ -254,17 +252,26 @@ public:
     return instructions;
   }
 
-
-	//TODO
-	virtual antlrcpp::Any visitWhileInstr(exprParser::WhileInstrContext *context) override {
-    return visit(ctx->IF());
+	virtual antlrcpp::Any visitIfInstr(exprParser::IfInstrContext *ctx) override {
+		debug("Visit IfInstr");
+		list<Instruction *> lelse;
+		if (ctx->corps().size() > 1) 
+			lelse.splice(lelse.end(),visit(ctx->corps(1)));
+		
+		Instruction * ifInstr = new IFInstruction(((Instruction *) visit(ctx->expression())),visit(ctx->corps(0)),lelse);
+		list<Instruction *> instr;
+		instr.push_back(ifInstr);
+    return instr;
   }
 
-	//TODO
-  virtual antlrcpp::Any visitInstrMult(exprParser::InstrContext *context) override {
-   // list<Instruction*> instructions = {visit(ctx->ret())};
-    return NULL;
+	virtual antlrcpp::Any visitWhileInstr(exprParser::WhileInstrContext *ctx) override {
+  	debug("Visit WhileInstr");		
+		Instruction * whileInstr = new WhileInstruction(((Instruction *) visit(ctx->expression())),visit(ctx->corps()));
+		list<Instruction *> instr;
+		instr.push_back(whileInstr);
+    return instr;
   }
+
 
   list<Fonction*> getFonctions() {
     return fonctions;

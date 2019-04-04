@@ -46,13 +46,13 @@ affect : (type left '=' expression ';')  # definition
 
 ret : RETURN expression ';' # return ;
 
-instruction : '{' instruction* '}' #instrMult
+instruction : IF '(' expression ')' '{' corps '}' (ELSE '{' corps '}')? # ifInstr
+	| WHILE '(' expression ')' '{' corps '}' # whileInstr 
 	| affect  # instrAff
 	| declare   # instrDec
 	| expression ';'   # instrExpr 
-	| ret # instrRet 
-	| IF '(' expression ')' instruction (ELSE instruction)? # ifInstr
-	| WHILE '(' expression ')' instruction # whileInstr ;
+	| ret # instrRet ;
+	
 
 corps : instruction # instr
 	| instruction corps # instrCorps ;
@@ -68,3 +68,4 @@ WHILE : 'while' ;
 ID : [A-Za-z]+ ;
 CARACTERE : '\''[A-Za-z]'\'' ;
 WS : [ \t\r\n] -> skip ;
+
