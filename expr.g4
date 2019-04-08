@@ -67,5 +67,8 @@ ELSE : 'else' ;
 WHILE : 'while' ;
 ID : [A-Za-z]+ ;
 CARACTERE : '\''[A-Za-z]'\'' ;
+PREPRO : '#' .*? '\n' -> skip ;
+COM1 : '//' .*? '\n' -> skip ;
+COM2 : '/*' .*? '*/' -> skip ;
 WS : [ \t\r\n] -> skip ;
 
