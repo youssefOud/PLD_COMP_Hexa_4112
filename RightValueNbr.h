@@ -14,4 +14,5 @@ class RightValueNbr : public RightValue {
 		string toString() { return "RightValueNbr "+to_string(nbr)+"\n";}
 		string getId() {return ""; };
 		int getNbr() { return nbr; };
+		virtual bool estCst(list<string> & opti) { return true;};
 };

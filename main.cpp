@@ -120,6 +120,7 @@ int main(int argc, const char ** argv) {
 					  }
 					  (*it)->generateSA(prototypes);
 					  (*it)->processSA();
+						(*it)->optimize();
 
 					  if (a) {
 					    // Générer que si argument passé en option
@@ -136,6 +137,11 @@ int main(int argc, const char ** argv) {
 					  {
 					    cfg->genererCodeAssembleur(myfile); 
 					  } 
+					if (o && numberOfErrors==0) 
+					  {
+					    (*it)->displayOpti();
+					  } 
+					
 				}
 				myfile.close();			
 			}

@@ -112,5 +112,9 @@ void Appel::analyse(map<string,vector<int>> & staticAnalysis,list<string> & erro
 	}
 }
 
+bool Appel::estCst(list<string> & opti) {
+	return false ; //le retour d'une fonction n'est pas considéré comme étant constant
+}
+
 
 

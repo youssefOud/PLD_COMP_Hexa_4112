@@ -210,8 +210,24 @@ void Fonction::generateSA(multimap<string,pair<Type,DefAppel*>> & prototypes){
 	    cout<< "Error: "<<(*it) <<endl;
 	  }
 	}
-
+	
+	void Fonction::displayOpti(){
+	  cerr << "Optimisations : Display opti"<< endl;
+	  for(list<string>::iterator it=opti.begin() ; it!=opti.end() ; ++it)
+	  {
+	    cout<< "Opti : "<< (*it) <<endl;
+	  }
+	}	
+	
 	int Fonction::getNumberOfErrors(){
 		return errors.size();
 	}
 
+	void Fonction::optimize(){
+		for(list<Instruction*>::iterator it = this->instructions.begin(); it != this->instructions.end(); it++){
+			if((*it)->estCst(opti)){
+				opti.push_back("Optimisation possible au niveau de l'instruction "+ (*it)->toString());
+			}
+		}
+		
+	}

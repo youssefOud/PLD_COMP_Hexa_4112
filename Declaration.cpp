@@ -95,3 +95,7 @@ void Declaration::analyse(map<string,vector<int>> & staticAnalysis,list<string> 
 			}
 
 }
+
+bool Declaration::estCst(list<string> & opti){
+	return false ; // pas d'optimisation de constante à faire dans une déclaration 
+}

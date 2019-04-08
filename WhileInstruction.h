@@ -19,6 +19,7 @@ class WhileInstruction : public Instruction{
 		virtual void analyse(map<string,vector<int>> & staticAnalysis,list<string> & errors,list<string> & warnings, multimap<string,pair<Type,DefAppel*>> & prototypes,bool returnType);
 		Instruction * getClause();
 		list<Instruction*> * getBlocWhile();
+		virtual bool estCst(list<string> & opti);
 	
 	protected:
 		Instruction *clause;

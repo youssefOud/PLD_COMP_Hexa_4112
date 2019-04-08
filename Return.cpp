@@ -24,3 +24,7 @@ string Return::buildIR(CFG *cfg){
 void Return::analyse(map<string,vector<int>> & staticAnalysis,list<string> & errors,list<string> & warnings, multimap<string,pair<Type,DefAppel*>> & prototypes,bool returnType){
 	expr->analyse(staticAnalysis,errors,warnings,prototypes,returnType);
 }
+
+bool Return::estCst(list<string> & opti){
+	return expr->estCst(opti);
+}
