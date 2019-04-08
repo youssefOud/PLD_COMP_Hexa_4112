@@ -1,4 +1,5 @@
 #include "IFInstruction.h"
+#include "BasicBlock.h"
 
 using namespace std;
 
@@ -59,6 +60,40 @@ string IFInstruction::toString (){
 }
 
 string IFInstruction::buildIR(CFG *cfg){
-	//TODO
+	string varTest = clause->buildIR(cfg);
+
+	BasicBlock *clauseBB = cfg->current_bb;
+	clauseBB->varTest = varTest;
+	
+	BasicBlock *thenBB = new BasicBlock(cfg, ".trueCode");//Rajouter les numeros
+	cfg->current_bb = thenBB;
+	for(list<Instruction*>::iterator it = this->blocIf.begin(); it != this->blocIf.end(); it++){
+		(*it)->buildIR(cfg);
+	}
+	cfg->add_bb(thenBB);
+
+	BasicBlock *elseBB = new BasicBlock(cfg, ".falseCode");//Rajouter les numéros
+	cfg->current_bb = elseBB;
+	for(list<Instruction*>::iterator it = this->blocElse.begin(); it != this->blocElse.end(); it++){
+		(*it)->buildIR(cfg);
+	}
+	cfg->add_bb(elseBB);
+	
+	
+	BasicBlock *afterIfBB = new BasicBlock(cfg, ".afterIfBB");//Rajouter les numéros
+	cfg->current_bb = afterIfBB;
+	cfg->add_bb(afterIfBB);
+	afterIfBB->exit_true = clauseBB->exit_true;
+	afterIfBB->exit_false = clauseBB->exit_false;
+
+	clauseBB->exit_true = thenBB;
+	clauseBB->exit_false = elseBB;
+
+	thenBB->exit_true = afterIfBB;
+	thenBB->exit_false = nullptr;
+	elseBB->exit_true = afterIfBB;
+	elseBB->exit_false = nullptr;
+	cfg->current_bb = afterIfBB;
+	
 	return "";
 }

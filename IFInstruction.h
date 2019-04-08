@@ -1,10 +1,12 @@
 #pragma once
-
+#include "CFG.h"
 #include "Instruction.h"
 #include <string.h>
 #include <iostream>
 #include <list>
+#include <vector>
 
+class BacicBlock;
 using namespace std;
 
 class IFInstruction : public Instruction {
