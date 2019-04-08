@@ -16,7 +16,7 @@ class IFInstruction : public Instruction {
 		string toString();
 		int eval() {return -1; };
 		int getClassName(){return 11;};
-		void analyse(map<string,vector<int>> & staticAnalysis,list<string> & errors,list<string> & warnings);
+		virtual void analyse(map<string,vector<int>> & staticAnalysis,list<string> & errors,list<string> & warnings, multimap<string,pair<Type,DefAppel*>> & prototypes,bool returnType);
 		Instruction * getClause();
 		list<Instruction*> * getBlocIf();
 		list<Instruction*> * getBlocElse();

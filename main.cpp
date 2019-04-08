@@ -4,6 +4,7 @@
     #define debug(debugString)
 #endif
 
+#include <sstream>
 #include <iostream>
 #include <fstream>
 #include <string.h>
@@ -44,15 +45,9 @@ int main(int argc, const char ** argv) {
   string nomFichier(argv[argc-1]);
 	ifstream myReadFile;
 	myReadFile.open(nomFichier);
-	string output="";
-	string temp;
-	if (myReadFile.is_open()) {
-		myReadFile >> noskipws;
-		while (!myReadFile.eof()) {
-				getline(myReadFile,temp);
-				output = output + temp;
-		}
-	}
+	stringstream ss;
+	ss << myReadFile.rdbuf();
+	string output=ss.str();
 	myReadFile.close();
 	ANTLRInputStream input(output);
 

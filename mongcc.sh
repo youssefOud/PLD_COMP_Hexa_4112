@@ -1,5 +1,5 @@
-# Lancer le script avec ce format: ./nomScript /chemin/vers/fichier/nomFichier.cpp {-a,-c,-o}
-#On vérifie la validité du fichier : si plus de 4 ou moins de 1 parametres: erreur, si 1 un argument : on vérifie que c'est un cpp 
+# Lancer le script avec ce format: ./nomScript {-a,-c,-o} /chemin/vers/fichier/nomFichier.c 
+#On vérifie la validité du fichier : si plus de 4 ou moins de 1 parametres: erreur, si 1 un argument : on vérifie que c'est un c 
 if [ $# -gt 4 ] || [ $# -lt 1 ] 
 then 
 	echo "Erreur dans le nombre d'argument passé"
