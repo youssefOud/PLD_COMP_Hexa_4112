@@ -1,12 +1,6 @@
-int toto(int a, int b) {
-
-	return 1;
-}
-
 int main() {
-	if (1) {
-		2+3
-	}
-	toto(1,1);
-	return 0;
+	int a = 4;
+	int b = 12;
+	int c = (0!=a);
+	return c;
 }

@@ -30,6 +30,7 @@ right : ID # rightValueID
 expression : expression ('*') expression # exprMult
 	| ('-') expression # exprNeg
 	| expression op = ('+'|'-') expression # exprAddMinus
+	| expression opc = ('=='|'<'|'<='|'>='|'>'|'!=') expression # exprComp
 	| '('expression')' # exprPar
 	| right  # rightValue
 	| appel # exprApp ;
