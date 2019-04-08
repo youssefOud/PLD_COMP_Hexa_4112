@@ -57,6 +57,8 @@ public:
 
     virtual antlrcpp::Any visitExprNeg(exprParser::ExprNegContext *context) = 0;
 
+    virtual antlrcpp::Any visitExprComp(exprParser::ExprCompContext *context) = 0;
+
     virtual antlrcpp::Any visitExprPar(exprParser::ExprParContext *context) = 0;
 
     virtual antlrcpp::Any visitExprApp(exprParser::ExprAppContext *context) = 0;

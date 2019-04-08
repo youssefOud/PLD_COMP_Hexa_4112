@@ -108,12 +108,79 @@ void IRInstr::genererCodeAssembleur(ostream &o) {
 			}
 			break;
 		}
-		case (cmp_eq) :
+		case (cmp_eq) :{
+			string offset1 = getMemoryOffset(params[1]);
+			string offset2 = getMemoryOffset(params[2]);
+			string offset3 = getMemoryOffset(params[0]);
+
+			o << "movq " << offset1 << ", %rax\r\n";
+			o << "cmpq " << offset2 << ", %rax\r\n";
+			o << "sete	%al\r\n";
+			o << "movzbq	%al, %rax\r\n";
+			o << "movq %rax, " << offset3 << "\r\n";
 			break;
-		case (cmp_lt) :
+		}
+		case (cmp_mt) :{
+			string offset1 = getMemoryOffset(params[1]);
+			string offset2 = getMemoryOffset(params[2]);
+			string offset3 = getMemoryOffset(params[0]);
+
+			o << "movq " << offset1 << ", %rax\r\n";
+			o << "cmpq " << offset2 << ", %rax\r\n";
+			o << "setg	%al\r\n";
+			o << "movzbq	%al, %rax\r\n";
+			o << "movq %rax, " << offset3 << "\r\n";
 			break;
-		case (cmp_le) :
 			break;
+		}
+		case (cmp_me) :{
+			string offset1 = getMemoryOffset(params[1]);
+			string offset2 = getMemoryOffset(params[2]);
+			string offset3 = getMemoryOffset(params[0]);
+
+			o << "movq " << offset1 << ", %rax\r\n";
+			o << "cmpq " << offset2 << ", %rax\r\n";
+			o << "setge	%al\r\n";
+			o << "movzbq	%al, %rax\r\n";
+			o << "movq %rax, " << offset3 << "\r\n";
+			break;
+		}
+		case (cmp_diff) :{
+			string offset1 = getMemoryOffset(params[1]);
+			string offset2 = getMemoryOffset(params[2]);
+			string offset3 = getMemoryOffset(params[0]);
+
+			o << "movq " << offset1 << ", %rax\r\n";
+			o << "cmpq " << offset2 << ", %rax\r\n";
+			o << "setne	%al\r\n";
+			o << "movzbq	%al, %rax\r\n";
+			o << "movq %rax, " << offset3 << "\r\n";
+			break;
+		}
+		case (cmp_lt) :{
+			string offset1 = getMemoryOffset(params[1]);
+			string offset2 = getMemoryOffset(params[2]);
+			string offset3 = getMemoryOffset(params[0]);
+
+			o << "movq " << offset1 << ", %rax\r\n";
+			o << "cmpq " << offset2 << ", %rax\r\n";
+			o << "setl	%al\r\n";
+			o << "movzbq	%al, %rax\r\n";
+			o << "movq %rax, " << offset3 << "\r\n";
+			break;
+		}
+		case (cmp_le) :{
+			string offset1 = getMemoryOffset(params[1]);
+			string offset2 = getMemoryOffset(params[2]);
+			string offset3 = getMemoryOffset(params[0]);
+
+			o << "movq " << offset1 << ", %rax\r\n";
+			o << "cmpq " << offset2 << ", %rax\r\n";
+			o << "setle	%al\r\n";
+			o << "movzbq	%al, %rax\r\n";
+			o << "movq %rax, " << offset3 << "\r\n";
+			break;
+		}
 		case (neg) :{
 			string offsetExprNeg = getMemoryOffset(params[0]);
 			string offsetExpr = getMemoryOffset(params[1]);

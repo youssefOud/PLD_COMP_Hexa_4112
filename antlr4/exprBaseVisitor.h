@@ -91,6 +91,10 @@ public:
     return visitChildren(ctx);
   }
 
+  virtual antlrcpp::Any visitExprComp(exprParser::ExprCompContext *ctx) override {
+    return visitChildren(ctx);
+  }
+
   virtual antlrcpp::Any visitExprPar(exprParser::ExprParContext *ctx) override {
     return visitChildren(ctx);
   }

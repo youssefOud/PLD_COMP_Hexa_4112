@@ -141,6 +141,7 @@ void Fonction::generateSA(multimap<string,pair<Type,DefAppel*>> & prototypes){
 			case 9:
 			case 10: 
 			case 11:
+			case 13:
 			case 12:
 				(*it)->analyse(staticAnalysis,errors,warnings,prototypes,0);
 				break;

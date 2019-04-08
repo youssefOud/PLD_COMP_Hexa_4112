@@ -27,6 +27,7 @@
 #include "ExprPlus.h"
 #include "ExprMoins.h"
 #include "ExprSimple.h"
+#include "ExprBool.h"
 #include "ExprNeg.h"
 #include "Appel.h"
 #include "IFInstruction.h"
@@ -165,6 +166,11 @@ public:
     
     return expr;
   }
+
+    virtual antlrcpp::Any visitExprComp(exprParser::ExprCompContext *ctx) override {
+		Instruction * expr = new ExprBool((Instruction *) visit(ctx->expression(0)), (Instruction *)visit(ctx->expression(1)), ctx->opc->getText());
+    	return expr;
+	}
  
   virtual antlrcpp::Any visitExprPar(exprParser::ExprParContext *context) override {
     return visit(context->expression());

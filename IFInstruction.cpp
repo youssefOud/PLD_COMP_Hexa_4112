@@ -80,6 +80,7 @@ void IFInstruction::analyse(map<string,vector<int>> & staticAnalysis,list<string
 			case 9:
 			case 10: 
 			case 11:
+			case 13:
 			case 12:
 				(*it)->analyse(staticAnalysis,errors,warnings,prototypes,0);
 				break;
@@ -123,6 +124,7 @@ void IFInstruction::analyse(map<string,vector<int>> & staticAnalysis,list<string
 			case 10: 
 			case 11:
 			case 12:
+			case 13:
 				(*it)->analyse(staticAnalysis,errors,warnings,prototypes,0);
 				break;
 			case 2:
