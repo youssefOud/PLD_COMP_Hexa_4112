@@ -84,3 +84,7 @@ string ExprBool::buildIR(CFG *cfg){
 	}
 	return var3;
 }
+
+bool ExprBool::estCst(list<string> & opti) { 
+return expr1->estCst(opti) && expr2->estCst(opti);
+}
