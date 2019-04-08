@@ -83,3 +83,15 @@ int Declaration::getClassName(){
 string Declaration::buildIR(CFG *cfg) {
 	return "25";
 }
+
+void Declaration::analyse(map<string,vector<int>> & staticAnalysis,list<string> & errors,list<string> & warnings, multimap<string,pair<Type,DefAppel*>> & prototypes,bool returnType) {
+	map<string,vector<int>>::iterator it2;
+			it2 = staticAnalysis.find(id);
+			if (it2 == staticAnalysis.end()) {	
+				//déclaration d'une nouvelle variable
+				vector<int> flags(2, 0);
+				staticAnalysis.insert(make_pair(id,flags ));
+				//ATTENTION LES DECLARATIONS MULTIPLES SONT GEREES DU COTE DE LA ST
+			}
+
+}
