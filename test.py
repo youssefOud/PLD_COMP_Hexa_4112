@@ -21,8 +21,8 @@ for input_file in input_files:
 for in_name in file_names :
 	os.system("rm -f "+dir_output+in_name+expect_name)
 	os.system("gcc -o " + dir_output+in_name + "_exec " + dir_input+ in_name+input_ext)
-	os.system("./"+dir_output+"/"+in_name + "_exec ; echo $? >> "+dir_output+in_name+expect_name)
-	os.system(exec_name+" "+dir_input+in_name+input_ext + " > "+dir_output+in_name+output_name)
+	os.system("./"+dir_output+"/"+in_name + "_exec ; echo $? >> "+dir_output+in_name+expect_name + " 2>"+dir_output+"logs.txt")
+	os.system(exec_name+" "+dir_input+in_name+input_ext + " > "+dir_output+in_name+output_name + " 2>"+dir_output+"logs.txt")
 
 # compare output files with expected output
 for name in file_names :
@@ -44,7 +44,8 @@ for input_file in input_files_erwarn:
 		file_names_erwarn.append(input_file[:-2])
 
 for in_name in file_names_erwarn :
-	os.system(exec_name+" "+dir_input_erwarn+in_name+input_ext + " > "+dir_output_erwarn+in_name+output_name)
+	os.system(exec_name+" "+dir_input_erwarn+in_name+input_ext + " > "+dir_output_erwarn+in_name+output_name+ " 2>"+dir_output_erwarn+"logs.txt")
+
 
 for name in file_names_erwarn :
 	print "-----------------------------------"
