@@ -1,0 +1,17 @@
+SymbolTable : 
+ID TYPE ADD
+a 2   1
+StaticAnalysisTable : 
+ID INIT UTI
+a 1   1
+StaticAnalysisTable : Display warnings
+StaticAnalysisTable : Display errors
+SymbolTable : 
+ID TYPE ADD
+!temp-16 1   -16
+!temp-24 1   -24
+!temp-8 2   -8
+StaticAnalysisTable : 
+ID INIT UTI
+StaticAnalysisTable : Display warnings
+StaticAnalysisTable : Display errors
