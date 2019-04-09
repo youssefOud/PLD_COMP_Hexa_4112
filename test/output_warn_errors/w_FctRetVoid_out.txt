@@ -1,0 +1,2 @@
+Warning : Fonction main de type void avec retour
+0

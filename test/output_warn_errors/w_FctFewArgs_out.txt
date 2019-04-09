@@ -1,0 +1,2 @@
+Warning : Pas assez d'arguments pour la fonction toto !
+1

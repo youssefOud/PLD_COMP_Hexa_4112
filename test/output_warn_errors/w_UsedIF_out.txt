@@ -1,0 +1,2 @@
+Warning : Variable definie non utilisee b
+127

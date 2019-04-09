@@ -1,0 +1,4 @@
+Warning : Variable definie non utilisee a
+Warning : Variable definie non utilisee b
+Warning : La fonction toto a un retour void !
+1

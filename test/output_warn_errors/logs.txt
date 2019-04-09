@@ -1,0 +1,20 @@
+N'existe pas dans la symbolTable
+terminate called after throwing an instance of 'std::logic_error'
+  what():  basic_string::_M_construct null not valid
+./mongcc.sh : ligne 90 :  5394 Abandon                 (core dumped)./exe -a -c $FICHIER
+/usr/lib64/gcc/x86_64-suse-linux/7/../../../../x86_64-suse-linux/bin/ld: /usr/lib64/gcc/x86_64-suse-linux/7/../../../../lib64/crt1.o: in function `_start':
+/home/abuild/rpmbuild/BUILD/glibc-2.26/csu/../sysdeps/x86_64/start.S:110: undefined reference to `main'
+collect2: error: ld a retourné le statut de sortie 1
+./mongcc.sh: ligne 48: ./a.out: Aucun fichier ou dossier de ce type
+/usr/lib64/gcc/x86_64-suse-linux/7/../../../../x86_64-suse-linux/bin/ld: test/input_warn_errors/w_FctNotDeclared.o: in function `.main':
+(.text+0x9): undefined reference to `fct'
+collect2: error: ld a retourné le statut de sortie 1
+./mongcc.sh: ligne 48: ./a.out: Aucun fichier ou dossier de ce type
+N'existe pas dans la symbolTable
+terminate called after throwing an instance of 'std::logic_error'
+  what():  basic_string::_M_construct null not valid
+./mongcc.sh : ligne 90 :  5490 Abandon                 (core dumped)./exe -a -c $FICHIER
+/usr/lib64/gcc/x86_64-suse-linux/7/../../../../x86_64-suse-linux/bin/ld: /usr/lib64/gcc/x86_64-suse-linux/7/../../../../lib64/crt1.o: in function `_start':
+/home/abuild/rpmbuild/BUILD/glibc-2.26/csu/../sysdeps/x86_64/start.S:110: undefined reference to `main'
+collect2: error: ld a retourné le statut de sortie 1
+./mongcc.sh: ligne 48: ./a.out: Aucun fichier ou dossier de ce type

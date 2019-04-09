@@ -45,6 +45,8 @@ public:
 
     virtual antlrcpp::Any visitRetourVoid(exprParser::RetourVoidContext *context) = 0;
 
+    virtual antlrcpp::Any visitRetourChar(exprParser::RetourCharContext *context) = 0;
+
     virtual antlrcpp::Any visitTypeVarInt(exprParser::TypeVarIntContext *context) = 0;
 
     virtual antlrcpp::Any visitTypeVarChar(exprParser::TypeVarCharContext *context) = 0;

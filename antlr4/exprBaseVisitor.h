@@ -67,6 +67,10 @@ public:
     return visitChildren(ctx);
   }
 
+  virtual antlrcpp::Any visitRetourChar(exprParser::RetourCharContext *ctx) override {
+    return visitChildren(ctx);
+  }
+
   virtual antlrcpp::Any visitTypeVarInt(exprParser::TypeVarIntContext *ctx) override {
     return visitChildren(ctx);
   }

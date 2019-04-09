@@ -1,0 +1,2 @@
+Error : Plusieurs fonctions main ont été trouvé
+Error : Multiples définitions des fonctions main 

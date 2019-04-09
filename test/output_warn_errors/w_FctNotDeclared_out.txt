@@ -1,0 +1,2 @@
+Warning : Fonction fct utilisee mais non definie
+127

@@ -261,6 +261,14 @@ public:
     virtual antlrcpp::Any accept(antlr4::tree::ParseTreeVisitor *visitor) override;
   };
 
+  class  RetourCharContext : public TypefctContext {
+  public:
+    RetourCharContext(TypefctContext *ctx);
+
+    antlr4::tree::TerminalNode *CHAR();
+    virtual antlrcpp::Any accept(antlr4::tree::ParseTreeVisitor *visitor) override;
+  };
+
   TypefctContext* typefct();
 
   class  TypeContext : public antlr4::ParserRuleContext {
