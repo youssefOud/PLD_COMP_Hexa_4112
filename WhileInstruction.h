@@ -4,7 +4,7 @@
 #include <iostream>
 #include <list>
 #include "Instruction.h"
-
+class BacicBlock;
 using namespace std;
 
 class WhileInstruction : public Instruction{

@@ -95,7 +95,7 @@ int main(int argc, const char ** argv) {
 					gen_asm_prologue_general(myfile);			
 				}
 	      			else if (c && numberOfErrors>0){			
-					cerr << "Erreur ! Le fichier assembleur n'a pas été généré !" <<endl;
+					cout << "Error : Le fichier assembleur n'a pas été généré !" <<endl;
 				}
 			
 				//On rajoute les fonctions de la librairie C que l'on souhaite gérer à nos prototypes 
@@ -108,12 +108,12 @@ int main(int argc, const char ** argv) {
 				//Fonction getchar
 				prototypes.insert(make_pair("getchar",make_pair(INT,new DefAppel())));
 
-
+				int cmptFct = 1;
 				for(list<Fonction*>::iterator it=fonctions.begin() ; it!=fonctions.end() ; ++it) 
 				{
 					  debug((*it)->toString());
 				  	  (*it)->generateST();
-					  CFG * cfg = new CFG((*it), &prototypes);
+					  CFG * cfg = new CFG((*it), &prototypes, cmptFct++);
 					  for(list<Instruction*>::iterator it2 = (*it)->getInstructions()->begin(); it2 != (*it)->getInstructions()->end(); it2++){
 						  ( *it2)->buildIR(cfg);
 					  }
@@ -147,23 +147,23 @@ int main(int argc, const char ** argv) {
 			else {
 
 				if(numberOfMains ==0){
-					cerr << "Erreur ! Aucune fonction main n'a été trouvé !" <<endl;
+					cout << "Error : Aucune fonction main n'a été trouvé" <<endl;
 				}
 				else if(numberOfMains > 1){
-					cerr << "Erreur ! Plusieurs fonctions main ont été trouvé !" <<endl;
+					cout << "Error : Plusieurs fonctions main ont été trouvé" <<endl;
 				}
 		    
 				if(fctRedef.size()!=0){
-				cerr << "Erreur ! Multiples définitions des fonctions " ;
+				cout << "Error : Multiples définitions des fonctions " ;
 				for(auto it=fctRedef.begin() ; it!=fctRedef.end()  ; ++it){
-						cerr<<*it<<" ";
+						cout<<*it<<" ";
 				}
-				cerr << "!"<<endl;
+				
 			}
 		}
 	}
 	else{
-		cerr << "Erreur ! L'arbre est mal formé, il ne pourra pas être visité." <<endl;
+		cout << "Error : L'arbre est mal formé, il ne pourra pas être visité." <<endl;
 	}
 	
 	return 0;

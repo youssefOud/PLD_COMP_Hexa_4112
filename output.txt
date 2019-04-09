@@ -1,0 +1,364 @@
+a-----------------------------------
+03_OperatorPlus: True
+int main() {
+   int a;
+   a = 1 + 2;
+   return a;
+}
+
+Resultat obtenu: 3
+
+Resultat attendu: 3
+
+-----------------------------------
+04_OperatorMinus: True
+int main() {
+   int a;
+   a = 2 - 1;
+	return a;
+}
+
+Resultat obtenu: 1
+
+Resultat attendu: 1
+
+-----------------------------------
+06_OperatorMult: True
+int main() {
+   int a;
+   a = 4 * 2;
+return a;
+}
+
+Resultat obtenu: 8
+
+Resultat attendu: 8
+
+-----------------------------------
+15_IfElse: False
+int main() {
+	int a = 1;
+	if (a==2) {
+		return a+1;
+	} else {
+		return a+2;
+	}
+	
+}
+Resultat obtenu: Warning : Retour attendu pour la fonction main 
+1
+
+Resultat attendu: 3
+
+-----------------------------------
+11_FctReturn: True
+int function(int a, int b) {
+	return a+b;
+}
+   
+int main() {
+	int a = function('a',1);
+	return a;
+}
+Resultat obtenu: 98
+
+Resultat attendu: 98
+
+-----------------------------------
+13_FctCallPutchar: False
+#include <stdio.h>
+
+int main() {
+	int a;
+	a=putchar(97);
+	a=a+2;
+	return 0;	
+}
+Resultat obtenu: a0
+
+Resultat attendu: 0
+
+-----------------------------------
+00_Return: True
+int main (){
+	return 65;
+}
+
+Resultat obtenu: 65
+
+Resultat attendu: 65
+
+-----------------------------------
+02_MultipleVarDeclarations: True
+int main() {
+   int a, b;
+	a = 5;
+	b = 6;
+	return b*a;
+}
+
+Resultat obtenu: 30
+
+Resultat attendu: 30
+
+-----------------------------------
+07_Parant: True
+int main() {
+   int a;
+   a = (1 + 2) * 3;
+return a;
+}
+
+Resultat obtenu: 9
+
+Resultat attendu: 9
+
+-----------------------------------
+08_ArithmeticExpressionWithPar: True
+int main() {
+   int a;
+   a = 1 + 2*4 - 2*((4 + 3*2) - 2);
+return a;
+}
+
+Resultat obtenu: 249
+
+Resultat attendu: 249
+
+-----------------------------------
+09_VarInitialization: True
+int main() {
+   int a = 5;
+	return a;
+}
+
+Resultat obtenu: 5
+
+Resultat attendu: 5
+
+-----------------------------------
+10_FctCall: True
+char function(char a) {
+	return a;
+}
+   
+int main() {
+	function('a');
+	return 1;
+}
+
+Resultat obtenu: 1
+
+Resultat attendu: 1
+
+-----------------------------------
+14_IF: False
+int main() {
+	int a = 1;
+	if (a==1) {
+		a = a+1;
+	}
+	return a;
+}
+Resultat obtenu: 1
+
+Resultat attendu: 2
+
+-----------------------------------
+er_UsedNotDeclared: True
+int main () {	
+	int e = 2;
+	r=e;
+	return 0;
+}
+
+Resultat obtenu: 
+Error : Variable utilisee mais non declaree r
+127
+
+Resultat attendu: 
+Error : Variable utilisee mais non declaree r
+127
+
+-----------------------------------
+w_UnusedVar: True
+int main() {
+	int a,b;
+	a=1;
+	return a;
+}
+
+Resultat obtenu: 
+Warning : Variable non utilisee b
+1
+
+Resultat attendu: 
+Warning : Variable non utilisee b
+1
+
+-----------------------------------
+w_UsedNonInitVar: True
+int main () {	
+	int r;
+	int e;
+	r=e;
+	return 1;
+}
+
+Resultat obtenu: 
+Warning : Variable utilisee mais non initialisee e
+Warning : Variable non utilisee e
+Warning : Variable definie non utilisee r
+1
+
+Resultat attendu: 
+Warning : Variable utilisee mais non initialisee e
+Warning : Variable non utilisee e
+Warning : Variable definie non utilisee r
+1
+
+-----------------------------------
+w_FctNotDeclared: True
+int main() {
+	fct();
+	return 0;
+}
+
+Resultat obtenu: 
+Warning : Fonction fct utilisee mais non definie
+127
+
+Resultat attendu: 
+Warning : Fonction fct utilisee mais non definie
+127
+
+-----------------------------------
+w_FctFewArgs: True
+int toto(int a, int b) {
+	return a+b;
+}
+int main () {
+	toto(1);
+	return 1;
+}
+
+Resultat obtenu: 
+Warning : Pas assez d'arguments pour la fonction toto !
+1
+
+Resultat attendu: 
+Warning : Pas assez d'arguments pour la fonction toto !
+1
+
+-----------------------------------
+w_FctNoRet: True
+int main() {
+	1+2;
+}
+Resultat obtenu: 
+Warning : Retour attendu pour la fonction main 
+3
+
+Resultat attendu: 
+Warning : Retour attendu pour la fonction main 
+3
+
+-----------------------------------
+er_DeclMultiple: True
+void main() {
+	int a = 1;
+	int a;
+}
+
+Resultat obtenu: 
+Warning : Variable definie non utilisee a
+Error : Declarations multiples de la variable a
+1
+
+Resultat attendu: 
+Warning : Variable definie non utilisee a
+Error : Declarations multiples de la variable a
+1
+
+-----------------------------------
+w_FctReturnType: True
+void toto(int a, int b) {
+	a = 1;
+	b = 1;
+}
+int main () {
+	int a = toto(1,2);
+	return a;
+}
+
+Resultat obtenu: 
+Warning : Variable definie non utilisee a
+Warning : Variable definie non utilisee b
+Warning : La fonction toto a un retour void !
+1
+
+Resultat attendu: 
+Warning : Variable definie non utilisee a
+Warning : Variable definie non utilisee b
+Warning : La fonction toto a un retour void !
+1
+
+-----------------------------------
+w_FctRetVoid: True
+void main() {
+	return 0;
+}
+Resultat obtenu: 
+Warning : Fonction main de type void avec retour
+0
+
+Resultat attendu: 
+Warning : Fonction main de type void avec retour
+0
+
+-----------------------------------
+er_NoMain: True
+int fct() {
+	return 0;
+}
+Resultat obtenu: 
+Error : Aucune fonction main n'a été trouvé
+
+Resultat attendu: 
+Error : Aucune fonction main n'a été trouvé
+
+-----------------------------------
+w_FctManyArgs: True
+int toto(int a, int b) {
+	return a+b;
+}
+int main () {
+	toto(1,2,3);
+	return 1;
+}
+Resultat obtenu: 
+Warning : Trop d'arguments pour la fonction toto !
+1
+
+Resultat attendu: 
+Warning : Trop d'arguments pour la fonction toto !
+1
+
+-----------------------------------
+er_MultipleMains: True
+int main() {
+	return 0;
+}
+
+int main() {
+	return 0;
+}
+Resultat obtenu: 
+Error : Plusieurs fonctions main ont été trouvé
+Error : Multiples définitions des fonctions main 
+Resultat attendu: 
+Error : Plusieurs fonctions main ont été trouvé
+Error : Multiples définitions des fonctions main 
+********************************
+Nb tests OK : 22
+Nb tests echoues : 3

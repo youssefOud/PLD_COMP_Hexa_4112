@@ -1,14 +1,16 @@
 #include "CFG.h"
 #include "BasicBlock.h"
 
-CFG::CFG(Fonction* f, multimap<string,pair<Type,DefAppel *>> *protos) {
+CFG::CFG(Fonction* f, multimap<string,pair<Type,DefAppel *>> *protos, int cmpt) {
 	ast = f;
 	symbolTable = f->getST();
 	nextFreeSymbolIndex = nextFree;
 	prototypes = protos;
-	current_bb = new BasicBlock(this, ".main");
+	current_bb = new BasicBlock(this, "." + f->getId());
 	add_bb(current_bb);
-	
+	nbIf = 0;
+	nbWhile = 0;
+	cmptFct = cmpt;
 }
 
 void CFG::genererIR(){
@@ -49,6 +51,7 @@ void CFG::gen_asm_prologue(ostream& o) {
 }
 
 void CFG::gen_asm_epilogue(ostream& o) {
+	o << ".epilogue" << to_string(cmptFct) <<":\r\n";
 	o << "# epilogue \r\n";
 	o << "leave # restore %rbp from the stack \r\n";
 	o << "ret # return to the caller (here the shell) \r\n";
@@ -95,4 +98,23 @@ int CFG::getOffsetFromSymbolTable(string id){
 
 Type CFG::getPrototypeType(string label){
 	return prototypes->find(label)->second.first;
+}
+
+int CFG::getNbIf(){
+	return nbIf;
+}
+
+int CFG::getNbWhile(){
+	return nbWhile;
+}
+
+int CFG::getCmptFct() {
+	return cmptFct;
+}
+
+void CFG::incrementNbIf(){
+	nbIf++;
+}
+void CFG::incrementNbWhile(){
+	nbWhile++;
 }
