@@ -108,12 +108,12 @@ int main(int argc, const char ** argv) {
 				//Fonction getchar
 				prototypes.insert(make_pair("getchar",make_pair(INT,new DefAppel())));
 
-
+				int cmptFct = 1;
 				for(list<Fonction*>::iterator it=fonctions.begin() ; it!=fonctions.end() ; ++it) 
 				{
 					  debug((*it)->toString());
 				  	  (*it)->generateST();
-					  CFG * cfg = new CFG((*it), &prototypes);
+					  CFG * cfg = new CFG((*it), &prototypes, cmptFct++);
 					  for(list<Instruction*>::iterator it2 = (*it)->getInstructions()->begin(); it2 != (*it)->getInstructions()->end(); it2++){
 						  ( *it2)->buildIR(cfg);
 					  }
