@@ -1,3 +1,9 @@
+#ifdef DEBUG_ENABLE
+    #define debug(debugString) std::cout << (debugString) << std::endl;
+#else
+    #define debug(debugString)
+#endif
+
 #include "Fonction.h"
 #include "Declaration.h"
 #include "Definition.h"
@@ -100,6 +106,7 @@ void Fonction::generateST(){
 			if (it2 != symbolTable.end()) {	
 				// Existe deja dans la table des symboles : gérer cas d'erreur
 				//déclarations multiples
+				debug("Error : Declarations multiples de la variable "+ ((Declaration*)(*it))->getId());
 				errors.push_back("Declarations multiples de la variable "+ ((Declaration*)(*it))->getId());
 			} else {
 				// On commence les adresses à -8
@@ -112,6 +119,7 @@ void Fonction::generateST(){
 			map<string,pair<Type,int>>::iterator it2;
 			it2 = this->symbolTable.find(((Definition*)(*it))->getLeft()->getId());
 			if (it2 != symbolTable.end()) {	
+				debug("Error : Declarations multiples de la variable "+ ((Definition*)(*it))->getLeft()->getId());
 				errors.push_back("Declarations multiples de la variable "+ ((Definition*)(*it))->getLeft()->getId());
 			} else {
 				// On commence les adresses à -8
@@ -157,9 +165,11 @@ void Fonction::generateSA(multimap<string,pair<Type,DefAppel*>> & prototypes){
 		
 	}
 	if(type==0 && retFound){
+		debug("Warning : Fonction "+id+" de type void avec retour")
 		warnings.push_back("Fonction "+id+" de type void avec retour"  );
 	}
 	else if(type!=0 && !retFound){
+		debug("Warning : Retour attendu pour la fonction "+id+" ");
 		warnings.push_back("Retour attendu pour la fonction "+id+" ");
 	}
 
@@ -208,7 +218,7 @@ void Fonction::generateSA(multimap<string,pair<Type,DefAppel*>> & prototypes){
 	  cerr << "StaticAnalysisTable : Display errors"<< endl;
 	  for(list<string>::iterator it=errors.begin() ; it!=errors.end() ; ++it)
 	  {
-	    cout<< "Error: "<<(*it) <<endl;
+	    cout<< "Error : "<<(*it) <<endl;
 	  }
 	}
 	

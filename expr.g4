@@ -18,7 +18,8 @@ defAppel : type ID # defParamUnique
 	| type ID ',' defAppel # defParamMult ;
 
 typefct : INT # retourInt
-	| VOID # retourVoid ;
+	| VOID # retourVoid 
+	| CHAR # retourChar ;
 
 type : INT # typeVarInt 
 	| CHAR #typeVarChar;
