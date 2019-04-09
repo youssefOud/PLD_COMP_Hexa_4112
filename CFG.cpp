@@ -8,6 +8,8 @@ CFG::CFG(Fonction* f, multimap<string,pair<Type,DefAppel *>> *protos) {
 	prototypes = protos;
 	current_bb = new BasicBlock(this, ".main");
 	add_bb(current_bb);
+	nbIf = 0;
+	nbWhile = 0;
 	
 }
 
@@ -49,6 +51,7 @@ void CFG::gen_asm_prologue(ostream& o) {
 }
 
 void CFG::gen_asm_epilogue(ostream& o) {
+	o << ".epilogue:\r\n";
 	o << "# epilogue \r\n";
 	o << "leave # restore %rbp from the stack \r\n";
 	o << "ret # return to the caller (here the shell) \r\n";
@@ -95,4 +98,19 @@ int CFG::getOffsetFromSymbolTable(string id){
 
 Type CFG::getPrototypeType(string label){
 	return prototypes->find(label)->second.first;
+}
+
+int CFG::getNbIf(){
+	return nbIf;
+}
+
+int CFG::getNbWhile(){
+	return nbWhile;
+}
+
+void CFG::incrementNbIf(){
+	nbIf++;
+}
+void CFG::incrementNbWhile(){
+	nbWhile++;
 }

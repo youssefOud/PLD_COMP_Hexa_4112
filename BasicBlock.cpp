@@ -19,10 +19,11 @@ void BasicBlock::genererCodeAssembleur(ostream &o) {
 		(*it)->genererCodeAssembleur(o);	
 	}
 	if(exit_true == nullptr && exit_false == nullptr){
+		o << "jmp .epilogue\r\n\r\n";
 	}
 	else if (exit_true != nullptr && exit_false == nullptr){
 		string jumpLabelTrue = exit_true->label;
-		o << "jmp " << jumpLabelTrue << "\r\n";
+		o << "jmp " << jumpLabelTrue << "\r\n\r\n";
 	}
 	else if (exit_true != nullptr && exit_false != nullptr){
 		string jumpLabelTrue = exit_true->label;
@@ -32,6 +33,6 @@ void BasicBlock::genererCodeAssembleur(ostream &o) {
 		o << "cmpq $0, %rax\r\n";
 
 		o << "jne " << jumpLabelTrue << "\r\n";
-		o << "jmp " << jumpLabelFalse << "\r\n";
+		o << "jmp " << jumpLabelFalse << "\r\n\r\n";
 	}
 }
