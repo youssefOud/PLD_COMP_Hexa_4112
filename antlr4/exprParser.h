@@ -13,9 +13,10 @@ class  exprParser : public antlr4::Parser {
 public:
   enum {
     T__0 = 1, T__1 = 2, T__2 = 3, T__3 = 4, T__4 = 5, T__5 = 6, T__6 = 7, 
-    T__7 = 8, T__8 = 9, T__9 = 10, VOID = 11, INT = 12, CHAR = 13, NBR = 14, 
-    RETURN = 15, IF = 16, ELSE = 17, WHILE = 18, ID = 19, CARACTERE = 20, 
-    WS = 21
+    T__7 = 8, T__8 = 9, T__9 = 10, T__10 = 11, T__11 = 12, T__12 = 13, T__13 = 14, 
+    T__14 = 15, T__15 = 16, VOID = 17, INT = 18, CHAR = 19, NBR = 20, RETURN = 21, 
+    IF = 22, ELSE = 23, WHILE = 24, ID = 25, CARACTERE = 26, PREPRO = 27, 
+    COM1 = 28, COM2 = 29, WS = 30
   };
 
   enum {
@@ -353,6 +354,16 @@ public:
     virtual antlrcpp::Any accept(antlr4::tree::ParseTreeVisitor *visitor) override;
   };
 
+  class  ExprCompContext : public ExpressionContext {
+  public:
+    ExprCompContext(ExpressionContext *ctx);
+
+    antlr4::Token *opc = nullptr;
+    std::vector<ExpressionContext *> expression();
+    ExpressionContext* expression(size_t i);
+    virtual antlrcpp::Any accept(antlr4::tree::ParseTreeVisitor *visitor) override;
+  };
+
   class  ExprParContext : public ExpressionContext {
   public:
     ExprParContext(ExpressionContext *ctx);
@@ -548,22 +559,13 @@ public:
    
   };
 
-  class  InstrMultContext : public InstructionContext {
-  public:
-    InstrMultContext(InstructionContext *ctx);
-
-    std::vector<InstructionContext *> instruction();
-    InstructionContext* instruction(size_t i);
-    virtual antlrcpp::Any accept(antlr4::tree::ParseTreeVisitor *visitor) override;
-  };
-
   class  WhileInstrContext : public InstructionContext {
   public:
     WhileInstrContext(InstructionContext *ctx);
 
     antlr4::tree::TerminalNode *WHILE();
     ExpressionContext *expression();
-    InstructionContext *instruction();
+    CorpsContext *corps();
     virtual antlrcpp::Any accept(antlr4::tree::ParseTreeVisitor *visitor) override;
   };
 
@@ -597,8 +599,8 @@ public:
 
     antlr4::tree::TerminalNode *IF();
     ExpressionContext *expression();
-    std::vector<InstructionContext *> instruction();
-    InstructionContext* instruction(size_t i);
+    std::vector<CorpsContext *> corps();
+    CorpsContext* corps(size_t i);
     antlr4::tree::TerminalNode *ELSE();
     virtual antlrcpp::Any accept(antlr4::tree::ParseTreeVisitor *visitor) override;
   };

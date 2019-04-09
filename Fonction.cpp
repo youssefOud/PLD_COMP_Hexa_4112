@@ -15,6 +15,8 @@
 #include "ExprNeg.h"
 #include "ExprSimple.h"
 #include "Appel.h"
+#include "IFInstruction.h"
+#include "WhileInstruction.h"
 #include <iostream>
 #include <utility>
 
@@ -137,68 +139,29 @@ void Fonction::generateSA(multimap<string,pair<Type,DefAppel*>> & prototypes){
 	}
 	bool retFound=false;
 	for(list<Instruction*>::iterator it = this->instructions.begin(); it != this->instructions.end(); it++){
-		if((*it)->getClassName() == 1){  //Declaration
-			map<string,vector<int>>::iterator it2;
-			it2 = this->staticAnalysis.find(((Declaration*)(*it))->getId());
-			if (it2 == staticAnalysis.end()) {	
-				//déclaration d'une nouvelle variable
-				vector<int> flags(2, 0);
-				this->staticAnalysis.insert(make_pair(((Declaration*)(*it))->getId(),flags ));
-				//ATTENTION LES DECLARATIONS MULTIPLES SONT GEREES DU COTE DE LA ST
-			}
-		}
-		else if((*it)->getClassName() == 2){ //Définition (Type d'affectation)
-			map<string,vector<int>>::iterator it2;
-			((Definition*)(*it))->getExpr()->analyse(staticAnalysis,errors,warnings,prototypes,1);
-			// traitement de la left value quel que soit le retour de la partie droite
-			it2 = this->staticAnalysis.find(((Definition*)(*it))->getLeft()->getId());
-			if (it2 == staticAnalysis.end()) {// elle n'a jamais été déclarée
-				//on notifie qu'elle a été déclarée et initialisée
-				vector<int> flags{1,0};
-				this->staticAnalysis.insert(make_pair(((Definition*)(*it))->getLeft()->getId(),flags ));
-			}
-			//ATTENTION LES DECLARATIONS MULTIPLES SONT GEREES PAR LA ST	
-		}
-		else if( (*it)->getClassName() == 3  ){ //Affectation Simple (Type d'affectation)
-			((AffectationSimple*)(*it))->getExpr()->analyse(staticAnalysis,errors,warnings,prototypes,1);
-			map<string,vector<int>>::iterator it2;
-			// traitement de la left value
-			it2 = this->staticAnalysis.find(((AffectationSimple*)(*it))->getLeft()->getId());
-			if (it2 != staticAnalysis.end()) {// elle a déjà été déclarée
-				//on notifie qu'elle a été initialisée ou affectée et utilisée
-				(*it2).second[0]=1;
-			  	(*it2).second[1]=1;
-			}
-			else{
-			//var gauche utilisée mais non déclarée
-				errors.push_back("Variable utilisee mais non declaree " + ((AffectationSimple*)(*it))->getLeft()->getId());
-			}	
-		}
-		else if( (*it)->getClassName() == 4  ){ //Return
-			((Return*)(*it))->getExpr()->analyse(staticAnalysis,errors,warnings,prototypes,0);
-			retFound=true;			
-		}
-		else if( (*it)->getClassName() == 5 ){
-			((ExprMoins*)(*it))->getExpr1()->analyse(staticAnalysis,errors,warnings,prototypes,0);
-			((ExprMoins*)(*it))->getExpr2()->analyse(staticAnalysis,errors,warnings,prototypes,0);
-		}
-		else if( (*it)->getClassName() == 6 ){
-			((ExprPlus*)(*it))->getExpr1()->analyse(staticAnalysis,errors,warnings,prototypes,0);
-			((ExprPlus*)(*it))->getExpr2()->analyse(staticAnalysis,errors,warnings,prototypes,0);
-		}
-		else if( (*it)->getClassName() == 7 ){
-			((ExprMult*)(*it))->getExpr1()->analyse(staticAnalysis,errors,warnings,prototypes,0);
-			((ExprMult*)(*it))->getExpr2()->analyse(staticAnalysis,errors,warnings,prototypes,0);
-		}
-		else if( (*it)->getClassName() == 8 ){
-			((ExprNeg*)(*it))->getExpr()->analyse(staticAnalysis,errors,warnings,prototypes,0);
-		}
-		else if( (*it)->getClassName() == 9 ){
-			((ExprSimple*)(*it))->analyse(staticAnalysis,errors,warnings,prototypes,0);
-		}
-		else if( (*it)->getClassName() == 10 ){
-			((Appel*)(*it))->analyse(staticAnalysis,errors,warnings,prototypes,0);
-		}
+		int id =(*it)->getClassName(); 
+		switch (id) {
+			case 1: 
+			case 5:
+			case 6: 
+			case 7:
+			case 8: 
+			case 9:
+			case 10: 
+			case 11:
+			case 13:
+			case 12:
+				(*it)->analyse(staticAnalysis,errors,warnings,prototypes,0);
+				break;
+			case 2:
+			case 3:
+				(*it)->analyse(staticAnalysis,errors,warnings,prototypes,1);
+				break;
+			case 4:
+				(*it)->analyse(staticAnalysis,errors,warnings,prototypes,0);
+				retFound=true;	
+				break;	
+		 }
 		
 	}
 	if(type==0 && retFound){
@@ -214,11 +177,13 @@ void Fonction::generateSA(multimap<string,pair<Type,DefAppel*>> & prototypes){
 	
 	
 	void Fonction::processSA(){
-
 		for(map<string,vector<int>>::iterator it=staticAnalysis.begin() ; it!=staticAnalysis.end() ; ++it)
 		{
-			if((*it).second[1]==0){
+			if((*it).second[1]==0 &&  (*it).second[0]==0){
 				warnings.push_back("Variable non utilisee " +(*it).first );
+			}
+			else if((*it).second[1]==0 &&  (*it).second[0]==1){
+				warnings.push_back("Variable definie non utilisee " +(*it).first );
 			}
 		}
 	}
@@ -256,8 +221,24 @@ void Fonction::generateSA(multimap<string,pair<Type,DefAppel*>> & prototypes){
 	    cout<< "Error : "<<(*it) <<endl;
 	  }
 	}
-
+	
+	void Fonction::displayOpti(){
+	  cerr << "Optimisations : Display opti"<< endl;
+	  for(list<string>::iterator it=opti.begin() ; it!=opti.end() ; ++it)
+	  {
+	    cout<< "Opti : "<< (*it) <<endl;
+	  }
+	}	
+	
 	int Fonction::getNumberOfErrors(){
 		return errors.size();
 	}
 
+	void Fonction::optimize(){
+		for(list<Instruction*>::iterator it = this->instructions.begin(); it != this->instructions.end(); it++){
+			if((*it)->estCst(opti)){
+				opti.push_back("Optimisation possible au niveau de l'instruction "+ (*it)->toString());
+			}
+		}
+		
+	}

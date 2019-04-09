@@ -42,3 +42,7 @@ string ExprNeg::buildIR(CFG *cfg){
 	return varNeg;
 
 }
+
+bool ExprNeg::estCst(list<string> & opti){
+	return expr->estCst(opti) ; 
+}

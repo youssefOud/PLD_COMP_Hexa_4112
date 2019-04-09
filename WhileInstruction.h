@@ -16,9 +16,10 @@ class WhileInstruction : public Instruction{
 		string toString();
 		int eval() {return -1; };
 		int getClassName(){return 12;};
-		void analyse(map<string,vector<int>> & staticAnalysis,list<string> & errors,list<string> & warnings);
+		virtual void analyse(map<string,vector<int>> & staticAnalysis,list<string> & errors,list<string> & warnings, multimap<string,pair<Type,DefAppel*>> & prototypes,bool returnType);
 		Instruction * getClause();
 		list<Instruction*> * getBlocWhile();
+		virtual bool estCst(list<string> & opti);
 	
 	protected:
 		Instruction *clause;

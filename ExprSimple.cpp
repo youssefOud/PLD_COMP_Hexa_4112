@@ -49,4 +49,8 @@ string ExprSimple::buildIR (CFG* cfg){
 	}
 }
 
+bool ExprSimple::estCst(list<string> & opti){
+	return right->estCst(opti); 
+}
+
 

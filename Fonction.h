@@ -36,8 +36,10 @@ class Fonction{
 		void displayStaticAnalysis();
 		void displayWarnings();
 		void displayErrors();
+		void displayOpti();
 		map<string,pair<Type, int>> *getST();
 		int getNumberOfErrors();
+		void optimize();
 
 	private:
 		string id;
@@ -47,5 +49,7 @@ class Fonction{
 		map<string,vector<int>> staticAnalysis;
 		list<string> errors;
 		list<string> warnings;
+		list<string> opti;
 		DefAppel* defAppel;
+		
 };

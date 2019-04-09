@@ -29,6 +29,9 @@ class IRInstr {
 		cmp_eq,
 		cmp_lt,
 		cmp_le,
+		cmp_mt,
+		cmp_me,
+		cmp_diff,
 		neg
 	} Operation;
 

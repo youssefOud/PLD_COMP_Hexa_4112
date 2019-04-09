@@ -26,3 +26,7 @@ string ExprPlus::buildIR(CFG *cfg){
 	cfg->addInstruction(IRInstr::Operation::add, params);
 	return var3;
 }
+
+bool ExprPlus::estCst(list<string> & opti){
+	return expr1->estCst(opti) && expr2->estCst(opti); 
+}
