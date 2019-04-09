@@ -153,16 +153,16 @@ void IFInstruction::analyse(map<string,vector<int>> & staticAnalysis,list<string
 
 bool IFInstruction::estCst(list<string> & opti){
 	if(clause->estCst(opti)){
-		opti.push_back("Optimisation possible au niveau de l'instruction "+ clause->toString());	
+		opti.push_back("Optimisation possible au niveau de la ligne "+ to_string(clause->getNbLine()));	
 	}
 	for(list<Instruction*>::iterator it = this->blocIf.begin(); it != this->blocIf.end(); it++){
 		if((*it)->estCst(opti)){
-			opti.push_back("Optimisation possible au niveau de l'instruction "+ (*it)->toString());
+			opti.push_back("Optimisation possible au niveau de la ligne "+ to_string((*it)->getNbLine()));
 		}
 	}
 	for(list<Instruction*>::iterator it = this->blocElse.begin(); it != this->blocElse.end(); it++){
 		if((*it)->estCst(opti)){
-			opti.push_back("Optimisation possible au niveau de l'instruction "+ (*it)->toString());
+			opti.push_back("Optimisation possible au niveau de la ligne "+ to_string((*it)->getNbLine()));
 		}
 	}
 	return false;

@@ -59,7 +59,6 @@ int main(int argc, const char ** argv) {
 	tree::ParseTree* tree = parser.fichier();
 
 	
-
 	if(parser.getNumberOfSyntaxErrors() == 0){
 
 		calc visitor;

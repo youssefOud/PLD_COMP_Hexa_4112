@@ -237,7 +237,7 @@ void Fonction::generateSA(multimap<string,pair<Type,DefAppel*>> & prototypes){
 	void Fonction::optimize(){
 		for(list<Instruction*>::iterator it = this->instructions.begin(); it != this->instructions.end(); it++){
 			if((*it)->estCst(opti)){
-				opti.push_back("Optimisation possible au niveau de l'instruction "+ (*it)->toString());
+				opti.push_back("Optimisation possible au niveau de la ligne "+ to_string((*it)->getNbLine()));
 			}
 		}
 		

@@ -26,5 +26,8 @@ void Return::analyse(map<string,vector<int>> & staticAnalysis,list<string> & err
 }
 
 bool Return::estCst(list<string> & opti){
-	return expr->estCst(opti);
+	if(expr->getClassName() != 9){ //Si ce n'est pas une expression simple
+		return expr->estCst(opti);		
+	}
+	return false; // Si c'est une expression simple, aucune optimisation n'est possible
 }
