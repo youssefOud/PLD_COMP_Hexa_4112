@@ -148,10 +148,15 @@ void Fonction::generateSA(multimap<string,pair<Type,DefAppel*>> & prototypes){
 			case 8: 
 			case 9:
 			case 10: 
-			case 11:
 			case 13:
+				(*it)->analyse(staticAnalysis,errors,warnings,prototypes,0);
+				break;
+			case 11:
 			case 12:
 				(*it)->analyse(staticAnalysis,errors,warnings,prototypes,0);
+				if((*it)->containsRet()){
+					retFound = true;
+				}
 				break;
 			case 2:
 			case 3:
@@ -207,7 +212,6 @@ void Fonction::generateSA(multimap<string,pair<Type,DefAppel*>> & prototypes){
 	}
 	
 	void Fonction::displayWarnings(){
-	  cerr << "StaticAnalysisTable : Display warnings"<< endl;
 	  for(list<string>::iterator it=warnings.begin() ; it!=warnings.end() ; ++it)
 	  {
 	    cout<< "Warning : "<< (*it) <<endl;
@@ -215,7 +219,6 @@ void Fonction::generateSA(multimap<string,pair<Type,DefAppel*>> & prototypes){
 	}
 	
 	void Fonction::displayErrors(){
-	  cerr << "StaticAnalysisTable : Display errors"<< endl;
 	  for(list<string>::iterator it=errors.begin() ; it!=errors.end() ; ++it)
 	  {
 	    cout<< "Error : "<<(*it) <<endl;
@@ -223,7 +226,6 @@ void Fonction::generateSA(multimap<string,pair<Type,DefAppel*>> & prototypes){
 	}
 	
 	void Fonction::displayOpti(){
-	  cerr << "Optimisations : Display opti"<< endl;
 	  for(list<string>::iterator it=opti.begin() ; it!=opti.end() ; ++it)
 	  {
 	    cout<< "Opti : "<< (*it) <<endl;

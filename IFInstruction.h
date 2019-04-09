@@ -21,9 +21,11 @@ class IFInstruction : public Instruction {
 		Instruction * getClause();
 		list<Instruction*> * getBlocIf();
 		list<Instruction*> * getBlocElse();
+		virtual bool containsRet(){return ret;};
 	
 	protected:
 		Instruction *clause;
 		list<Instruction*> blocIf;
 		list<Instruction*> blocElse;
+		bool ret=false;
 };

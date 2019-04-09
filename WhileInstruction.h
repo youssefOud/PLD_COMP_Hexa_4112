@@ -20,8 +20,10 @@ class WhileInstruction : public Instruction{
 		Instruction * getClause();
 		list<Instruction*> * getBlocWhile();
 		virtual bool estCst(list<string> & opti);
+		virtual bool containsRet(){return ret;};
 	
 	protected:
 		Instruction *clause;
 		list<Instruction*> blocWhile;
+		bool ret=false;
 };

@@ -58,6 +58,7 @@ void WhileInstruction::analyse(map<string,vector<int>> & staticAnalysis,list<str
 				break;
 			case 4:
 				(*it)->analyse(staticAnalysis,errors,warnings,prototypes,0);
+				ret=true;
 				break;	
 		 }
 	}
@@ -96,7 +97,13 @@ string WhileInstruction::buildIR(CFG *cfg){
 
 bool WhileInstruction::estCst(list<string> & opti){
 	if(clause->estCst(opti)){
-		opti.push_back("Optimisation possible au niveau de la ligne "+ to_string(clause->getNbLine()));	
+		if(clause->eval() != 0){
+			opti.push_back("Boucle infinie au niveau de la ligne "+ to_string(clause->getNbLine()));	
+		}
+		else{	
+			opti.push_back("Boucle jamais atteinte au niveau de la ligne "+ to_string(clause->getNbLine()));	
+		}
+		
 	}
 	for(list<Instruction*>::iterator it = this->blocWhile.begin(); it != this->blocWhile.end(); it++){
 		if((*it)->estCst(opti)){

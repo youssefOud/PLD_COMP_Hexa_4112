@@ -30,6 +30,7 @@ public:
 	virtual bool estCst(list<string> & opti) { return false;};
 	virtual int getNbLine(){return nbLine;};
 	virtual void setNbLine(int l){nbLine=l;};
+	virtual bool containsRet(){return false;};
 
 protected:
 	int nbLine;

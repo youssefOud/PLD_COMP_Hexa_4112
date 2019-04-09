@@ -123,9 +123,9 @@ int main(int argc, const char ** argv) {
 
 					  if (a) {
 					    // Générer que si argument passé en option
-					    (*it)->displaySymbolTable();
+					    //(*it)->displaySymbolTable();
 					    //cout << endl;
-					    (*it)->displayStaticAnalysis();
+					    //(*it)->displayStaticAnalysis();
 					    //cout << endl;
 					    (*it)->displayWarnings();
 					    //cout << endl;

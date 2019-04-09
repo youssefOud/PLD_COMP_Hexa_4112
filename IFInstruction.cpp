@@ -61,6 +61,9 @@ string IFInstruction::buildIR(CFG *cfg){
 }
 
 void IFInstruction::analyse(map<string,vector<int>> & staticAnalysis,list<string> & errors,list<string> & warnings, multimap<string,pair<Type,DefAppel*>> & prototypes,bool returnType) {
+	//RETURN DANS LES DEUX BRANCHES ?
+	bool retIf=false;
+	bool retElse=false;
 	//Traitement de la clause
 	clause->analyse(staticAnalysis,errors,warnings,prototypes,1);
 
@@ -90,6 +93,7 @@ void IFInstruction::analyse(map<string,vector<int>> & staticAnalysis,list<string
 				break;
 			case 4:
 				(*it)->analyse(staticAnalysis,errors,warnings,prototypes,0);
+				retIf=true;
 				break;	
 		 }
 	}
@@ -133,9 +137,12 @@ void IFInstruction::analyse(map<string,vector<int>> & staticAnalysis,list<string
 				break;
 			case 4:
 				(*it)->analyse(staticAnalysis,errors,warnings,prototypes,0);
+				retElse=true;
 				break;	
 		 }
 	}
+	//Est ce qu'il y'a un retour dans les deux branches ?
+	ret = retIf && retElse;
 	//On analyse la map  et on supprime les variables déclarées dans le else de la TAS
 	for(list<string>::iterator it2=ids.begin() ; it2!=ids.end() ; ++it2)
 	{
