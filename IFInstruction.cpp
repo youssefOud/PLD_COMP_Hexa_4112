@@ -64,18 +64,10 @@ string IFInstruction::buildIR(CFG *cfg){
 	BasicBlock *clauseBB = cfg->current_bb;
 	clauseBB->varTest = varTest;
 	
-	BasicBlock *thenBB = new BasicBlock(cfg, ".trueCode_"+to_string(cfg->getNbIf()));//Rajouter les numeros
-	//cfg->current_bb = thenBB;
-	//for(list<Instruction*>::iterator it = this->blocIf.begin(); it != this->blocIf.end(); it++){
-		//(*it)->buildIR(cfg);
-	//}
+	BasicBlock *thenBB = new BasicBlock(cfg, ".trueCode_"+to_string(cfg->getNbIf()));
 	cfg->add_bb(thenBB);
 
-	BasicBlock *elseBB = new BasicBlock(cfg, ".falseCode_"+to_string(cfg->getNbIf()));//Rajouter les numéros
-	//cfg->current_bb = elseBB;
-	//for(list<Instruction*>::iterator it = this->blocElse.begin(); it != this->blocElse.end(); it++){
-		//(*it)->buildIR(cfg);
-	//}
+	BasicBlock *elseBB = new BasicBlock(cfg, ".falseCode_"+to_string(cfg->getNbIf()));
 	cfg->add_bb(elseBB);
 	
 	
@@ -92,7 +84,6 @@ string IFInstruction::buildIR(CFG *cfg){
 	thenBB->exit_false = nullptr;
 	elseBB->exit_true = afterIfBB;
 	elseBB->exit_false = nullptr;
-	//cfg->current_bb = afterIfBB;
 
 	cfg->current_bb = thenBB;
 	for(list<Instruction*>::iterator it = this->blocIf.begin(); it != this->blocIf.end(); it++){

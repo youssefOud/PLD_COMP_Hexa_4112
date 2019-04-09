@@ -5,16 +5,14 @@
 #include <iostream>
 #include <initializer_list>
 #include <map>
-// TODO : A completer
-
 #include "Fonction.h"
 #include "Enum.h"
-
 #include "IRInstr.h"
 
 using namespace std;
-
+class Instruction;
 class BacicBlock;
+
 class CFG {
  public:
 	CFG(Fonction* ast, multimap<string,pair<Type,DefAppel *>> *protos, int cmpt);
@@ -22,7 +20,6 @@ class CFG {
 	Fonction* ast; /**< The AST this CFG comes from */
 	
 	void addInstruction (IRInstr::Operation mnemo, vector<string> params);
-	void add_bb(BasicBlock* bb); 
 
 	// x86 code generation: could be encapsulated in a processor class in a retargetable compiler
 	void genererCodeAssembleur(ostream& o);
@@ -37,15 +34,16 @@ class CFG {
 	int get_var_type(string name);
 	int getOffsetFromSymbolTable(string id);
 
-	int getNextFreeIndex();
-
-	void genererIR();
 
 	// basic bloc management
 	string new_BB_name();
 	BasicBlock* current_bb;
+	void add_bb(BasicBlock* bb);
+	
+	//Various methods
 	Type getPrototypeType(string label);
-
+	int getNextFreeIndex();
+	void genererIR();
 	int getNbIf();
 	int getNbWhile();
 	int getCmptFct();

@@ -23,7 +23,6 @@ public:
     	virtual int getClassName()=0;
 	Type getType();	
 	void setType(Type t);
-	
 	Instruction *getExpr();
     	LeftValue *getLeft();	
 	Type convertTypeToInt(string);
@@ -32,7 +31,6 @@ public:
 	virtual bool estCst(list<string> & opti);
   
   
-
 protected:
 	Instruction *expr;
 	Type type;

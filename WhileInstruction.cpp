@@ -94,15 +94,11 @@ string WhileInstruction::buildIR(CFG *cfg){
 	string varTest = clause->buildIR(cfg);
 	
 	BasicBlock *beforeWhileBB = cfg->current_bb;
-	BasicBlock *clauseBB = new BasicBlock(cfg, ".clauseWhile_"+to_string(cfg->getNbWhile()));//Rajouter les numeros;
+	BasicBlock *clauseBB = new BasicBlock(cfg, ".clauseWhile_"+to_string(cfg->getNbWhile()));
 	clauseBB->varTest = varTest;
 	cfg->add_bb(clauseBB);
 	
-	BasicBlock *doBB = new BasicBlock(cfg, ".doCode_"+to_string(cfg->getNbWhile()));//Rajouter les numeros
-	//cfg->current_bb = doBB;
-	//for(list<Instruction*>::iterator it = this->blocWhile.begin(); it != this->blocWhile.end(); it++){
-		//(*it)->buildIR(cfg);
-	//}
+	BasicBlock *doBB = new BasicBlock(cfg, ".doCode_"+to_string(cfg->getNbWhile()));
 	cfg->add_bb(doBB);
 	
 	
@@ -129,8 +125,6 @@ string WhileInstruction::buildIR(CFG *cfg){
 		(*it)->buildIR(cfg);
 	}
 
-	
-	
 	cfg->current_bb = afterWhileBB;
 	return "";
 }

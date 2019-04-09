@@ -114,9 +114,6 @@ int main(int argc, const char ** argv) {
 					  debug((*it)->toString());
 				  	  (*it)->generateST();
 					  CFG * cfg = new CFG((*it), &prototypes, cmptFct++);
-					  for(list<Instruction*>::iterator it2 = (*it)->getInstructions()->begin(); it2 != (*it)->getInstructions()->end(); it2++){
-						  ( *it2)->buildIR(cfg);
-					  }
 					  (*it)->generateSA(prototypes);
 					  (*it)->processSA();
 						(*it)->optimize();

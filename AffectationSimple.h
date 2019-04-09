@@ -14,7 +14,6 @@ using namespace std;
 class AffectationSimple : public Affectation {
 
 public:
-
 	AffectationSimple(Instruction *e, LeftValue *l, string t) : Affectation(e, l, t) {};
 	~AffectationSimple() {} ;
      	string toString();
