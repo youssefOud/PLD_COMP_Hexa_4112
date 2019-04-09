@@ -19,7 +19,7 @@ void BasicBlock::genererCodeAssembleur(ostream &o) {
 		(*it)->genererCodeAssembleur(o);	
 	}
 	if(exit_true == nullptr && exit_false == nullptr){
-		o << "jmp .epilogue\r\n\r\n";
+		o << "jmp .epilogue" << cfg->getCmptFct() << "\r\n\r\n";
 	}
 	else if (exit_true != nullptr && exit_false == nullptr){
 		string jumpLabelTrue = exit_true->label;
