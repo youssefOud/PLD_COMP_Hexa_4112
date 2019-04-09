@@ -18,7 +18,8 @@ defAppel : type ID # defParamUnique
 	| type ID ',' defAppel # defParamMult ;
 
 typefct : INT # retourInt
-	| VOID # retourVoid ;
+	| VOID # retourVoid 
+	| CHAR # retourChar ;
 
 type : INT # typeVarInt 
 	| CHAR #typeVarChar;
@@ -30,6 +31,7 @@ right : ID # rightValueID
 expression : expression ('*') expression # exprMult
 	| ('-') expression # exprNeg
 	| expression op = ('+'|'-') expression # exprAddMinus
+	| expression opc = ('=='|'<'|'<='|'>='|'>'|'!=') expression # exprComp
 	| '('expression')' # exprPar
 	| right  # rightValue
 	| appel # exprApp ;
@@ -67,5 +69,8 @@ ELSE : 'else' ;
 WHILE : 'while' ;
 ID : [A-Za-z]+ ;
 CARACTERE : '\''[A-Za-z]'\'' ;
+PREPRO : '#' .*? '\n' -> skip ;
+COM1 : '//' .*? '\n' -> skip ;
+COM2 : '/*' .*? '*/' -> skip ;
 WS : [ \t\r\n] -> skip ;
 

@@ -20,6 +20,7 @@ class ExprNeg : public Instruction{
 		virtual void analyse(map<string,vector<int>> & staticAnalysis,list<string> & errors,list<string> & warnings, multimap<string,pair<Type,DefAppel*>> & prototypes,bool returnType) ;
 		virtual string buildIR(CFG *cfg);
 		Instruction * getExpr(){ return expr;}
+		virtual bool estCst(list<string> & opti);
 	
 	protected:
 		Instruction *expr;

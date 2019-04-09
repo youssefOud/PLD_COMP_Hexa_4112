@@ -25,10 +25,11 @@ public:
 	void setType(Type t);
 	
 	Instruction *getExpr();
-    LeftValue *getLeft();	
-Type convertTypeToInt(string);
+    	LeftValue *getLeft();	
+	Type convertTypeToInt(string);
 	virtual string buildIR(CFG *cfg) = 0;
-	//virtual string createNewVar()=0;
+	virtual void analyse(map<string,vector<int>> & staticAnalysis,list<string> & errors,list<string> & warnings, multimap<string,pair<Type,DefAppel*>> & 	prototypes,bool returnType) {};
+	virtual bool estCst(list<string> & opti);
   
   
 

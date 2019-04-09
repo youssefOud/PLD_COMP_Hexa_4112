@@ -27,9 +27,12 @@ public:
 	virtual int eval() {return 0;};
 	virtual string buildIR(CFG *cfg) = 0;
 	virtual void analyse(map<string,vector<int>> & staticAnalysis,list<string> & errors,list<string> & warnings, multimap<string,pair<Type,DefAppel*>> & 	prototypes,bool returnType) {};
-
+	virtual bool estCst(list<string> & opti) { return false;};
+	virtual int getNbLine(){return nbLine;};
+	virtual void setNbLine(int l){nbLine=l;};
 
 protected:
+	int nbLine;
 
 private:
 

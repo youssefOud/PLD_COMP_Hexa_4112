@@ -13,6 +13,7 @@ class RightValue {
 		virtual string toString() =0;
 		virtual string getId() {return id; };
 		virtual int getNbr() {return nbr; } ;
+		virtual bool estCst(list<string> & opti) { return false;};
 	
 	protected:
 		string id;

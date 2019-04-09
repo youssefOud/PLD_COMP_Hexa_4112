@@ -1,12 +1,11 @@
-int toto(int a, int b) {
 
-	return 1;
+void mai() {
+	return 3+2;
 }
 
 int main() {
-	if (1) {
-		2+3
-	}
-	toto(1,1);
-	return 0;
+	mai();
+	int a;
+	int a;
+	return 1;
 }

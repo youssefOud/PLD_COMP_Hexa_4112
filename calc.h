@@ -27,6 +27,7 @@
 #include "ExprPlus.h"
 #include "ExprMoins.h"
 #include "ExprSimple.h"
+#include "ExprBool.h"
 #include "ExprNeg.h"
 #include "Appel.h"
 #include "IFInstruction.h"
@@ -60,11 +61,13 @@ public:
 //TODO QUELLE CLASSE METTRE
   virtual antlrcpp::Any visitAppelFuncSansParam(exprParser::AppelFuncSansParamContext *ctx) override {
     Instruction * appel = new Appel((string) ctx->ID()->getText());
+	appel->setNbLine(ctx->getStart()->getLine());
 	return appel;
   }
 //TODO QUELLE CLASSE METTRE
   virtual antlrcpp::Any visitAppelFuncAvecParam(exprParser::AppelFuncAvecParamContext *ctx) override {
     Instruction * appel = new Appel((string) ctx->ID()->getText(),visit(ctx->vars()));
+	appel->setNbLine(ctx->getStart()->getLine());
 	return appel;
   }
 
@@ -116,6 +119,10 @@ public:
     return visit(ctx->VOID());
   }
 
+virtual antlrcpp::Any visitRetourChar(exprParser::RetourCharContext *ctx) override {
+    return visit(ctx->CHAR());
+  }
+
   virtual antlrcpp::Any visitTypeVarChar(exprParser::TypeVarCharContext *ctx) override {
      return visit(ctx->CHAR());
   }
@@ -145,6 +152,7 @@ public:
 
   virtual antlrcpp::Any visitExprNeg(exprParser::ExprNegContext *ctx) override {
     Instruction * expr = new ExprNeg((Instruction *) visit(ctx->expression()));
+    expr->setNbLine(ctx->getStart()->getLine());
     return expr;
   }
   
@@ -155,16 +163,21 @@ public:
 
 	virtual antlrcpp::Any visitExprAddMinus(exprParser::ExprAddMinusContext *ctx) override {
 		Instruction * expr;
-		//debug ((string) ctx->op());
 		if( ctx->op->getText() == "+"){
 			 expr = new ExprPlus((Instruction *) visit(ctx->expression(0)), (Instruction *)visit(ctx->expression(1)));
 		}
 		else {
 			expr = new ExprMoins((Instruction *) visit(ctx->expression(0)), (Instruction *)visit(ctx->expression(1)));
 		}
-    
+    expr->setNbLine(ctx->getStart()->getLine());
     return expr;
   }
+
+    virtual antlrcpp::Any visitExprComp(exprParser::ExprCompContext *ctx) override {
+		Instruction * expr = new ExprBool((Instruction *) visit(ctx->expression(0)), (Instruction *)visit(ctx->expression(1)), ctx->opc->getText());
+	expr->setNbLine(ctx->getStart()->getLine());    	
+	return expr;
+	}
  
   virtual antlrcpp::Any visitExprPar(exprParser::ExprParContext *context) override {
     return visit(context->expression());
@@ -172,12 +185,14 @@ public:
   
   virtual antlrcpp::Any visitRightValue(exprParser::RightValueContext *context) override {
     Instruction * expr = new ExprSimple((RightValue *)visit(context->right()));
-    return expr;
+	expr->setNbLine(context->getStart()->getLine());    
+	return expr;
   }
 
   virtual antlrcpp::Any visitExprMult(exprParser::ExprMultContext *context) override {
     Instruction * expr = new ExprMult((Instruction *) visit(context->expression(0)), (Instruction *)visit(context->expression(1)));
-    return expr;
+	expr->setNbLine(context->getStart()->getLine());    
+	return expr;
   }
 
 
@@ -194,11 +209,11 @@ public:
   }
 
   virtual antlrcpp::Any visitDeclaration(exprParser::DeclarationContext *context) override {
-  // TODO modifier
     list<string> ids = visit(context->ids());
     list<Instruction*> instructions;
     for(list<string>::iterator it = ids.begin(); it != ids.end(); it++){
 		  Instruction * dec = new Declaration((*it),(string) context->type()->getText());
+		dec->setNbLine(context->getStart()->getLine());
       instructions.push_back(dec);
     }
 		return instructions;
@@ -206,16 +221,19 @@ public:
 
   virtual antlrcpp::Any visitDefinition(exprParser::DefinitionContext *context) override {
 		Instruction * def = new Definition((Instruction *)visit(context->expression()),(LeftValue *)visit(context->left()),(string) context->type()->getText());
+	def->setNbLine(context->getStart()->getLine());
 		return def;
   }
 
   virtual antlrcpp::Any visitAffectation(exprParser::AffectationContext *context) override {
 		Instruction * affS =new AffectationSimple((Instruction *)visit(context->expression()),(LeftValue *)visit(context->left()),"");
+		affS->setNbLine(context->getStart()->getLine());		
 		return affS;
   }
 
   virtual antlrcpp::Any visitReturn(exprParser::ReturnContext *context) override {
   		Instruction * ret = new Return((Instruction *)visit(context->expression()));
+		ret->setNbLine(context->getStart()->getLine());			
 		return ret;
   }
 
@@ -240,7 +258,6 @@ public:
   }
 
   virtual antlrcpp::Any visitInstrCorps(exprParser::InstrCorpsContext *ctx) override {
-  	//debug( ( (Instruction*) (visit(ctx->instruction())->front() )->toString() );
     list<Instruction*> instructions = visit(ctx->instruction());
     instructions.splice(instructions.end(),visit(ctx->corps()));
     return instructions;
@@ -251,8 +268,7 @@ public:
     return instructions;
   }
 
-	virtual antlrcpp::Any visitIfInstr(exprParser::IfInstrContext *ctx) override {
-		debug("Visit IfInstr");
+	virtual antlrcpp::Any visitIfInstr(exprParser::IfInstrContext *ctx) override {                                    
 		list<Instruction *> lelse;
 		if (ctx->corps().size() > 1) 
 			lelse.splice(lelse.end(),visit(ctx->corps(1)));

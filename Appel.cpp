@@ -1,3 +1,9 @@
+#ifdef DEBUG_ENABLE
+    #define debug(debugString) std::cout << (debugString) << std::endl;
+#else
+    #define debug(debugString)
+#endif
+
 #include "Appel.h"
 #include <iostream>
 
@@ -78,6 +84,7 @@ void Appel::analyse(map<string,vector<int>> & staticAnalysis,list<string> & erro
 	--it;
 	//Si elle n'a pas été définie, on s'arrête
 	if(!hasBeenDefined){
+		debug("Fonction "+ id +" utilisee mais non definie");
 		warnings.push_back("Fonction "+ id +" utilisee mais non definie");
 	}
 	//Si elle a déjà été définie
@@ -96,9 +103,11 @@ void Appel::analyse(map<string,vector<int>> & staticAnalysis,list<string> & erro
 		} 
 		else{
 			if(nbParam > nbParamExpected){
+				debug("Trop d'arguments pour la fonction "+ id +" !");
 				warnings.push_back("Trop d'arguments pour la fonction "+ id +" !");
 			}
 			else{
+				debug("Pas assez d'arguments pour la fonction "+ id +" !");
 				warnings.push_back("Pas assez d'arguments pour la fonction "+ id +" !");
 			}
 		}
@@ -106,10 +115,15 @@ void Appel::analyse(map<string,vector<int>> & staticAnalysis,list<string> & erro
 		//S'il s'agit d'un appel de fonction faisant partie d'une affectation, on vérifie le type de retour
 
 		if( returnType && it->second.first == 0){
+			debug("La fonction "+ id +" a un retour void !");
 			warnings.push_back("La fonction "+ id +" a un retour void !");
 		}
 		
 	}
+}
+
+bool Appel::estCst(list<string> & opti) {
+	return false ; //le retour d'une fonction n'est pas considéré comme étant constant
 }
 
 

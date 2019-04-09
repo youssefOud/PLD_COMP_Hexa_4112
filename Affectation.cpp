@@ -35,3 +35,11 @@ Type Affectation::convertTypeToInt(string nom) {
 	return t; 
 }
 
+bool Affectation::estCst(list<string> & opti) {
+	if(expr->getClassName() != 9){ //Si ce n'est pas une expression simple
+		return expr->estCst(opti);		
+	}
+	return false; // Si c'est une expression simple, aucune optimisation n'est possible
+	
+}
+

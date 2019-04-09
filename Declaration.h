@@ -31,6 +31,9 @@ public:
 	Type convertTypeToInt(string);
 	int getClassName();
 	string buildIR(CFG *cfg);
+	virtual void analyse(map<string,vector<int>> & staticAnalysis,list<string> & errors,list<string> & warnings, multimap<string,pair<Type,DefAppel*>> & prototypes,bool returnType);
+
+	virtual bool estCst(list<string> & opti);
     
 private:
     string id;
