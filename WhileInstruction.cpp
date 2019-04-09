@@ -119,12 +119,17 @@ string WhileInstruction::buildIR(CFG *cfg){
 	doBB->exit_false = nullptr;
 
 	beforeWhileBB->exit_true = clauseBB;
+	
+	cfg->current_bb = clauseBB;
+	varTest = clause->buildIR(cfg);
+	clauseBB->varTest = varTest;
 
 	cfg->current_bb = doBB;
 	for(list<Instruction*>::iterator it = this->blocWhile.begin(); it != this->blocWhile.end(); it++){
 		(*it)->buildIR(cfg);
 	}
 
+	
 	
 	cfg->current_bb = afterWhileBB;
 	return "";
