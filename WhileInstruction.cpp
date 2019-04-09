@@ -96,11 +96,11 @@ string WhileInstruction::buildIR(CFG *cfg){
 
 bool WhileInstruction::estCst(list<string> & opti){
 	if(clause->estCst(opti)){
-		opti.push_back("Optimisation possible au niveau de l'instruction "+ clause->toString());	
+		opti.push_back("Optimisation possible au niveau de la ligne "+ to_string(clause->getNbLine()));	
 	}
 	for(list<Instruction*>::iterator it = this->blocWhile.begin(); it != this->blocWhile.end(); it++){
 		if((*it)->estCst(opti)){
-			opti.push_back("Optimisation possible au niveau de l'instruction "+ (*it)->toString());
+			opti.push_back("Optimisation possible au niveau de la ligne "+ to_string((*it)->getNbLine()));
 		}
 	}
 	return false;
