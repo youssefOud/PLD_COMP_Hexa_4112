@@ -15,10 +15,9 @@
 using namespace std;
 
 class BacicBlock;
-
 class CFG {
  public:
-	CFG(Fonction* ast, multimap<string,pair<Type,DefAppel *>> *protos);
+	CFG(Fonction* ast, multimap<string,pair<Type,DefAppel *>> *protos, int cmpt);
 
 	Fonction* ast; /**< The AST this CFG comes from */
 	
@@ -49,6 +48,7 @@ class CFG {
 
 	int getNbIf();
 	int getNbWhile();
+	int getCmptFct();
 	void incrementNbIf();
 	void incrementNbWhile();
 	
@@ -61,4 +61,5 @@ class CFG {
 	int maxSizeAR;
 	int nbIf; //nombre de "blocs IF" dans le CFG
 	int nbWhile; //nombre de "blocs while" dans le CFG
+	int cmptFct;
 };
