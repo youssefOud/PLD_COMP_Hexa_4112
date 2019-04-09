@@ -8,7 +8,7 @@ dir_input = "test/input_normal/"
 dir_output = "test/output_normal/"
 dir_input_erwarn = "test/input_warn_errors/"
 dir_output_erwarn = "test/output_warn_errors/"
-exec_name = "/bin/bash " + path + "TestScriptAssemb.sh -a -c -o"
+exec_name = "/bin/bash " + path + "mongcc.sh -a -c"
 input_ext = '.c'
 output_name = '_out.txt'
 expect_name = '_exp.txt'
@@ -32,8 +32,8 @@ for in_name in file_names :
 # compare output files with expected output
 for name in file_names :
 	print "-----------------------------------"
-	result = str(filecmp.cmp(dir_output+name+output_name, dir_output+name+expect_name))
-	print name + ": " + result
+	result = filecmp.cmp(dir_output+name+output_name, dir_output+name+expect_name)
+	print name + ": " + str(result)
 	if (result) :
 		nbTestsOK += 1
 	else : 
@@ -59,9 +59,9 @@ for in_name in file_names_erwarn :
 
 for name in file_names_erwarn :
 	print "-----------------------------------"
-	result = str(filecmp.cmp(dir_output_erwarn+name+output_name, dir_output_erwarn+name+expect_name))
-	print name + ": " + result
-	if (result) :
+	result = filecmp.cmp(dir_output_erwarn+name+output_name, dir_output_erwarn+name+expect_name)
+	print name + ": " + str(result)
+	if result :
 		nbTestsOK += 1
 	else : 
 		nbTestsFailed += 1
