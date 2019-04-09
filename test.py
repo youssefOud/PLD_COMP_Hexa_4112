@@ -1,4 +1,3 @@
-
 import filecmp
 import os
 
@@ -26,7 +25,7 @@ for input_file in input_files:
 for in_name in file_names :
 	os.system("rm -f "+dir_output+in_name+expect_name)
 	os.system("gcc -o " + dir_output+in_name + "_exec " + dir_input+ in_name+input_ext)
-	os.system("./"+dir_output+"/"+in_name + "_exec ; echo $? >> "+dir_output+in_name+expect_name + " 2>>"+dir_output+"logs.txt")
+	os.system("./"+dir_output+"/"+in_name + "_exec ; echo $? > "+dir_output+in_name+expect_name + " 2>>"+dir_output+"logs.txt")
 	os.system(exec_name+" "+dir_input+in_name+input_ext + " > "+dir_output+in_name+output_name + " 2>>"+dir_output+"logs.txt")
 
 # compare output files with expected output
@@ -56,12 +55,11 @@ for input_file in input_files_erwarn:
 for in_name in file_names_erwarn :
 	os.system(exec_name+" "+dir_input_erwarn+in_name+input_ext + " > "+dir_output_erwarn+in_name+output_name+ " 2>>"+dir_output_erwarn+"logs.txt")
 
-
 for name in file_names_erwarn :
 	print "-----------------------------------"
 	result = filecmp.cmp(dir_output_erwarn+name+output_name, dir_output_erwarn+name+expect_name)
 	print name + ": " + str(result)
-	if result :
+	if (result) :
 		nbTestsOK += 1
 	else : 
 		nbTestsFailed += 1
@@ -70,10 +68,8 @@ for name in file_names_erwarn :
 	with open(dir_output_erwarn+"/"+name+output_name, 'r') as fout:
     		print "Resultat obtenu: \n" + fout.read()
 	with open(dir_output_erwarn+"/"+name+expect_name, 'r') as fexp:
-    		print "Resultat attendu: \n" + fexp.read()
-	
+    		print "Resultat attendu: \n" + fexp.read()	
 
 print '********************************'
 print "Nb tests OK : " + str(nbTestsOK)
 print "Nb tests echoues : " + str(nbTestsFailed)
-
