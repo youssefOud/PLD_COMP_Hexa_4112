@@ -76,14 +76,14 @@ string IFInstruction::buildIR(CFG *cfg)
     BasicBlock *clauseBB = cfg->current_bb;
     clauseBB->varTest = varTest;
 
-    BasicBlock *thenBB = new BasicBlock(cfg, ".trueCode_"+to_string(cfg->getNbIf()));
+    BasicBlock *thenBB = new BasicBlock(cfg, ".trueCode_"+to_string(cfg->getCmptFct())+to_string(cfg->getNbIf()));
     cfg->add_bb(thenBB);
 
-    BasicBlock *elseBB = new BasicBlock(cfg, ".falseCode_"+to_string(cfg->getNbIf()));
+    BasicBlock *elseBB = new BasicBlock(cfg, ".falseCode_"+to_string(cfg->getCmptFct())+to_string(cfg->getNbIf()));
     cfg->add_bb(elseBB);
 
 
-    BasicBlock *afterIfBB = new BasicBlock(cfg, ".afterIfBB_"+to_string(cfg->getNbIf()));
+    BasicBlock *afterIfBB = new BasicBlock(cfg, ".afterIfBB_"+to_string(cfg->getCmptFct())+to_string(cfg->getNbIf()));
     cfg->current_bb = afterIfBB;
     cfg->add_bb(afterIfBB);
     afterIfBB->exit_true = clauseBB->exit_true;

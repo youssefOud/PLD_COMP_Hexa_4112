@@ -5,15 +5,13 @@
 #include <iostream>
 #include <initializer_list>
 #include <map>
-// TODO : A completer
-
 #include "Fonction.h"
 #include "Enum.h"
-
 #include "IRInstr.h"
 
 using namespace std;
 
+class Instruction;
 class BacicBlock;
 class CFG
 {
