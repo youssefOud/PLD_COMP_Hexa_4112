@@ -34,9 +34,8 @@ else	#Nombre parametres correct, voir si le fichier est .c
 				./exe -c $FICHIER
 				if [ -f $FICHIER_SORTIE.s ]; then
 					as -o $FICHIER_SORTIE.o $FICHIER_SORTIE.s
-					gcc $FICHIER_SORTIE.o
-					./a.out
-					echo $?
+					gcc $FICHIER_SORTIE.o > erreurs.txt
+
 				fi
 			elif [ $ANALYSE -eq 1 -a $OPTIMISATION -eq 1 -a $CODE_GEN -eq 0 ]; then
 				./exe -a $FICHIER
@@ -44,41 +43,36 @@ else	#Nombre parametres correct, voir si le fichier est .c
 				./exe -a -c $FICHIER
 				if [ -f $FICHIER_SORTIE.s ]; then
 					as -o $FICHIER_SORTIE.o $FICHIER_SORTIE.s
-					gcc $FICHIER_SORTIE.o
-					./a.out
-					echo $?
+					gcc $FICHIER_SORTIE.o > erreurs.txt
+
 				fi
 			elif [ $ANALYSE -eq 0 -a $OPTIMISATION -eq 1 -a $CODE_GEN -eq 1 ]; then
 				./exe -c $FICHIER
 				if [ -f $FICHIER_SORTIE.s ]; then
 					as -o $FICHIER_SORTIE.o $FICHIER_SORTIE.s
-					gcc $FICHIER_SORTIE.o
-					./a.out
-					echo $?
+					gcc $FICHIER_SORTIE.o > erreurs.txt
+
 				fi
 			elif [ $ANALYSE -eq 1 -a $OPTIMISATION -eq 1 -a $CODE_GEN -eq 1 ]; then
 				./exe -a -c $FICHIER
 				if [ -f $FICHIER_SORTIE.s ]; then
 					as -o $FICHIER_SORTIE.o $FICHIER_SORTIE.s
-					gcc $FICHIER_SORTIE.o
-					./a.out
-					echo $?	
+					gcc $FICHIER_SORTIE.o > erreurs.txt
+
 				fi
 			elif [ $ANALYSE -eq 0 -a $OPTIMISATION -eq 0 -a $CODE_GEN -eq 0 ]; then
 				./exe -c $FICHIER
 				if [ -f $FICHIER_SORTIE.s ]; then
 					as -o $FICHIER_SORTIE.o $FICHIER_SORTIE.s
-					gcc $FICHIER_SORTIE.o
-					./a.out
-					echo $?
+					gcc $FICHIER_SORTIE.o > erreurs.txt
+
 				fi
 			elif [ $ANALYSE -eq 0 -a $OPTIMISATION -eq 1 -a $CODE_GEN -eq 0 ]; then
 				./exe -o $FICHIER
 				if [ -f $FICHIER_SORTIE.s ]; then
 					as -o $FICHIER_SORTIE.o $FICHIER_SORTIE.s
-					gcc $FICHIER_SORTIE.o
-					./a.out
-					echo $?
+					gcc $FICHIER_SORTIE.o > erreurs.txt
+
 				fi
 			fi
 		#---------------------------------------

@@ -107,7 +107,7 @@ void Fonction::generateST(){
 				// Existe deja dans la table des symboles : gérer cas d'erreur
 				//déclarations multiples
 				debug("Error : Declarations multiples de la variable "+ ((Declaration*)(*it))->getId());
-				errors.push_back("Declarations multiples de la variable "+ ((Declaration*)(*it))->getId());
+				errors.push_back("Declarations multiples de la variable "+ ((Declaration*)(*it))->getId()+" au niveau de la ligne "+to_string((*it)->getNbLine()));
 			} else {
 				// On commence les adresses à -8
 				this->symbolTable.insert(make_pair(((Declaration*)(*it))->getId(), make_pair(((Declaration*)(*it))->getType(),nextFree)));
@@ -120,7 +120,7 @@ void Fonction::generateST(){
 			it2 = this->symbolTable.find(((Definition*)(*it))->getLeft()->getId());
 			if (it2 != symbolTable.end()) {	
 				debug("Error : Declarations multiples de la variable "+ ((Definition*)(*it))->getLeft()->getId());
-				errors.push_back("Declarations multiples de la variable "+ ((Definition*)(*it))->getLeft()->getId());
+				errors.push_back("Declarations multiples de la variable "+ ((Definition*)(*it))->getLeft()->getId()+" au niveau de la ligne "+to_string((*it)->getNbLine()));
 			} else {
 				// On commence les adresses à -8
 				this->symbolTable.insert(make_pair(((Definition*)(*it))->getLeft()->getId(), make_pair(((Definition*)(*it))->getType(),nextFree)));
