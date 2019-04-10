@@ -124,7 +124,7 @@ void Fonction::generateST()
             if (it2 != symbolTable.end())
             {
                 debug("Error : Declarations multiples de la variable "+ ((Declaration*)(*it))->getId());
-                errors.push_back("Declarations multiples de la variable "+ ((Declaration*)(*it))->getId());
+                errors.push_back("Declarations multiples de la variable "+ ((Declaration*)(*it))->getId() + " au niveau de la ligne " + to_string((*it)->getNbLine()));
             }
             else
             {
@@ -141,7 +141,7 @@ void Fonction::generateST()
             if (it2 != symbolTable.end())
             {
                 debug("Error : Declarations multiples de la variable "+ ((Definition*)(*it))->getLeft()->getId());
-                errors.push_back("Declarations multiples de la variable "+ ((Definition*)(*it))->getLeft()->getId());
+                errors.push_back("Declarations multiples de la variable "+ ((Definition*)(*it))->getLeft()->getId() + " au niveau de la ligne " + to_string((*it)->getNbLine()));
             }
             else
             {
@@ -286,4 +286,4 @@ void Fonction::optimize()
     }
 
 }
->>>>>>> 5e7aae30f2c862638c6d8073df5ebf06238c8928
+
