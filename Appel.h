@@ -7,35 +7,33 @@
 
 using namespace std;
 
-class Appel: public Instruction {
+class Appel: public Instruction
+{
 
 public:
-	Appel() {}
-	Appel(string);
-	Appel(string, list<Instruction*>);
-	~Appel();
-	string getId();
-	list<Instruction*> getExpressions(); 
-	void setId(string); 
-	void setInstructions (list<Instruction*>);
-	void addInstruction(Instruction* e);
-	string toString();
+    Appel() {}
+    Appel(string);
+    Appel(string, list<Instruction*>);
+    ~Appel();
+    string getId();
+    list<Instruction*> getExpressions();
+    void setId(string);
+    void setInstructions (list<Instruction*>);
+    void addInstruction(Instruction* e);
+    string toString();
 
-	int getClassName(){return 10;};
-	virtual int eval() {return 0;};
-  
-	virtual string buildIR(CFG *cfg);
+    int getClassName(){ return 10; };
+    virtual int eval() { return 0; };
 
-	virtual void analyse(map<string,vector<int>> & staticAnalysis,list<string> & errors,list<string> & warnings, multimap<string,pair<Type,DefAppel*>> & prototypes,bool returnType) ;
+    virtual string buildIR(CFG *cfg);
 
-	virtual bool estCst(list<string> & opti) ;
+    virtual void analyse(map<string,vector<int>> & staticAnalysis,list<string> & errors,list<string> & warnings, multimap<string,pair<Type,DefAppel*>> & prototypes,bool returnType) ;
 
+    virtual bool estCst(list<string> & opti) ;
 
-
-	
 protected:
-	string id;
-	list<Instruction*> parametres;
+    string id;
+    list<Instruction*> parametres;
 
 private:
 

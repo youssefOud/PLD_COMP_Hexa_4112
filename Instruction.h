@@ -16,24 +16,25 @@
 
 using namespace std;
 
-class Instruction {
+class Instruction
+{
 
 public:
 
-	Instruction();
-	virtual ~Instruction();
-  	virtual string toString() {return "instruction"; };
- 	virtual int getClassName(){return -1;};
-	virtual int eval() {return 0;};
-	virtual string buildIR(CFG *cfg) = 0;
-	virtual void analyse(map<string,vector<int>> & staticAnalysis,list<string> & errors,list<string> & warnings, multimap<string,pair<Type,DefAppel*>> & 	prototypes,bool returnType) {};
-	virtual bool estCst(list<string> & opti) { return false;};
-	virtual int getNbLine(){return nbLine;};
-	virtual void setNbLine(int l){nbLine=l;};
-	virtual bool containsRet(){return false;};
+    Instruction();
+    virtual ~Instruction();
+    virtual string toString(){ return "instruction"; };
+    virtual int getClassName(){ return -1; };
+    virtual int eval(){ return 0; };
+    virtual string buildIR(CFG *cfg) = 0;
+    virtual void analyse(map<string,vector<int>> & staticAnalysis,list<string> & errors,list<string> & warnings, multimap<string,pair<Type,DefAppel*>> & 	prototypes,bool returnType) {};
+    virtual bool estCst(list<string> & opti){ return false; };
+    virtual int getNbLine(){ return nbLine; };
+    virtual void setNbLine(int l){ nbLine=l; };
+    virtual bool containsRet(){ return false; };
 
 protected:
-	int nbLine;
+    int nbLine;
 
 private:
 
