@@ -1,5 +1,6 @@
 #include "CFG.h"
 #include "BasicBlock.h"
+#include "Instruction.h"
 
 CFG::CFG(Fonction* f, multimap<string,pair<Type,DefAppel *>> *protos, int cmpt)
 {
@@ -16,6 +17,9 @@ CFG::CFG(Fonction* f, multimap<string,pair<Type,DefAppel *>> *protos, int cmpt)
 
 void CFG::genererIR()
 {
+    for(list<Instruction*>::iterator it = ast->getInstructions()->begin(); it != ast->getInstructions()->end(); it++){
+	(*it)->buildIR(this);
+    }
 }
 
 void CFG::add_bb(BasicBlock* bb)
