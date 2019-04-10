@@ -12,34 +12,32 @@
 
 using namespace std;
 
-class Affectation : public Instruction {
+class Affectation : public Instruction
+{
 
 public:
 
-	Affectation(Instruction *e, LeftValue *l, string t);
-	Affectation();
-	virtual ~Affectation();
-    	virtual string toString() {return "Affectation"; };
-    	virtual int getClassName()=0;
-	Type getType();	
-	void setType(Type t);
-	
-	Instruction *getExpr();
-    	LeftValue *getLeft();	
-	Type convertTypeToInt(string);
-	virtual string buildIR(CFG *cfg) = 0;
-	virtual void analyse(map<string,vector<int>> & staticAnalysis,list<string> & errors,list<string> & warnings, multimap<string,pair<Type,DefAppel*>> & 	prototypes,bool returnType) {};
-	virtual bool estCst(list<string> & opti);
-  
-  
+    Affectation(Instruction *e, LeftValue *l, string t);
+    Affectation();
+    virtual ~Affectation();
+    virtual string toString(){ return "Affectation"; };
+    virtual int getClassName()=0;
+    Type getType();
+    void setType(Type t);
+
+    Instruction *getExpr();
+    LeftValue *getLeft();
+    Type convertTypeToInt(string);
+    virtual string buildIR(CFG *cfg) = 0;
+    virtual void analyse(map<string,vector<int>> & staticAnalysis,list<string> & errors,list<string> & warnings, multimap<string,pair<Type,DefAppel*>> & 	prototypes,bool returnType) {};
+    virtual bool estCst(list<string> & opti);
 
 protected:
-	Instruction *expr;
-	Type type;
-	LeftValue *left;
+    Instruction *expr;
+    Type type;
+    LeftValue *left;
 
 private:
-	
 
 };
 

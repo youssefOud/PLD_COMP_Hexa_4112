@@ -16,11 +16,11 @@
     * '-a' : Option permettant de faire une analyse statique du code et de détecter les warnings et les erreurs.
     * '-c' : Option permettant de générer du code assembleur dans un fichier '.s'. Ce fichier portera le nom du fichier test. 
     _Exemple_ : Si le fichier test porte le nom "operationArithmetique.c", le fichier compilé aura le nom suivant : "operationArithmetique.s"
-    * '-o' : Cette option n'est pas encore disponible. Elle permet d'optimiser le code compilé.
+    * '-o' : Elle permet d'indiquer des optimisations possibles dans le code compilé.
     
     En plus de ces options, vous devez spécifier en dernier argument le nom du fichier à analyser. Les seuls fichiers autorisés sont de la forme **/chemin/vers/fichier/nomFichier.c**. 
     
-    Pour lancer le script : ouvrir un terminal dans le dossier source et taper la ligne : **./nomScript.sh [-a] [-o] [-c] chemin/vers/fichier/nomFichierTest.c**
+    Pour lancer le script : ouvrir un terminal dans le dossier source et taper la ligne : **./mongcc.sh [-a] [-o] [-c] chemin/vers/fichier/nomFichierTest.c**
     
 ## Fonctionnalités actuelles du compilateur
 
@@ -36,14 +36,29 @@
     * Parenthèse : _a = (42);_
     * Opérations arithmétiques combinant les opérations précédentes et ordre de priorité respecté
     * Déclaration multiple : _int a,b,c;_
+	* Négation
+	* Condition If Else : attention, notre compilateur ne supporte pas le else if et juste le if
     
-    Il est capable de détecter les erreurs/warnings suivants :
+    Il est capable de détecter les warnings suivants :
     * les variables non utilisées, 
-    * les variables non déclarées
-    * les variables utilisées mais non déclarées 
-    * les variables utilisées mais non initialisées
-    
-    Dans le cas où la syntaxe n'est pas respecté dans le fichier, une erreur sera relevée.
+    * les variables non déclarées,
+	* Absence de return dans une fonction qui est censée retourner une quelque chose,
+	* S'il y a un retour pour une fonction void,
+	* Fonction non définie utilisée
+
+	Il est capable de détecter les erreurs suivantes :
+    * Déclarations multiples d’une variable,
+	* Variable utilisée mais non déclarée
+	* Variable utilisée mais non initialisée
+	* Multiples définitions de fonctions
+	* S'il n'y aucun ou plusieurs main
+	
+	Il est également capable de donner les optimisations possibles du code suivantes :
+	* Expression constante : _int a = 2+3+4+5_ 
+	* Boucle infinie :  _while(3==2+1)_
+	* Boucle jamais atteinte : _while(1==2)_   
+	
+    Dans le cas où la syntaxe n'est pas respectée dans le fichier, une erreur sera relevée.
     
 ## Tests automatiques
 

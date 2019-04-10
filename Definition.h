@@ -11,17 +11,18 @@
 
 using namespace std;
 
-class Definition : public Affectation {
+class Definition : public Affectation
+{
 
 public:
 
-	Definition(Instruction *e, LeftValue *l, string t):Affectation(e, l, t) {};
-	~Definition() {};
-     string toString();
-     int getClassName();
-	string buildIR(CFG *cfg);
-	virtual void analyse(map<string,vector<int>> & staticAnalysis,list<string> & errors,list<string> & warnings, multimap<string,pair<Type,DefAppel*>> & prototypes,bool returnType);
-  
+    Definition(Instruction *e, LeftValue *l, string t):Affectation(e, l, t) {};
+    ~Definition() {};
+    string toString();
+    int getClassName();
+    string buildIR(CFG *cfg);
+    virtual void analyse(map<string,vector<int>> & staticAnalysis,list<string> & errors,list<string> & warnings, multimap<string,pair<Type,DefAppel*>> & prototypes,bool returnType);
+
 protected:
 
 private:
