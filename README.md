@@ -62,5 +62,5 @@
     
 ## Tests automatiques
 
-    Il est possible de lancer un set de tests automatiques afin de vérifier après chaque changement que le compilateur fonctionne toujours correctement. Pour le faire, il faut lancer le script test.py en tapant la commande suivante : python test.py 
-    Vous obtiendrez une liste avec le nom du fichier testé suivi d'un "True" ou "False" spécifiant si le test est passé ou pas.
+    Il est possible de lancer un set de tests automatiques afin de vérifier après chaque changement que le compilateur fonctionne toujours correctement. Pour le faire, il faut lancer le script test.py en tapant la commande suivante : python test.py . Par ailleurs, le makefile contient une cible "test" qui crée l'executable et lance les jeux des tests (lancer la commande : make test).
+    Vous obtiendrez une liste contenant le nom du fichier testé suivi d'un "True" ou "False" spécifiant si le test est passé ou pas, le code testé, ainsi que les résultats obtenus et attendus.
