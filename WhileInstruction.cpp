@@ -108,15 +108,15 @@ string WhileInstruction::buildIR(CFG *cfg)
     string varTest = clause->buildIR(cfg);
 
     BasicBlock *beforeWhileBB = cfg->current_bb;
-    BasicBlock *clauseBB = new BasicBlock(cfg, ".clauseWhile_"+to_string(cfg->getCmptFct())+to_string(cfg->getNbWhile()));
+    BasicBlock *clauseBB = new BasicBlock(cfg, ".clauseWhile_"+to_string(cfg->getCmptFct())+"_"+to_string(cfg->getNbWhile()));
     clauseBB->varTest = varTest;
     cfg->add_bb(clauseBB);
 
-    BasicBlock *doBB = new BasicBlock(cfg, ".doCode_"+to_string(cfg->getCmptFct())+to_string(cfg->getNbWhile()));
+    BasicBlock *doBB = new BasicBlock(cfg, ".doCode_"+to_string(cfg->getCmptFct())+"_"+to_string(cfg->getNbWhile()));
     cfg->add_bb(doBB);
 
 
-    BasicBlock *afterWhileBB = new BasicBlock(cfg, ".afterWhileBB_"+to_string(cfg->getCmptFct())+to_string(cfg->getNbWhile()));
+    BasicBlock *afterWhileBB = new BasicBlock(cfg, ".afterWhileBB_"+to_string(cfg->getCmptFct())+"_"+to_string(cfg->getNbWhile()));
     cfg->current_bb = afterWhileBB;
     cfg->add_bb(afterWhileBB);
     afterWhileBB->exit_true = beforeWhileBB->exit_true;

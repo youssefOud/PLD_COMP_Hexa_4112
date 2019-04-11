@@ -1,0 +1,1 @@
+Warning : Variable definie non utilisee b

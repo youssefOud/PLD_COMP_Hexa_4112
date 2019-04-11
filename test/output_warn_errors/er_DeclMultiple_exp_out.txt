@@ -1,0 +1,2 @@
+Warning : Variable definie non utilisee a
+Error : Declarations multiples de la variable a au niveau de la ligne 3
