@@ -22,7 +22,7 @@
 
 using namespace std;
 
-int nextFree = -8;
+int nextFree = -8; //next free offset in memory
 
 
 Fonction::Fonction(string nomFct, string typeFct, list<Instruction*> instr, DefAppel * da)
