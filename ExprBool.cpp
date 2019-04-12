@@ -116,6 +116,7 @@ string ExprBool::buildIR(CFG *cfg)
     {
         cfg->addInstruction(IRInstr::Operation::cmp_diff, params);
     }
+	cfg->setInitOffset();
     return var3;
 }
 
