@@ -20,6 +20,7 @@ string AffectationSimple::buildIR (CFG* cfg)
     params.push_back(l);
     params.push_back(r);
     cfg->addInstruction( IRInstr::Operation::wmem, params);
+    cfg->setInitOffset();
     return r;
 }
 

@@ -33,8 +33,7 @@ public:
     int get_var_index(string name);
     int get_var_type(string name);
     int getOffsetFromSymbolTable(string id);
-
-    int getNextFreeIndex();
+    void setInitOffset();
 
     void genererIR();
 
@@ -51,7 +50,8 @@ public:
 
 protected:
     map<string,pair<Type, int>> *symbolTable; // The first int in the pair is the type of the variable and the second is its offset
-    int nextFreeSymbolIndex; // to allocate new symbols in the symbol table
+    int nextFreeInit; // nextFree without any temporary variable
+    int maxNextFree; // max value reached for nextFree
     int nextBBnumber; // just for naming
     vector <BasicBlock*> bbs; // all the basic blocs of this CFG
     multimap<string,pair<Type,DefAppel *>> *prototypes;

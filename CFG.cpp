@@ -6,7 +6,8 @@ CFG::CFG(Fonction* f, multimap<string,pair<Type,DefAppel *>> *protos, int cmpt)
 {
     ast = f;
     symbolTable = f->getST();
-    nextFreeSymbolIndex = nextFree;
+    nextFreeInit = nextFree;
+    maxNextFree = nextFree;
     prototypes = protos;
     current_bb = new BasicBlock(this, "." + f->getId());
     add_bb(current_bb);
@@ -40,7 +41,7 @@ void CFG::genererCodeAssembleur(ostream& o)
 void CFG::gen_asm_prologue(ostream& o)
 {
     // Calcule la taille nécessaire pour l'AR
-    maxSizeAR = 8 * symbolTable->size();
+    maxSizeAR = - maxNextFree;
     if(maxSizeAR % 16 !=0)
     {
         maxSizeAR += 8;
@@ -66,13 +67,13 @@ void CFG::gen_asm_epilogue(ostream& o)
 
 void CFG::add_to_symbol_table(string name, Type t)
 {
-    symbolTable->insert( make_pair(name, make_pair(t, nextFreeSymbolIndex) ));
-    nextFreeSymbolIndex -=8;
+    symbolTable->insert( make_pair(name, make_pair(t, nextFree) ));
+    nextFree -=8;
 }
 
 string CFG::create_new_tempvar(Type t)
 {
-    string newVarName = "!temp" + to_string(nextFreeSymbolIndex);
+    string newVarName = "!temp" + to_string(nextFree);
     add_to_symbol_table(newVarName, t);
     return newVarName;
 }
@@ -92,9 +93,13 @@ void CFG::addInstruction (IRInstr::Operation mnemo, vector<string> params)
     current_bb->add_IRInstr(mnemo, symbolTable->find(params[0])->second.first, params);
 }
 
-int CFG::getNextFreeIndex()
-{
-    return nextFreeSymbolIndex;
+
+void CFG::setInitOffset(){
+	//save the maximum memory offset for the function
+	if(nextFree > maxNextFree){
+		maxNextFree = nextFree;
+	}
+	nextFree = nextFreeInit;
 }
 
 int CFG::getOffsetFromSymbolTable(string id)

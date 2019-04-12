@@ -125,8 +125,12 @@ int main(int argc, const char ** argv)
             int cmptFct = 1;
             for(list<Fonction*>::iterator it=fonctions.begin() ; it!=fonctions.end() ; ++it)
             {
+				(*it)->generateST();
+			}
+            for(list<Fonction*>::iterator it=fonctions.begin() ; it!=fonctions.end() ; ++it)
+            {
                 debug((*it)->toString());
-                (*it)->generateST();
+                
                 CFG * cfg = new CFG((*it), &prototypes, cmptFct++);
 		cfg->genererIR();
                 (*it)->generateSA(prototypes);
