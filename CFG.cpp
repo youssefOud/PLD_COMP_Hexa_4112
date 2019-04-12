@@ -41,7 +41,7 @@ void CFG::genererCodeAssembleur(ostream& o)
 void CFG::gen_asm_prologue(ostream& o)
 {
     // Calcule la taille nécessaire pour l'AR
-    maxSizeAR = - maxNextFree;
+    maxSizeAR = - (maxNextFree+8);
     if(maxSizeAR % 16 !=0)
     {
         maxSizeAR += 8;
@@ -52,6 +52,39 @@ void CFG::gen_asm_prologue(ostream& o)
     o << "pushq %rbp # save %rbp on the stack \r\n";
     o << "movq %rsp, %rbp # define %rbp for the current function \r\n";
     o << "subq $" << to_string(maxSizeAR) << ", %rsp\r\n";
+    //On copie les variables passées en paramètre dans leurs cases mémoire
+    int cmpt = 1;
+    for (unordered_multimap<string,string>::iterator itParam = ast->getDefAppel()->getParameters()->begin(); itParam != ast->getDefAppel()->getParameters()->end(); itParam++){    
+		switch (cmpt){
+			case 1:{
+				o << "movq %rdi, %rax\r\n";
+				break;
+			}
+			case 2:{
+				o << "movq %rsi, %rax\r\n";
+				break;
+			}
+			case 3:{
+				o << "movq %rdx, %rax\r\n";
+				break;
+			}
+			case 4:{
+				o << "movq %rcx, %rax\r\n";
+				break;
+			}
+			case 5:{
+				o << "movq %r8, %rax\r\n";
+				break;
+			}
+			case 6:{
+				o << "movq %r9, %rax\r\n";
+				break;
+			}
+		}
+		int memoryCase = getOffsetFromSymbolTable((*itParam).first);
+		o << "movq %rax, " << to_string(memoryCase) << "(%rbp)\r\n";
+		cmpt++;
+	}
     o << "\r\n";
     o << "# body \r\n";
 }

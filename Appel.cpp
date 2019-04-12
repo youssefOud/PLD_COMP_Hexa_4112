@@ -83,6 +83,7 @@ string Appel::buildIR(CFG *cfg)
         params.push_back(param);
     }
     cfg->addInstruction(IRInstr::Operation::call, params);
+    cfg->setInitOffset();
     return dest;
 };
 
