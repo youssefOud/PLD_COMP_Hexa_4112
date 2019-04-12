@@ -227,25 +227,11 @@ void IRInstr::genererCodeAssembleur(ostream &o)
 string IRInstr::getMemoryOffset(string param)
 {
     int memoryCase = bb->cfg->getOffsetFromSymbolTable(param);
-    switch (memoryCase)
-    {
-    case 0:
-        cerr << "N'existe pas dans la symbolTable" << endl;
-        break;
-    case 1:
-        return "%rdi";
-    case 2:
-        return "%rsi";
-    case 3:
-        return "%rdx";
-    case 4:
-        return "%rcx";
-    case 5:
-        return "%r8";
-    case 6:
-        return "%r9";
-    default:
-        return to_string(memoryCase) + "(%rbp)"; // Cas où c'est un offset négatif généré par nous même
+    if(memoryCase != 0){
+		return to_string(memoryCase) + "(%rbp)";
     }
-    return 0;
+    else{
+        cerr << "N'existe pas dans la symbolTable" << endl;
+	}
+	return "";
 }
